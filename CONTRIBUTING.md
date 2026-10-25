@@ -1,6 +1,6 @@
-# Contributing to LexiconUI
+# Contributing to LexiconUI (`RootDeveloperDS/LexicanUI`)
 
-Thank you for helping build **LexiconUI**—the open-source interactive UI/UX terminology encyclopedia and prompt-engineering standard for developers, designers, and AI vibe coders!
+Thank you for helping build **LexiconUI** ([`https://github.com/RootDeveloperDS/LexicanUI`](https://github.com/RootDeveloperDS/LexicanUI))—the open-source interactive UI/UX terminology encyclopedia and prompt-engineering standard for developers, designers, and AI vibe coders!
 
 Whether you want to **add new UI/UX concepts**, **invent richer interactive sandboxes**, **contribute Sci-Fi / Spatial UI (FUI) patterns**, or **improve the website's own convenience, UI/UX polish, and developer workflows**, your contributions are deeply valued.
 

@@ -2,15 +2,13 @@ import React, { useState, useMemo } from 'react';
 import { DESIGN_TERMS, DesignTerm } from '../data/termsData';
 import { VIBE_PRESET_SCENARIOS } from '../data/anatomyData';
 import {
-  Wand2,
   Copy,
   Check,
   Plus,
   Download,
   ArrowUpRight,
-  CheckCircle2,
-  Sliders,
   RotateCcw,
+  ChevronDown,
 } from 'lucide-react';
 
 interface PromptTranslatorViewProps {
@@ -206,7 +204,7 @@ const KEYWORD_SYNONYM_MAP: Record<string, string[]> = {
     'stagger',
     'domino',
   ],
-  'masonry-grid': [
+  'masonry-waterfall': [
     'pinterest',
     'masonry',
     'waterfall',
@@ -230,7 +228,7 @@ const KEYWORD_SYNONYM_MAP: Record<string, string[]> = {
     'progressive disclosure',
     'plus icon that turns',
   ],
-  'mystery-menu-icons': [
+  'iconic-menu-taxonomy': [
     'three dots',
     '3 dots',
     'hamburger',
@@ -241,13 +239,13 @@ const KEYWORD_SYNONYM_MAP: Record<string, string[]> = {
     'doner',
     'three lines',
   ],
-  'mega-menu-flyout': [
+  'mega-menu': [
     'mega menu',
     'giant multi-column dropdown',
     'stripe style menu',
     'multi-column flyout',
   ],
-  'bottom-sheet-handle': [
+  'bottom-sheet': [
     'bottom sheet',
     'slides up from the bottom',
     'little gray pill',
@@ -262,7 +260,7 @@ const KEYWORD_SYNONYM_MAP: Record<string, string[]> = {
     'peek of the next card',
     'carousel',
   ],
-  'avatar-facepile': [
+  'avatar-stack': [
     'overlapping profile',
     'facepile',
     'avatar stack',
@@ -285,20 +283,20 @@ const KEYWORD_SYNONYM_MAP: Record<string, string[]> = {
     'speed dial',
     'pops out 3',
   ],
-  'coachmark-spotlight': [
+  'spotlight-tour': [
     'darkens the whole screen except',
     'coachmark',
     'product tour',
     'spotlight cutout',
     'onboarding tooltip',
   ],
-  'reading-progress-bar': [
+  'scroll-progress': [
     'thin colored bar at the very top',
     'reading progress',
     'scroll progress',
     'fills up from 0% to 100%',
   ],
-  'fui-chamfered-hud': [
+  'hud-reticle-frame': [
     'angled 45-degree',
     'chamfered',
     'cut corners',
@@ -308,7 +306,7 @@ const KEYWORD_SYNONYM_MAP: Record<string, string[]> = {
     'clip-path',
     'sci-fi frame',
   ],
-  'spatial-glass-vision': [
+  'spatial-vision-glass': [
     'apple vision pro',
     'visionos',
     'spatial glass',
@@ -359,6 +357,7 @@ export const PromptTranslatorView: React.FC<PromptTranslatorViewProps> = ({
   const [manualExtraIds, setManualExtraIds] = useState<string[]>([]);
   const [excludedIds, setExcludedIds] = useState<string[]>([]);
   const [copiedOutput, setCopiedOutput] = useState(false);
+  const [showAllChips, setShowAllChips] = useState(false);
 
   // Universal architectural guardrails
   const [guardrails, setGuardrails] = useState({
@@ -507,19 +506,30 @@ export const PromptTranslatorView: React.FC<PromptTranslatorViewProps> = ({
     }
   };
 
+  const visibleChips = useMemo(() => {
+    if (showAllChips) return DESIGN_TERMS;
+    // By default show active/matched terms + top 10 foundational terms so mobile isn't flooded with 42 chips
+    const activeSet = new Set(activeTerms.map((t) => t.id));
+    const prioritized = [
+      ...DESIGN_TERMS.filter((t) => activeSet.has(t.id)),
+      ...DESIGN_TERMS.filter((t) => !activeSet.has(t.id)).slice(0, 8),
+    ];
+    return prioritized.slice(0, 14);
+  }, [showAllChips, activeTerms]);
+
   return (
-    <div className="space-y-8">
+    <div className="space-y-6 sm:space-y-8">
       {/* Header Banner */}
-      <div className="bg-white border border-slate-200 rounded-2xl p-6 space-y-4">
+      <div className="bg-white border border-slate-200 rounded-2xl p-4 sm:p-6 space-y-4">
         <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
           <div className="space-y-1">
             <div className="text-xs font-mono text-sky-700 font-semibold">
-              VIBE-TO-SPEC PROMPT TRANSLATOR & COMPILER
+              VIBE-TO-SPEC PROMPT TRANSLATOR &amp; COMPILER
             </div>
-            <h2 className="font-display text-2xl font-bold text-slate-900 tracking-tight">
+            <h2 className="font-display text-xl sm:text-2xl font-bold text-slate-900 tracking-tight">
               Describe the UI in plain English — get the exact UI/UX engineering prompt
             </h2>
-            <p className="text-xs text-slate-600 max-w-2xl">
+            <p className="text-xs text-slate-600 max-w-2xl leading-relaxed">
               Type how you naturally picture the screen (or load a common scenario below). LexiconUI
               detects every underlying UI/UX pattern, shows you what it is formally called, and
               compiles a clean Markdown specification ready to paste into any AI coding agent.
@@ -533,19 +543,19 @@ export const PromptTranslatorView: React.FC<PromptTranslatorViewProps> = ({
               setManualExtraIds([]);
               setVibeText(VIBE_PRESET_SCENARIOS[0].vibeInput);
             }}
-            className="px-3 py-2 text-xs font-medium text-slate-600 hover:text-slate-900 border border-slate-200 rounded-xl flex items-center gap-1.5 self-start lg:self-auto whitespace-nowrap"
+            className="min-h-[42px] sm:min-h-[38px] px-3.5 py-2 text-xs font-medium text-slate-700 hover:text-slate-900 border border-slate-200 rounded-xl flex items-center justify-center gap-1.5 self-start lg:self-auto whitespace-nowrap"
           >
             <RotateCcw className="w-3.5 h-3.5" />
             <span>Reset Translator</span>
           </button>
         </div>
 
-        {/* Preset Scenario Buttons */}
-        <div className="space-y-2 pt-2 border-t border-slate-100">
+        {/* Preset Scenario Buttons (Swipeable on mobile, wrapped on desktop) */}
+        <div className="space-y-2 pt-3 border-t border-slate-100">
           <div className="text-xs font-mono text-slate-500">
             LOAD A COMMON VIBE-CODING SCENARIO:
           </div>
-          <div className="flex flex-wrap gap-2">
+          <div className="flex sm:flex-wrap gap-2 overflow-x-auto no-scrollbar pb-1 sm:pb-0 snap-x">
             {VIBE_PRESET_SCENARIOS.map((preset) => {
               const isSelected = vibeText === preset.vibeInput;
               return (
@@ -557,9 +567,9 @@ export const PromptTranslatorView: React.FC<PromptTranslatorViewProps> = ({
                     setManualExtraIds([]);
                     setVibeText(preset.vibeInput);
                   }}
-                  className={`px-3 py-1.5 rounded-lg text-xs font-medium border transition-colors ${
+                  className={`min-h-[40px] sm:min-h-[34px] px-3 py-1.5 rounded-xl sm:rounded-lg text-xs font-medium border transition-colors whitespace-nowrap shrink-0 snap-start ${
                     isSelected
-                      ? 'bg-slate-900 border-slate-900 text-white'
+                      ? 'bg-slate-900 border-slate-900 text-white font-semibold'
                       : 'bg-slate-50 border-slate-200 text-slate-700 hover:bg-slate-100'
                   }`}
                 >
@@ -572,19 +582,19 @@ export const PromptTranslatorView: React.FC<PromptTranslatorViewProps> = ({
       </div>
 
       {/* Main Two-Column Translator Workspace */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 sm:gap-6 items-start">
         {/* LEFT 6 COLUMNS: Natural Vibe Input + Detected UI/UX Terms Breakdown */}
-        <div className="lg:col-span-6 space-y-6">
+        <div className="lg:col-span-6 space-y-5 sm:space-y-6">
           {/* Natural Language Input Card */}
-          <div className="bg-white border border-slate-200 rounded-2xl p-5 space-y-3">
-            <div className="flex items-center justify-between">
+          <div className="bg-white border border-slate-200 rounded-2xl p-4 sm:p-5 space-y-3.5">
+            <div className="flex flex-wrap items-center justify-between gap-2">
               <label
                 htmlFor="vibe-input-textarea"
                 className="text-xs font-mono font-semibold text-slate-700"
               >
                 1. YOUR CASUAL &ldquo;VIBE&rdquo; DESCRIPTION
               </label>
-              <span className="text-xs font-mono text-sky-700 tabular-nums">
+              <span className="text-xs font-mono text-sky-700 font-semibold tabular-nums">
                 {matchedResults.length} UI/UX Concepts Detected
               </span>
             </div>
@@ -598,20 +608,38 @@ export const PromptTranslatorView: React.FC<PromptTranslatorViewProps> = ({
               className="w-full p-3.5 text-sm bg-slate-50 border border-slate-200 rounded-xl text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-sky-600 focus:bg-white leading-relaxed"
             />
 
-            {/* Quick-Toggle Concept Chips */}
+            {/* Quick-Toggle Concept Chips (Collapsible on Mobile for clean ergonomics) */}
             <div className="space-y-2 pt-2">
-              <div className="text-[11px] font-mono text-slate-500">
-                CLICK ANY CONCEPT TO TOGGLE IT IN OR OUT OF YOUR SPEC:
+              <div className="flex items-center justify-between gap-2">
+                <span className="text-[11px] font-mono text-slate-500">
+                  TAP ANY CONCEPT TO TOGGLE IT IN OR OUT:
+                </span>
+                <button
+                  type="button"
+                  onClick={() => setShowAllChips((prev) => !prev)}
+                  className="text-xs font-mono font-semibold text-sky-700 hover:text-sky-900 inline-flex items-center gap-1"
+                >
+                  <span>
+                    {showAllChips
+                      ? 'Show Compact List'
+                      : `Show All ${DESIGN_TERMS.length} Chips`}
+                  </span>
+                  <ChevronDown
+                    className={`w-3.5 h-3.5 transition-transform ${
+                      showAllChips ? 'rotate-180' : ''
+                    }`}
+                  />
+                </button>
               </div>
               <div className="flex flex-wrap gap-1.5">
-                {DESIGN_TERMS.map((term) => {
+                {visibleChips.map((term) => {
                   const isIncluded = activeTerms.some((t) => t.id === term.id);
                   return (
                     <button
                       key={term.id}
                       type="button"
                       onClick={() => handleToggleTermChip(term.id)}
-                      className={`px-2.5 py-1 rounded-md text-xs font-medium border transition-colors ${
+                      className={`min-h-[36px] sm:min-h-[30px] px-2.5 py-1 rounded-lg text-xs font-medium border transition-colors ${
                         isIncluded
                           ? 'bg-sky-50 border-sky-400 text-sky-900 font-semibold'
                           : 'bg-white border-slate-200 text-slate-500 hover:text-slate-800'
@@ -627,8 +655,8 @@ export const PromptTranslatorView: React.FC<PromptTranslatorViewProps> = ({
           </div>
 
           {/* Detected UI/UX Terms & Translation Cards */}
-          <div className="bg-white border border-slate-200 rounded-2xl p-5 space-y-4">
-            <div className="flex items-center justify-between">
+          <div className="bg-white border border-slate-200 rounded-2xl p-4 sm:p-5 space-y-4">
+            <div className="flex flex-wrap items-center justify-between gap-2">
               <span className="text-xs font-mono font-semibold text-slate-700">
                 2. DETECTED EXACT UI/UX TERMINOLOGY ({matchedResults.length})
               </span>
@@ -636,7 +664,7 @@ export const PromptTranslatorView: React.FC<PromptTranslatorViewProps> = ({
                 <button
                   type="button"
                   onClick={() => onAddMultipleToCart(activeTerms.map((t) => t.id))}
-                  className="text-xs font-semibold text-sky-700 hover:text-sky-900 flex items-center gap-1"
+                  className="min-h-[36px] px-2.5 py-1 rounded-lg bg-sky-50 border border-sky-200 text-xs font-semibold text-sky-800 hover:bg-sky-100 flex items-center gap-1"
                 >
                   <Plus className="w-3.5 h-3.5" />
                   <span>Add All {activeTerms.length} to Spec Cart</span>
@@ -645,13 +673,13 @@ export const PromptTranslatorView: React.FC<PromptTranslatorViewProps> = ({
             </div>
 
             {matchedResults.length === 0 ? (
-              <div className="p-8 border border-dashed border-slate-300 rounded-xl text-center space-y-2">
+              <div className="p-6 sm:p-8 border border-dashed border-slate-300 rounded-xl text-center space-y-2">
                 <div className="text-sm font-semibold text-slate-800">
                   No specific terms detected yet
                 </div>
                 <p className="text-xs text-slate-500">
                   Type phrases like &ldquo;boxes of different sizes&rdquo;, &ldquo;blurry top
-                  bar&rdquo;, &ldquo;ctrl+k popup&rdquo;, or click any concept chip above.
+                  bar&rdquo;, &ldquo;ctrl+k popup&rdquo;, or tap any concept chip above.
                 </p>
               </div>
             ) : (
@@ -659,26 +687,27 @@ export const PromptTranslatorView: React.FC<PromptTranslatorViewProps> = ({
                 {matchedResults.map(({ term, matchedTrigger }) => (
                   <div
                     key={term.id}
-                    className="p-4 bg-white hover:bg-slate-50/70 transition-colors space-y-1.5"
+                    className="p-3.5 sm:p-4 bg-white hover:bg-slate-50/70 transition-colors space-y-1.5"
                   >
-                    <div className="flex items-center justify-between gap-2">
-                      <div className="flex items-center gap-2">
-                        <span className="text-xs font-mono text-sky-700 font-semibold">
-                          {term.number}.
-                        </span>
-                        <h4 className="font-display text-sm font-bold text-slate-900">
-                          {term.title}
-                        </h4>
-                        <span className="text-xs text-slate-400">·</span>
-                        <span className="text-[11px] font-mono text-emerald-700">
+                    <div className="flex items-start sm:items-center justify-between gap-2">
+                      <div className="space-y-0.5 min-w-0">
+                        <div className="flex items-center gap-1.5 flex-wrap">
+                          <span className="text-xs font-mono text-sky-700 font-semibold">
+                            {term.number}.
+                          </span>
+                          <h4 className="font-display text-sm font-bold text-slate-900">
+                            {term.title}
+                          </h4>
+                        </div>
+                        <div className="text-[11px] font-mono text-emerald-700">
                           Matched: &ldquo;{matchedTrigger}&rdquo;
-                        </span>
+                        </div>
                       </div>
 
                       <button
                         type="button"
                         onClick={() => onJumpToTerm(term.id)}
-                        className="text-xs font-medium text-sky-700 hover:text-sky-900 flex items-center gap-0.5 shrink-0"
+                        className="min-h-[36px] px-2.5 py-1 rounded-lg bg-slate-50 border border-slate-200 text-xs font-medium text-sky-700 hover:text-sky-900 flex items-center gap-1 shrink-0"
                       >
                         <span>Sandbox</span>
                         <ArrowUpRight className="w-3.5 h-3.5" />
@@ -693,40 +722,40 @@ export const PromptTranslatorView: React.FC<PromptTranslatorViewProps> = ({
         </div>
 
         {/* RIGHT 6 COLUMNS: Compiled AI Agent System Prompt Output */}
-        <div className="lg:col-span-6 bg-white border border-slate-200 rounded-2xl p-6 space-y-5 sticky top-24">
-          <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-200 pb-4">
+        <div className="lg:col-span-6 bg-white border border-slate-200 rounded-2xl p-4 sm:p-6 space-y-5 lg:sticky lg:top-24">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-200 pb-4">
             <div>
               <div className="text-xs font-mono font-semibold text-emerald-800">
                 3. COMPILED AI AGENT SPECIFICATION PROMPT
               </div>
-              <h3 className="font-display text-lg font-bold text-slate-900 mt-0.5">
+              <h3 className="font-display text-base sm:text-lg font-bold text-slate-900 mt-0.5">
                 Ready to paste into Cursor, Claude Code, Windsurf, or AI Studio
               </h3>
             </div>
 
-            <div className="flex items-center gap-2">
+            <div className="grid grid-cols-2 sm:flex items-center gap-2 shrink-0">
               <button
                 type="button"
                 onClick={handleDownloadMarkdown}
-                className="px-3 py-2 text-xs font-medium bg-slate-100 text-slate-700 hover:bg-slate-200 rounded-xl flex items-center gap-1.5 whitespace-nowrap"
+                className="min-h-[42px] sm:min-h-[38px] px-3 py-2 text-xs font-medium bg-slate-100 text-slate-700 hover:bg-slate-200 rounded-xl flex items-center justify-center gap-1.5 whitespace-nowrap"
               >
                 <Download className="w-3.5 h-3.5" />
-                <span>.MD</span>
+                <span>Download .MD</span>
               </button>
               <button
                 type="button"
                 onClick={handleCopyPrompt}
-                className="px-4 py-2 text-xs font-semibold bg-slate-900 text-white hover:bg-slate-800 rounded-xl flex items-center gap-1.5 whitespace-nowrap"
+                className="min-h-[42px] sm:min-h-[38px] px-4 py-2 text-xs font-semibold bg-slate-900 text-white hover:bg-slate-800 rounded-xl flex items-center justify-center gap-1.5 whitespace-nowrap"
               >
                 {copiedOutput ? (
                   <>
                     <Check className="w-3.5 h-3.5 text-emerald-400" />
-                    <span>Copied Full Spec!</span>
+                    <span>Copied Spec!</span>
                   </>
                 ) : (
                   <>
                     <Copy className="w-3.5 h-3.5" />
-                    <span>Copy Agent Prompt</span>
+                    <span>Copy Prompt</span>
                   </>
                 )}
               </button>
@@ -749,7 +778,7 @@ export const PromptTranslatorView: React.FC<PromptTranslatorViewProps> = ({
                 return (
                   <label
                     key={item.key}
-                    className="flex items-center gap-2 p-2.5 rounded-lg border border-slate-200 bg-slate-50/70 text-xs font-medium text-slate-800 cursor-pointer hover:bg-slate-100/80"
+                    className="min-h-[44px] flex items-center gap-2.5 p-2.5 rounded-xl border border-slate-200 bg-slate-50/70 text-xs font-medium text-slate-800 cursor-pointer hover:bg-slate-100/80"
                   >
                     <input
                       type="checkbox"
@@ -760,7 +789,7 @@ export const PromptTranslatorView: React.FC<PromptTranslatorViewProps> = ({
                           [item.key]: e.target.checked,
                         }))
                       }
-                      className="rounded accent-slate-900"
+                      className="w-4 h-4 rounded accent-slate-900 shrink-0"
                     />
                     <span>{item.label}</span>
                   </label>
@@ -770,7 +799,7 @@ export const PromptTranslatorView: React.FC<PromptTranslatorViewProps> = ({
           </div>
 
           {/* Markdown Code Preview */}
-          <pre className="p-4 rounded-xl bg-slate-900 text-slate-100 font-mono text-xs overflow-x-auto max-h-[420px] overflow-y-auto leading-relaxed whitespace-pre-wrap">
+          <pre className="p-3.5 sm:p-4 rounded-xl bg-slate-900 text-slate-100 font-mono text-xs overflow-x-auto max-h-[420px] overflow-y-auto leading-relaxed whitespace-pre-wrap break-words">
             <code>{compiledMarkdownPrompt}</code>
           </pre>
         </div>

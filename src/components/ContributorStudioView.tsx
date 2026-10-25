@@ -848,25 +848,26 @@ ${vibePhrases.map((p) => `- *"${p}"*`).join('\n')}
   };
 
   return (
-    <div className="space-y-10">
+    <div className="space-y-6 sm:space-y-10">
       {/* =====================================================================
           1. OPEN-SOURCE VISION & MANDATORY LIVE DEMO REQUIREMENT
       ===================================================================== */}
       <section className="bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-2xs">
-        <div className="p-6 border-b border-slate-200 flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+        <div className="p-4 sm:p-6 border-b border-slate-200 flex flex-col lg:flex-row lg:items-center justify-between gap-4">
           <div className="space-y-1.5">
             <div className="inline-flex items-center gap-2 text-xs font-mono text-sky-700 font-semibold">
               <LexiconLogo size={18} />
-              <span>OPEN-SOURCE COMMUNITY HUB · EXPAND THE ENCYCLOPEDIA WITH LIVE DEMOS</span>
+              <span>OPEN-SOURCE COMMUNITY HUB · ROOTDEVELOPERDS/LEXICANUI</span>
             </div>
-            <h2 className="font-display text-2xl font-bold text-slate-900 tracking-tight">
+            <h2 className="font-display text-xl sm:text-2xl font-bold text-slate-900 tracking-tight">
               Contribute new beautiful UI/UX concepts &amp; designs — complete with live interactive
               demo previews
             </h2>
             <p className="text-xs text-slate-600 max-w-3xl leading-relaxed">
-              LexiconUI is built to grow into the world&apos;s most comprehensive open-source UI/UX
-              encyclopedia. Anyone can contribute brand-new UI/UX concepts, futuristic sci-fi
-              patterns, or platform UX enhancements—and{' '}
+              LexiconUI (<code className="font-mono text-slate-800">RootDeveloperDS/LexicanUI</code>) is
+              built to grow into the world&apos;s most comprehensive open-source UI/UX encyclopedia.
+              Anyone can contribute brand-new UI/UX concepts, futuristic sci-fi patterns, or
+              platform UX enhancements—and{' '}
               <strong className="text-slate-900">
                 every contributed concept includes both its exact AI prompt specification (
                 <code className="font-mono text-sky-700">termsData.ts</code>) AND a working,
@@ -877,12 +878,19 @@ ${vibePhrases.map((p) => `- *"${p}"*`).join('\n')}
             </p>
           </div>
 
-          <div className="flex items-center gap-2 shrink-0 text-xs font-mono">
-            <span className="px-3 py-1.5 rounded-lg bg-slate-100 border border-slate-200 text-slate-800">
-              MIT License
-            </span>
-            <span className="px-3 py-1.5 rounded-lg bg-emerald-50 border border-emerald-200 text-emerald-900 font-semibold">
-              Live Demo + Spec Standard
+          <div className="flex flex-wrap items-center gap-2 shrink-0 text-xs font-mono">
+            <a
+              href="https://github.com/RootDeveloperDS/LexicanUI"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="min-h-[40px] px-3.5 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-semibold inline-flex items-center gap-1.5 transition-colors"
+            >
+              <GitPullRequest className="w-3.5 h-3.5 text-sky-400" />
+              <span>GitHub: RootDeveloperDS/LexicanUI</span>
+              <ArrowUpRight className="w-3.5 h-3.5 text-slate-300" />
+            </a>
+            <span className="min-h-[40px] px-3 py-2 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-900 font-semibold inline-flex items-center">
+              MIT · Live Demo Standard
             </span>
           </div>
         </div>
@@ -912,15 +920,15 @@ ${vibePhrases.map((p) => `- *"${p}"*`).join('\n')}
               branch: 'feat/sandbox-<slug>',
             },
           ].map((item) => (
-            <div key={item.title} className="p-5 flex flex-col justify-between gap-3">
+            <div key={item.title} className="p-4 sm:p-5 flex flex-col justify-between gap-3">
               <div className="space-y-1.5">
                 <div className="text-xs font-mono text-sky-700 font-semibold">{item.track}</div>
                 <h3 className="font-display text-base font-bold text-slate-900">{item.title}</h3>
                 <p className="text-xs text-slate-600 leading-relaxed">{item.desc}</p>
               </div>
-              <div className="pt-2 border-t border-slate-100 flex items-center justify-between text-[11px] font-mono text-slate-500">
+              <div className="pt-2 border-t border-slate-100 flex items-center justify-between gap-2 text-[11px] font-mono text-slate-500">
                 <span className="truncate">{item.target}</span>
-                <span className="text-slate-800">{item.branch}</span>
+                <span className="text-slate-800 shrink-0">{item.branch}</span>
               </div>
             </div>
           ))}
@@ -950,15 +958,15 @@ ${vibePhrases.map((p) => `- *"${p}"*`).join('\n')}
               branch: 'feat/anatomy-<domain>',
             },
           ].map((item) => (
-            <div key={item.title} className="p-5 flex flex-col justify-between gap-3">
+            <div key={item.title} className="p-4 sm:p-5 flex flex-col justify-between gap-3">
               <div className="space-y-1.5">
                 <div className="text-xs font-mono text-emerald-700 font-semibold">{item.track}</div>
                 <h3 className="font-display text-base font-bold text-slate-900">{item.title}</h3>
                 <p className="text-xs text-slate-600 leading-relaxed">{item.desc}</p>
               </div>
-              <div className="pt-2 border-t border-slate-100 flex items-center justify-between text-[11px] font-mono text-slate-500">
+              <div className="pt-2 border-t border-slate-100 flex items-center justify-between gap-2 text-[11px] font-mono text-slate-500">
                 <span className="truncate">{item.target}</span>
-                <span className="text-slate-800">{item.branch}</span>
+                <span className="text-slate-800 shrink-0">{item.branch}</span>
               </div>
             </div>
           ))}
@@ -970,14 +978,14 @@ ${vibePhrases.map((p) => `- *"${p}"*`).join('\n')}
       ===================================================================== */}
       <section
         id="community-showcase-gallery"
-        className="bg-white border border-slate-200 rounded-2xl p-6 space-y-6 shadow-2xs"
+        className="bg-white border border-slate-200 rounded-2xl p-4 sm:p-6 space-y-5 sm:space-y-6 shadow-2xs"
       >
         <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 border-b border-slate-200 pb-4">
           <div className="space-y-1">
             <div className="text-xs font-mono text-sky-700 font-semibold">
               COMMUNITY SHOWCASE GALLERY · USER-CONTRIBUTED UI/UX COMPONENTS
             </div>
-            <h3 className="font-display text-xl font-bold text-slate-900 tracking-tight">
+            <h3 className="font-display text-lg sm:text-xl font-bold text-slate-900 tracking-tight">
               Explore components &amp; live demos contributed by the community ({allShowcaseItems.length})
             </h3>
             <p className="text-xs text-slate-600 max-w-2xl">
@@ -989,8 +997,8 @@ ${vibePhrases.map((p) => `- *"${p}"*`).join('\n')}
             </p>
           </div>
 
-          {/* Showcase Pillar Filter Bar */}
-          <div className="inline-flex flex-wrap gap-1 p-1 bg-slate-100 rounded-xl border border-slate-200 self-start lg:self-center">
+          {/* Showcase Pillar Filter Bar (Swipeable on Mobile) */}
+          <div className="flex items-center gap-1 p-1 bg-slate-100 rounded-xl border border-slate-200 overflow-x-auto no-scrollbar max-w-full self-start lg:self-center">
             {[
               { id: 'all', label: `All (${allShowcaseItems.length})` },
               { id: 'layout', label: 'Layout' },
@@ -1004,7 +1012,7 @@ ${vibePhrases.map((p) => `- *"${p}"*`).join('\n')}
                   key={tab.id}
                   type="button"
                   onClick={() => setShowcaseFilter(tab.id as TermCategory | 'all')}
-                  className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-colors whitespace-nowrap tabular-nums ${
+                  className={`min-h-[38px] px-3 py-1.5 rounded-lg text-xs font-medium transition-colors whitespace-nowrap tabular-nums shrink-0 ${
                     isSelected
                       ? 'bg-white text-slate-900 shadow-2xs font-semibold'
                       : 'text-slate-600 hover:text-slate-900'
@@ -1018,7 +1026,7 @@ ${vibePhrases.map((p) => `- *"${p}"*`).join('\n')}
         </div>
 
         {/* Dynamic Grid of Showcase Gallery Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
           {filteredShowcaseItems.map((item) => {
             const isInspecting = inspectedShowcaseItem?.id === item.id;
             return (
@@ -1040,10 +1048,10 @@ ${vibePhrases.map((p) => `- *"${p}"*`).join('\n')}
                       loading="lazy"
                     />
                     <div className="absolute top-2 left-2 right-2 flex items-center justify-between gap-2 pointer-events-none">
-                      <span className="px-2 py-0.5 rounded bg-slate-900/85 text-white font-mono text-[10px] font-medium backdrop-blur-xs">
+                      <span className="px-2 py-0.5 rounded bg-slate-900/85 text-white font-mono text-[10px] font-medium backdrop-blur-xs truncate">
                         {item.contributor}
                       </span>
-                      <span className="px-2 py-0.5 rounded bg-white/90 text-slate-800 border border-slate-200 font-mono text-[10px] font-semibold backdrop-blur-xs">
+                      <span className="px-2 py-0.5 rounded bg-white/90 text-slate-800 border border-slate-200 font-mono text-[10px] font-semibold backdrop-blur-xs shrink-0">
                         {item.prBadge}
                       </span>
                     </div>
@@ -1051,7 +1059,7 @@ ${vibePhrases.map((p) => `- *"${p}"*`).join('\n')}
 
                   {/* Unboxed Metadata & Title */}
                   <div className="space-y-1 px-0.5">
-                    <div className="text-[11px] font-mono text-sky-700 font-medium">
+                    <div className="text-[11px] font-mono text-sky-700 font-medium truncate">
                       {item.categoryLabel} · {item.alias}
                     </div>
                     <h4 className="font-display text-base font-bold text-slate-900">
@@ -1082,7 +1090,7 @@ ${vibePhrases.map((p) => `- *"${p}"*`).join('\n')}
                           }
                           onCopyFeedback(`Removed "${item.title}" from local showcase`);
                         }}
-                        className="px-2 py-1.5 rounded-lg text-[11px] text-slate-400 hover:text-red-600 hover:bg-red-50 transition-colors"
+                        className="min-h-[38px] px-2.5 py-1.5 rounded-lg text-[11px] text-slate-500 hover:text-red-600 hover:bg-red-50 transition-colors"
                         title="Remove local draft"
                       >
                         Remove
@@ -1094,7 +1102,7 @@ ${vibePhrases.map((p) => `- *"${p}"*`).join('\n')}
                       onClick={() =>
                         setInspectedShowcaseItem(isInspecting ? null : item)
                       }
-                      className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-colors flex items-center gap-1.5 whitespace-nowrap ${
+                      className={`min-h-[38px] px-3 py-1.5 rounded-lg text-xs font-semibold transition-colors flex items-center gap-1.5 whitespace-nowrap ${
                         isInspecting
                           ? 'bg-sky-700 text-white'
                           : 'bg-slate-900 hover:bg-slate-800 text-white'
@@ -1112,14 +1120,14 @@ ${vibePhrases.map((p) => `- *"${p}"*`).join('\n')}
 
         {/* Inline Code & Prompt Inspector Drawer when a User Clicks "View Code" */}
         {inspectedShowcaseItem && (
-          <div className="rounded-2xl border-2 border-sky-500 bg-slate-950 text-slate-100 p-5 space-y-4 shadow-xl">
+          <div className="rounded-2xl border-2 border-sky-500 bg-slate-950 text-slate-100 p-4 sm:p-5 space-y-4 shadow-xl">
             <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-800 pb-3">
-              <div>
+              <div className="min-w-0">
                 <div className="text-xs font-mono text-sky-400">
                   SHOWCASE COMPONENT CODE &amp; AGENT PROMPT INSPECTOR ·{' '}
                   {inspectedShowcaseItem.contributor}
                 </div>
-                <h4 className="font-display text-lg font-bold text-white mt-0.5">
+                <h4 className="font-display text-base sm:text-lg font-bold text-white mt-0.5">
                   {inspectedShowcaseItem.title} ({inspectedShowcaseItem.alias})
                 </h4>
               </div>
@@ -1128,7 +1136,7 @@ ${vibePhrases.map((p) => `- *"${p}"*`).join('\n')}
                 <button
                   type="button"
                   onClick={() => handleCopyShowcaseCode(inspectedShowcaseItem)}
-                  className="px-3.5 py-1.5 rounded-lg bg-sky-500 hover:bg-sky-400 text-slate-950 text-xs font-semibold flex items-center gap-1.5 whitespace-nowrap"
+                  className="min-h-[40px] px-3.5 py-2 rounded-xl bg-sky-500 hover:bg-sky-400 text-slate-950 text-xs font-semibold flex items-center gap-1.5 whitespace-nowrap"
                 >
                   {copiedShowcaseId === inspectedShowcaseItem.id ? (
                     <>
@@ -1145,7 +1153,7 @@ ${vibePhrases.map((p) => `- *"${p}"*`).join('\n')}
                 <button
                   type="button"
                   onClick={() => setInspectedShowcaseItem(null)}
-                  className="p-1.5 rounded-lg bg-slate-800 text-slate-400 hover:text-white"
+                  className="min-w-[40px] min-h-[40px] p-2 rounded-xl bg-slate-800 text-slate-400 hover:text-white flex items-center justify-center"
                   aria-label="Close Code Inspector"
                 >
                   <X className="w-4 h-4" />
@@ -1154,7 +1162,7 @@ ${vibePhrases.map((p) => `- *"${p}"*`).join('\n')}
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-4">
-              <div className="lg:col-span-5 space-y-2 bg-slate-900/90 p-4 rounded-xl border border-slate-800">
+              <div className="lg:col-span-5 space-y-2 bg-slate-900/90 p-3.5 sm:p-4 rounded-xl border border-slate-800">
                 <div className="text-xs font-mono text-emerald-400 font-semibold">
                   EXACT AI AGENT PROMPT SPECIFICATION
                 </div>
@@ -1173,7 +1181,7 @@ ${vibePhrases.map((p) => `- *"${p}"*`).join('\n')}
                 </div>
               </div>
 
-              <div className="lg:col-span-7 space-y-2">
+              <div className="lg:col-span-7 space-y-2 min-w-0">
                 <div className="text-xs font-mono text-slate-400">
                   REACT / TAILWIND COMPONENT IMPLEMENTATION:
                 </div>
@@ -1191,38 +1199,38 @@ ${vibePhrases.map((p) => `- *"${p}"*`).join('\n')}
       ===================================================================== */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
         {/* LEFT 7 COLUMNS: Interactive Term Contributor Form */}
-        <div className="lg:col-span-7 bg-white border border-slate-200 rounded-2xl p-6 space-y-5 shadow-2xs">
-          <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-200 pb-4">
+        <div className="lg:col-span-7 bg-white border border-slate-200 rounded-2xl p-4 sm:p-6 space-y-5 shadow-2xs">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-200 pb-4">
             <div>
               <div className="text-xs font-mono text-sky-700 font-semibold">
                 INTERACTIVE CONCEPT &amp; LIVE DEMO BUILDER (ALL 5 PILLARS)
               </div>
-              <h3 className="font-display text-lg font-bold text-slate-900">
+              <h3 className="font-display text-base sm:text-lg font-bold text-slate-900">
                 Draft a New UI/UX Concept &amp; Publish It to the Showcase Gallery
               </h3>
             </div>
-            <div className="flex items-center gap-2">
+            <div className="flex flex-wrap items-center gap-2">
               <button
                 type="button"
                 onClick={handleClearBlank}
-                className="px-3 py-1.5 text-xs font-medium text-slate-600 hover:text-slate-900 border border-slate-200 rounded-lg flex items-center gap-1 whitespace-nowrap"
+                className="min-h-[40px] px-3 py-2 text-xs font-medium text-slate-600 hover:text-slate-900 border border-slate-200 rounded-xl flex items-center gap-1.5 whitespace-nowrap"
               >
-                <RotateCcw className="w-3 h-3" />
+                <RotateCcw className="w-3.5 h-3.5" />
                 <span>Blank Canvas</span>
               </button>
               <button
                 type="button"
                 onClick={handlePublishToShowcase}
-                className="px-3.5 py-1.5 text-xs font-semibold bg-sky-600 hover:bg-sky-700 text-white rounded-lg flex items-center gap-1.5 whitespace-nowrap shadow-2xs"
+                className="min-h-[40px] px-3.5 py-2 text-xs font-semibold bg-sky-600 hover:bg-sky-700 text-white rounded-xl flex items-center gap-1.5 whitespace-nowrap shadow-2xs"
               >
                 <Plus className="w-3.5 h-3.5" />
-                <span>Publish Draft to Showcase Gallery</span>
+                <span>Publish Draft to Showcase</span>
               </button>
             </div>
           </div>
 
           {/* Starter Concept Preset Loader Bar */}
-          <div className="space-y-1.5 bg-slate-50 p-3 rounded-xl border border-slate-200">
+          <div className="space-y-2 bg-slate-50 p-3 sm:p-3.5 rounded-xl border border-slate-200">
             <div className="text-[11px] font-mono text-slate-500">
               CLICK ANY EXAMPLE CONCEPT BELOW TO PREVIEW ITS SPEC + WORKING LIVE DEMO:
             </div>
@@ -1234,7 +1242,7 @@ ${vibePhrases.map((p) => `- *"${p}"*`).join('\n')}
                     key={preset.id}
                     type="button"
                     onClick={() => handleLoadPreset(preset)}
-                    className={`px-2.5 py-1.5 rounded-lg text-xs font-medium border transition-colors whitespace-nowrap ${
+                    className={`min-h-[38px] px-3 py-1.5 rounded-lg text-xs font-medium border transition-colors text-left ${
                       isSelected
                         ? 'bg-slate-900 border-slate-900 text-white'
                         : 'bg-white border-slate-200 text-slate-700 hover:bg-slate-100'
@@ -1258,7 +1266,7 @@ ${vibePhrases.map((p) => `- *"${p}"*`).join('\n')}
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
                 placeholder="e.g. CSS Subgrid Alignment"
-                className="w-full px-3 py-2 text-xs bg-slate-50 border border-slate-200 rounded-lg text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-sky-600"
+                className="w-full min-h-[42px] px-3 py-2 text-xs bg-slate-50 border border-slate-200 rounded-xl text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-sky-600"
               />
             </div>
 
@@ -1267,7 +1275,7 @@ ${vibePhrases.map((p) => `- *"${p}"*`).join('\n')}
               <select
                 value={category}
                 onChange={(e) => setCategory(e.target.value as TermCategory)}
-                className="w-full px-3 py-2 text-xs bg-slate-50 border border-slate-200 rounded-lg text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-sky-600"
+                className="w-full min-h-[42px] px-3 py-2 text-xs bg-slate-50 border border-slate-200 rounded-xl text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-sky-600"
               >
                 <option value="layout">Layout &amp; Spatial Systems</option>
                 <option value="navigation">Navigation &amp; UI Components</option>
@@ -1284,7 +1292,7 @@ ${vibePhrases.map((p) => `- *"${p}"*`).join('\n')}
                 value={contributorHandle}
                 onChange={(e) => setContributorHandle(e.target.value)}
                 placeholder="@your-handle"
-                className="w-full px-3 py-2 text-xs font-mono bg-slate-50 border border-slate-200 rounded-lg text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-sky-600"
+                className="w-full min-h-[42px] px-3 py-2 text-xs font-mono bg-slate-50 border border-slate-200 rounded-xl text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-sky-600"
               />
             </div>
           </div>
@@ -1299,7 +1307,7 @@ ${vibePhrases.map((p) => `- *"${p}"*`).join('\n')}
                 value={alias}
                 onChange={(e) => setAlias(e.target.value)}
                 placeholder="e.g. Cross-Card Track Inheritance (grid-template-rows: subgrid)"
-                className="w-full px-3 py-2 text-xs bg-slate-50 border border-slate-200 rounded-lg text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-sky-600"
+                className="w-full min-h-[42px] px-3 py-2 text-xs bg-slate-50 border border-slate-200 rounded-xl text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-sky-600"
               />
             </div>
 
@@ -1312,7 +1320,7 @@ ${vibePhrases.map((p) => `- *"${p}"*`).join('\n')}
                     e.target.value as 'Foundational' | 'Intermediate' | 'System Architecture'
                   )
                 }
-                className="w-full px-3 py-2 text-xs bg-slate-50 border border-slate-200 rounded-lg text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-sky-600"
+                className="w-full min-h-[42px] px-3 py-2 text-xs bg-slate-50 border border-slate-200 rounded-xl text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-sky-600"
               >
                 <option value="Foundational">Foundational</option>
                 <option value="Intermediate">Intermediate</option>
@@ -1330,7 +1338,7 @@ ${vibePhrases.map((p) => `- *"${p}"*`).join('\n')}
                 rows={3}
                 value={summary}
                 onChange={(e) => setSummary(e.target.value)}
-                className="w-full p-2.5 text-xs bg-slate-50 border border-slate-200 rounded-lg text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-sky-600 leading-relaxed"
+                className="w-full p-2.5 text-xs bg-slate-50 border border-slate-200 rounded-xl text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-sky-600 leading-relaxed"
               />
             </div>
 
@@ -1342,7 +1350,7 @@ ${vibePhrases.map((p) => `- *"${p}"*`).join('\n')}
                 rows={3}
                 value={whyAgentsNeedIt}
                 onChange={(e) => setWhyAgentsNeedIt(e.target.value)}
-                className="w-full p-2.5 text-xs bg-slate-50 border border-slate-200 rounded-lg text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-sky-600 leading-relaxed"
+                className="w-full p-2.5 text-xs bg-slate-50 border border-slate-200 rounded-xl text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-sky-600 leading-relaxed"
               />
             </div>
           </div>
@@ -1356,7 +1364,7 @@ ${vibePhrases.map((p) => `- *"${p}"*`).join('\n')}
               value={vibePhrasesInput}
               onChange={(e) => setVibePhrasesInput(e.target.value)}
               placeholder="What do people type when they forget this word?"
-              className="w-full p-2.5 text-xs font-mono bg-slate-50 border border-slate-200 rounded-lg text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-sky-600"
+              className="w-full p-2.5 text-xs font-mono bg-slate-50 border border-slate-200 rounded-xl text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-sky-600"
             />
           </div>
 
@@ -1369,7 +1377,7 @@ ${vibePhrases.map((p) => `- *"${p}"*`).join('\n')}
                 rows={3}
                 value={badPrompt}
                 onChange={(e) => setBadPrompt(e.target.value)}
-                className="w-full p-2.5 text-xs bg-amber-50/40 border border-amber-200 rounded-lg text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-amber-500"
+                className="w-full p-2.5 text-xs bg-amber-50/40 border border-amber-200 rounded-xl text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-amber-500"
               />
             </div>
 
@@ -1381,7 +1389,7 @@ ${vibePhrases.map((p) => `- *"${p}"*`).join('\n')}
                 rows={3}
                 value={goodPrompt}
                 onChange={(e) => setGoodPrompt(e.target.value)}
-                className="w-full p-2.5 text-xs bg-emerald-50/40 border border-emerald-200 rounded-lg text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-600"
+                className="w-full p-2.5 text-xs bg-emerald-50/40 border border-emerald-200 rounded-xl text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-600"
               />
             </div>
           </div>
@@ -1393,7 +1401,7 @@ ${vibePhrases.map((p) => `- *"${p}"*`).join('\n')}
                 rows={4}
                 value={cssSnippet}
                 onChange={(e) => setCssSnippet(e.target.value)}
-                className="w-full p-2.5 text-xs font-mono bg-slate-900 text-slate-100 border border-slate-700 rounded-lg focus:outline-none"
+                className="w-full p-2.5 text-xs font-mono bg-slate-900 text-slate-100 border border-slate-700 rounded-xl focus:outline-none"
               />
             </div>
 
@@ -1405,20 +1413,20 @@ ${vibePhrases.map((p) => `- *"${p}"*`).join('\n')}
                 rows={4}
                 value={tailwindInput}
                 onChange={(e) => setTailwindInput(e.target.value)}
-                className="w-full p-2.5 text-xs font-mono bg-slate-50 border border-slate-200 rounded-lg text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-sky-600"
+                className="w-full p-2.5 text-xs font-mono bg-slate-50 border border-slate-200 rounded-xl text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-sky-600"
               />
             </div>
           </div>
         </div>
 
         {/* RIGHT 5 COLUMNS: LIVE INTERACTIVE DEMO PREVIEW + 6-GATE RUBRIC + CODE EXPORTER */}
-        <div className="lg:col-span-5 space-y-6 sticky top-24">
+        <div className="lg:col-span-5 space-y-6 lg:sticky lg:top-24">
           {/* =================================================================
               LIVE INTERACTIVE CONCEPT DEMO PREVIEW STAGE
           ================================================================= */}
-          <div className="bg-white border border-slate-200 rounded-2xl p-5 space-y-4 shadow-2xs">
+          <div className="bg-white border border-slate-200 rounded-2xl p-4 sm:p-5 space-y-4 shadow-2xs">
             <div className="flex flex-wrap items-center justify-between gap-2 border-b border-slate-200 pb-3">
-              <div>
+              <div className="min-w-0">
                 <div className="text-[11px] font-mono text-sky-700 font-semibold">
                   LIVE INTERACTIVE DEMO PREVIEW (REQUIRED FOR NEW CONCEPTS)
                 </div>
@@ -1429,11 +1437,11 @@ ${vibePhrases.map((p) => `- *"${p}"*`).join('\n')}
               </div>
 
               {/* Interactive Sandbox Mode Switcher */}
-              <div className="inline-flex p-0.5 bg-slate-100 rounded-lg border border-slate-200 text-[11px]">
+              <div className="inline-flex p-1 bg-slate-100 rounded-xl border border-slate-200 text-xs">
                 <button
                   type="button"
                   onClick={() => setPreviewMode('canonical')}
-                  className={`px-2.5 py-1 rounded-md font-medium transition-colors ${
+                  className={`min-h-[34px] px-2.5 py-1 rounded-lg font-medium transition-colors ${
                     previewMode === 'canonical'
                       ? 'bg-white text-slate-900 shadow-2xs font-semibold'
                       : 'text-slate-600 hover:text-slate-900'
@@ -1444,7 +1452,7 @@ ${vibePhrases.map((p) => `- *"${p}"*`).join('\n')}
                 <button
                   type="button"
                   onClick={() => setPreviewMode('fallback')}
-                  className={`px-2.5 py-1 rounded-md font-medium transition-colors ${
+                  className={`min-h-[34px] px-2.5 py-1 rounded-lg font-medium transition-colors ${
                     previewMode === 'fallback'
                       ? 'bg-amber-500 text-white font-semibold'
                       : 'text-slate-600 hover:text-slate-900'
@@ -1456,7 +1464,7 @@ ${vibePhrases.map((p) => `- *"${p}"*`).join('\n')}
             </div>
 
             {/* Dynamic Interactive Demo Stage based on active preset or custom concept */}
-            <div className="p-4 rounded-xl border border-slate-200 blueprint-grid bg-[#F8FAFC]">
+            <div className="p-3.5 sm:p-4 rounded-xl border border-slate-200 blueprint-grid bg-[#F8FAFC]">
               {slugId.includes('subgrid') ? (
                 <div className="space-y-2">
                   <div className="text-[11px] font-mono text-slate-500 flex justify-between">
@@ -1466,7 +1474,7 @@ ${vibePhrases.map((p) => `- *"${p}"*`).join('\n')}
                         : 'Independent Flex Cards (Misaligned Buttons & Baselines)'}
                     </span>
                   </div>
-                  <div className="grid grid-cols-3 gap-2.5">
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
                     {[
                       {
                         plan: 'Starter',
@@ -1485,13 +1493,13 @@ ${vibePhrases.map((p) => `- *"${p}"*`).join('\n')}
                         key={card.plan}
                         className={`p-2.5 rounded-lg border bg-white ${
                           previewMode === 'canonical'
-                            ? 'flex flex-col justify-between h-36 border-sky-300'
+                            ? 'flex flex-col justify-between sm:h-36 border-sky-300'
                             : 'space-y-2 self-start border-amber-300'
                         }`}
                       >
                         <div
                           className={`text-xs font-bold text-slate-900 ${
-                            previewMode === 'canonical' ? 'min-h-[32px]' : ''
+                            previewMode === 'canonical' ? 'sm:min-h-[32px]' : ''
                           }`}
                         >
                           {card.plan}
@@ -1513,17 +1521,17 @@ ${vibePhrases.map((p) => `- *"${p}"*`).join('\n')}
                     caret:
                   </div>
                   <div className="p-2 rounded bg-slate-50 border border-slate-200 text-xs font-mono text-slate-900">
-                    /h2<span className="animate-pulse text-sky-600">|</span>
+                    /h2<span className="text-sky-600 font-bold">|</span>
                   </div>
                   {previewMode === 'canonical' ? (
-                    <div className="w-56 rounded-xl border border-slate-200 bg-white shadow-lg p-1.5 space-y-1">
+                    <div className="w-full max-w-[240px] rounded-xl border border-slate-200 bg-white shadow-lg p-1.5 space-y-1">
                       {['Heading 2 (Section Title)', 'Bullet List', 'Code Block (TSX)'].map(
                         (item, idx) => (
                           <button
                             key={item}
                             type="button"
                             onClick={() => setSlashSelectedIdx(idx)}
-                            className={`w-full text-left px-2.5 py-1.5 rounded-lg text-xs flex items-center justify-between ${
+                            className={`w-full min-h-[36px] text-left px-2.5 py-1.5 rounded-lg text-xs flex items-center justify-between ${
                               slashSelectedIdx === idx
                                 ? 'bg-sky-50 text-sky-900 font-semibold'
                                 : 'text-slate-600 hover:bg-slate-50'
@@ -1577,7 +1585,7 @@ ${vibePhrases.map((p) => `- *"${p}"*`).join('\n')}
                     setMagneticOffset({ x: Math.round(dx), y: Math.round(dy) });
                   }}
                   onMouseLeave={() => setMagneticOffset({ x: 0, y: 0 })}
-                  className="bg-white rounded-xl border border-slate-200 p-6 flex flex-col items-center justify-center gap-2 cursor-crosshair"
+                  className="bg-white rounded-xl border border-slate-200 p-5 sm:p-6 flex flex-col items-center justify-center gap-2 cursor-crosshair"
                 >
                   <button
                     type="button"
@@ -1587,7 +1595,7 @@ ${vibePhrases.map((p) => `- *"${p}"*`).join('\n')}
                           ? `translate3d(${magneticOffset.x}px, ${magneticOffset.y}px, 0)`
                           : 'none',
                     }}
-                    className="px-4 py-2 rounded-xl bg-slate-900 text-white text-xs font-semibold shadow-md transition-transform duration-150"
+                    className="min-h-[42px] px-4 py-2 rounded-xl bg-slate-900 text-white text-xs font-semibold shadow-md transition-transform duration-150"
                   >
                     Move Pointer Around Me ({magneticOffset.x}px, {magneticOffset.y}px)
                   </button>
@@ -1627,8 +1635,8 @@ ${vibePhrases.map((p) => `- *"${p}"*`).join('\n')}
           </div>
 
           {/* 6-Gate Editorial Rubric Card */}
-          <div className="bg-white border border-slate-200 rounded-2xl p-5 space-y-4 shadow-2xs">
-            <div className="flex items-center justify-between border-b border-slate-200 pb-3">
+          <div className="bg-white border border-slate-200 rounded-2xl p-4 sm:p-5 space-y-4 shadow-2xs">
+            <div className="flex items-center justify-between gap-2 border-b border-slate-200 pb-3">
               <div>
                 <div className="text-xs font-mono text-slate-500">AUTOMATED PR RUBRIC CHECK</div>
                 <h4 className="font-display text-base font-bold text-slate-900">
@@ -1636,7 +1644,7 @@ ${vibePhrases.map((p) => `- *"${p}"*`).join('\n')}
                 </h4>
               </div>
               <span
-                className={`px-2.5 py-1 rounded-lg font-mono text-xs font-semibold tabular-nums ${
+                className={`px-2.5 py-1 rounded-lg font-mono text-xs font-semibold tabular-nums shrink-0 ${
                   passedCount === 6
                     ? 'bg-emerald-50 text-emerald-800 border border-emerald-200'
                     : 'bg-amber-50 text-amber-800 border border-amber-200'
@@ -1658,9 +1666,9 @@ ${vibePhrases.map((p) => `- *"${p}"*`).join('\n')}
                     ) : (
                       <AlertCircle className="w-4 h-4 text-amber-600 shrink-0" />
                     )}
-                    <div className="truncate">
+                    <div className="min-w-0">
                       <div className="font-semibold text-slate-900 truncate">{gate.label}</div>
-                      <div className="text-[11px] text-slate-500">{gate.detail}</div>
+                      <div className="text-[11px] text-slate-500 truncate">{gate.detail}</div>
                     </div>
                   </div>
                   <span
@@ -1676,13 +1684,13 @@ ${vibePhrases.map((p) => `- *"${p}"*`).join('\n')}
           </div>
 
           {/* 3-Tab Export Payload Card (termsData.ts + InteractiveStage.tsx + PR Markdown) */}
-          <div className="bg-white border border-slate-200 rounded-2xl p-5 space-y-4 shadow-2xs">
-            <div className="flex flex-wrap items-center justify-between gap-2">
-              <div className="inline-flex p-1 bg-slate-100 rounded-xl border border-slate-200 text-xs">
+          <div className="bg-white border border-slate-200 rounded-2xl p-4 sm:p-5 space-y-4 shadow-2xs">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">
+              <div className="inline-flex p-1 bg-slate-100 rounded-xl border border-slate-200 text-xs overflow-x-auto no-scrollbar">
                 <button
                   type="button"
                   onClick={() => setExportTab('termsData')}
-                  className={`px-2.5 py-1 rounded-lg font-medium transition-colors ${
+                  className={`min-h-[36px] px-2.5 py-1 rounded-lg font-medium transition-colors whitespace-nowrap ${
                     exportTab === 'termsData'
                       ? 'bg-white text-slate-900 shadow-2xs font-semibold'
                       : 'text-slate-600 hover:text-slate-900'
@@ -1693,7 +1701,7 @@ ${vibePhrases.map((p) => `- *"${p}"*`).join('\n')}
                 <button
                   type="button"
                   onClick={() => setExportTab('interactiveStage')}
-                  className={`px-2.5 py-1 rounded-lg font-medium transition-colors ${
+                  className={`min-h-[36px] px-2.5 py-1 rounded-lg font-medium transition-colors whitespace-nowrap ${
                     exportTab === 'interactiveStage'
                       ? 'bg-white text-slate-900 shadow-2xs font-semibold'
                       : 'text-slate-600 hover:text-slate-900'
@@ -1704,7 +1712,7 @@ ${vibePhrases.map((p) => `- *"${p}"*`).join('\n')}
                 <button
                   type="button"
                   onClick={() => setExportTab('prMarkdown')}
-                  className={`px-2.5 py-1 rounded-lg font-medium transition-colors ${
+                  className={`min-h-[36px] px-2.5 py-1 rounded-lg font-medium transition-colors whitespace-nowrap ${
                     exportTab === 'prMarkdown'
                       ? 'bg-white text-slate-900 shadow-2xs font-semibold'
                       : 'text-slate-600 hover:text-slate-900'
@@ -1714,11 +1722,11 @@ ${vibePhrases.map((p) => `- *"${p}"*`).join('\n')}
                 </button>
               </div>
 
-              <div className="flex items-center gap-1.5">
+              <div className="flex flex-wrap items-center gap-1.5">
                 <button
                   type="button"
                   onClick={handleCopyStage}
-                  className="px-2.5 py-1.5 text-xs font-medium bg-sky-50 hover:bg-sky-100 text-sky-900 border border-sky-200 rounded-lg flex items-center gap-1 whitespace-nowrap"
+                  className="min-h-[38px] px-2.5 py-1.5 text-xs font-medium bg-sky-50 hover:bg-sky-100 text-sky-900 border border-sky-200 rounded-xl flex items-center gap-1 whitespace-nowrap"
                 >
                   {copiedStage ? (
                     <>
@@ -1736,7 +1744,7 @@ ${vibePhrases.map((p) => `- *"${p}"*`).join('\n')}
                 <button
                   type="button"
                   onClick={exportTab === 'prMarkdown' ? handleCopyPr : handleCopyTs}
-                  className="px-3 py-1.5 text-xs font-semibold bg-slate-900 hover:bg-slate-800 text-white rounded-lg flex items-center gap-1.5 whitespace-nowrap"
+                  className="min-h-[38px] px-3 py-1.5 text-xs font-semibold bg-slate-900 hover:bg-slate-800 text-white rounded-xl flex items-center gap-1.5 whitespace-nowrap"
                 >
                   {copiedTs || copiedPr ? (
                     <>
@@ -1765,11 +1773,20 @@ ${vibePhrases.map((p) => `- *"${p}"*`).join('\n')}
               </code>
             </pre>
 
-            <div className="text-[11px] font-mono text-slate-500">
-              Every new concept PR updates both{' '}
-              <code className="text-slate-800">src/data/termsData.ts</code> (Terminology &amp;
-              Prompts) and <code className="text-slate-800">src/components/InteractiveStage.tsx</code>{' '}
-              (Live Interactive Demo Preview).
+            <div className="pt-1 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-[11px] font-mono text-slate-500">
+              <span>
+                Updates <code className="text-slate-800">src/data/termsData.ts</code> +{' '}
+                <code className="text-slate-800">src/components/InteractiveStage.tsx</code>
+              </span>
+              <a
+                href="https://github.com/RootDeveloperDS/LexicanUI/pulls"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="min-h-[36px] px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-900 font-semibold inline-flex items-center justify-center gap-1 transition-colors shrink-0"
+              >
+                <span>Open PR on GitHub</span>
+                <ArrowUpRight className="w-3.5 h-3.5" />
+              </a>
             </div>
           </div>
         </div>

@@ -523,19 +523,22 @@ export const InteractiveStage: React.FC<InteractiveStageProps> = ({
       const inspectorOpen = String(controlValues.inspectorOpen || 'open') === 'open';
 
       return (
-        <div className="w-full h-[250px] bg-white border border-slate-300 rounded-xl overflow-hidden flex shadow-xs">
+        <div className="w-full min-h-[250px] bg-white border border-slate-300 rounded-xl overflow-hidden flex flex-col sm:flex-row shadow-xs">
           <aside
-            className="bg-slate-50 border-r border-slate-200 flex flex-col justify-between p-2.5 shrink-0 transition-all duration-180"
-            style={{ width: sidebarWidth === '64' ? '56px' : sidebarWidth === '280' ? '170px' : '140px' }}
+            className="bg-slate-50 border-b sm:border-b-0 sm:border-r border-slate-200 flex sm:flex-col justify-between items-center sm:items-stretch p-2.5 shrink-0 transition-all duration-180 w-full sm:w-auto"
+            style={{
+              minWidth:
+                sidebarWidth === '64' ? '56px' : sidebarWidth === '280' ? '156px' : '132px',
+            }}
           >
-            <div className="space-y-1.5">
-              <div className="text-[11px] font-display font-bold text-slate-900 px-1.5 py-1 truncate">
+            <div className="flex sm:flex-col items-center sm:items-stretch gap-1.5 overflow-x-auto no-scrollbar w-full">
+              <div className="text-[11px] font-display font-bold text-slate-900 px-1.5 py-1 truncate shrink-0">
                 {sidebarWidth === '64' ? 'LX' : 'Lexicon Studio'}
               </div>
               {['Overview', 'Tokens', 'Schemas', 'Audit'].map((nav, i) => (
                 <div
                   key={nav}
-                  className={`text-[11px] px-2 py-1 rounded flex items-center gap-2 ${
+                  className={`text-[11px] px-2 py-1 rounded flex items-center gap-1.5 shrink-0 ${
                     i === 1 ? 'bg-slate-900 text-white font-medium' : 'text-slate-600'
                   }`}
                 >
@@ -544,7 +547,7 @@ export const InteractiveStage: React.FC<InteractiveStageProps> = ({
                 </div>
               ))}
             </div>
-            <div className="text-[10px] font-mono text-slate-400 px-1 truncate">
+            <div className="hidden sm:block text-[10px] font-mono text-slate-400 px-1 truncate">
               {sidebarWidth}px Rail
             </div>
           </aside>
@@ -578,16 +581,16 @@ export const InteractiveStage: React.FC<InteractiveStageProps> = ({
           </div>
 
           {inspectorOpen && (
-            <aside className="w-36 border-l border-slate-200 bg-white p-2.5 flex flex-col justify-between shrink-0">
+            <aside className="w-full sm:w-36 border-t sm:border-t-0 sm:border-l border-slate-200 bg-white p-2.5 flex sm:flex-col items-center sm:items-stretch justify-between gap-2 shrink-0">
               <div>
                 <div className="text-[10px] font-mono text-slate-400">INSPECTOR</div>
-                <div className="text-xs font-semibold text-slate-900 mt-1">Token #1</div>
-                <div className="mt-2 space-y-1 text-[10px] font-mono text-slate-500">
+                <div className="text-xs font-semibold text-slate-900 mt-0.5 sm:mt-1">Token #1</div>
+                <div className="hidden sm:block mt-2 space-y-1 text-[10px] font-mono text-slate-500">
                   <div>padding: 24px</div>
                   <div>radius: 12px</div>
                 </div>
               </div>
-              <div className="text-[10px] font-mono text-emerald-700 bg-emerald-50 px-1.5 py-1 rounded text-center">
+              <div className="text-[10px] font-mono text-emerald-700 bg-emerald-50 px-2 py-1 rounded text-center">
                 Synced
               </div>
             </aside>
@@ -860,7 +863,7 @@ export const InteractiveStage: React.FC<InteractiveStageProps> = ({
               <div
                 className={`absolute bg-white shadow-2xl border-slate-200 flex flex-col justify-between transition-transform duration-180 ${
                   anchorEdge === 'right'
-                    ? 'inset-y-0 right-0 w-64 border-l'
+                    ? 'inset-y-0 right-0 w-52 sm:w-64 border-l'
                     : 'inset-x-0 bottom-0 h-44 border-t rounded-t-xl'
                 }`}
               >
@@ -1044,16 +1047,16 @@ export const InteractiveStage: React.FC<InteractiveStageProps> = ({
       const current = catalog.find((c) => c.id === iconType) || catalog[0];
 
       return (
-        <div className="w-full bg-white border border-slate-200 rounded-xl p-4 space-y-4">
+        <div className="w-full bg-white border border-slate-200 rounded-xl p-3.5 sm:p-4 space-y-4">
           {/* Interactive 5-Icon Selector Bar */}
-          <div className="grid grid-cols-5 gap-2">
+          <div className="grid grid-cols-3 sm:grid-cols-5 gap-1.5 sm:gap-2">
             {catalog.map((item) => {
               const Icon = item.glyph;
               const isSelected = item.id === current.id;
               return (
                 <div
                   key={item.id}
-                  className={`p-2.5 rounded-xl border text-center flex flex-col items-center gap-1.5 transition-all ${
+                  className={`p-2 sm:p-2.5 rounded-xl border text-center flex flex-col items-center gap-1.5 transition-all ${
                     isSelected
                       ? 'bg-slate-900 text-white border-slate-900 shadow-sm'
                       : 'bg-slate-50 text-slate-600 border-slate-200'
@@ -1069,12 +1072,12 @@ export const InteractiveStage: React.FC<InteractiveStageProps> = ({
           </div>
 
           {/* Active Icon Anatomy Card */}
-          <div className="p-4 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-between gap-4">
-            <div className="space-y-1">
+          <div className="p-3.5 sm:p-4 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-between gap-3 sm:gap-4">
+            <div className="space-y-1 min-w-0">
               <div className="text-xs font-mono text-sky-700 font-semibold">
                 FORMAL NAME: {current.name.toUpperCase()}
               </div>
-              <div className="text-sm font-display font-bold text-slate-900">
+              <div className="text-xs sm:text-sm font-display font-bold text-slate-900">
                 {current.purpose}
               </div>
               <div className="text-xs text-slate-500">
@@ -1085,7 +1088,7 @@ export const InteractiveStage: React.FC<InteractiveStageProps> = ({
             <button
               type="button"
               onClick={() => setIconMenuOpen((o) => !o)}
-              className="p-2.5 rounded-xl bg-white border border-slate-300 text-slate-900 shadow-2xs shrink-0"
+              className="min-h-[42px] min-w-[42px] p-2.5 rounded-xl bg-white border border-slate-300 text-slate-900 shadow-2xs shrink-0 flex items-center justify-center"
               title={current.name}
             >
               <current.glyph className="w-5 h-5" />
@@ -1102,9 +1105,9 @@ export const InteractiveStage: React.FC<InteractiveStageProps> = ({
       const tab = String(controlValues.megaTab || 'products');
 
       return (
-        <div className="w-full bg-slate-100 p-3.5 rounded-xl border border-slate-200 space-y-2.5">
+        <div className="w-full bg-slate-100 p-3 sm:p-3.5 rounded-xl border border-slate-200 space-y-2.5">
           {/* Simulated Top Navbar */}
-          <div className="bg-white border border-slate-200 rounded-lg px-4 py-2 flex items-center gap-6 text-xs">
+          <div className="bg-white border border-slate-200 rounded-lg px-3.5 sm:px-4 py-2 flex items-center gap-4 sm:gap-6 text-xs">
             <span className="font-display font-bold text-slate-900">Acme Cloud</span>
             <span className="text-sky-700 font-semibold underline underline-offset-4">
               {tab === 'products' ? 'Products ▾' : 'Developers ▾'}
@@ -1114,7 +1117,7 @@ export const InteractiveStage: React.FC<InteractiveStageProps> = ({
 
           {/* 12-Col Mega Menu Flyout */}
           <div className="bg-white border border-slate-200 rounded-2xl shadow-lg overflow-hidden grid grid-cols-1 md:grid-cols-12">
-            <div className="md:col-span-8 p-4 grid grid-cols-2 gap-2.5">
+            <div className="md:col-span-8 p-3.5 sm:p-4 grid grid-cols-1 sm:grid-cols-2 gap-2.5">
               {(tab === 'products'
                 ? [
                     { t: 'Edge Compute', d: 'Zero-cold-start global isolates' },
@@ -1264,17 +1267,17 @@ export const InteractiveStage: React.FC<InteractiveStageProps> = ({
       ];
 
       return (
-        <div className="w-full bg-white border border-slate-200 rounded-xl p-6 space-y-4">
+        <div className="w-full bg-white border border-slate-200 rounded-xl p-4 sm:p-6 space-y-4">
           <div className="flex items-center w-full">
             {steps.map((s, idx) => {
               const isCompleted = s.num < currentStep;
               const isCurrent = s.num === currentStep;
               return (
                 <React.Fragment key={s.num}>
-                  <div className="flex items-center gap-2.5 shrink-0">
+                  <div className="flex items-center gap-1.5 sm:gap-2.5 shrink-0">
                     <div
                       aria-current={isCurrent ? 'step' : undefined}
-                      className={`w-7 h-7 rounded-full text-xs font-mono font-bold flex items-center justify-center transition-all ${
+                      className={`w-6 h-6 sm:w-7 sm:h-7 rounded-full text-[11px] sm:text-xs font-mono font-bold flex items-center justify-center transition-all ${
                         isCompleted
                           ? 'bg-slate-900 text-white'
                           : isCurrent
@@ -1285,7 +1288,7 @@ export const InteractiveStage: React.FC<InteractiveStageProps> = ({
                       {isCompleted ? <Check className="w-3.5 h-3.5" /> : s.num}
                     </div>
                     <span
-                      className={`text-xs font-medium ${
+                      className={`text-[11px] sm:text-xs font-medium ${
                         isCurrent
                           ? 'text-slate-900 font-bold'
                           : isCompleted
@@ -1298,7 +1301,7 @@ export const InteractiveStage: React.FC<InteractiveStageProps> = ({
                   </div>
                   {idx < steps.length - 1 && (
                     <div
-                      className={`flex-1 h-0.5 mx-3 transition-colors ${
+                      className={`flex-1 h-0.5 mx-1.5 sm:mx-3 transition-colors ${
                         s.num < currentStep ? 'bg-slate-900' : 'bg-slate-200'
                       }`}
                     />
@@ -1307,9 +1310,9 @@ export const InteractiveStage: React.FC<InteractiveStageProps> = ({
               );
             })}
           </div>
-          <div className="text-xs font-mono text-slate-500 pt-2 border-t border-slate-100 flex justify-between">
+          <div className="text-[11px] sm:text-xs font-mono text-slate-500 pt-2 border-t border-slate-100 flex flex-wrap justify-between gap-2">
             <span>Completed: Checkmark + Solid Connector</span>
-            <span>Active: aria-current=&quot;step&quot; + Offset Halo</span>
+            <span>Active: aria-current=&quot;step&quot;</span>
           </div>
         </div>
       );
@@ -1661,11 +1664,11 @@ export const InteractiveStage: React.FC<InteractiveStageProps> = ({
 
       return (
         <div className="w-full space-y-3">
-          <div className="h-7 w-full rounded-lg overflow-hidden flex border border-slate-300 text-[11px] font-mono font-semibold">
-            <div className="w-[60%] bg-[#F8FAFC] text-slate-700 flex items-center justify-center border-r border-slate-200">
+          <div className="h-7 w-full rounded-lg overflow-hidden flex border border-slate-300 text-[10px] sm:text-[11px] font-mono font-semibold">
+            <div className="w-[60%] bg-[#F8FAFC] text-slate-700 flex items-center justify-center border-r border-slate-200 px-1 truncate">
               60% Neutral Canvas
             </div>
-            <div className="w-[30%] bg-white text-slate-900 flex items-center justify-center border-r border-slate-200">
+            <div className="w-[30%] bg-white text-slate-900 flex items-center justify-center border-r border-slate-200 px-1 truncate">
               30% Structure
             </div>
             <div
@@ -1677,8 +1680,8 @@ export const InteractiveStage: React.FC<InteractiveStageProps> = ({
           </div>
 
           {mode === 'disciplined' ? (
-            <div className="bg-[#F8FAFC] p-4 rounded-xl border border-slate-200">
-              <div className="bg-white p-4 rounded-lg border border-slate-200 flex items-center justify-between gap-4">
+            <div className="bg-[#F8FAFC] p-3.5 sm:p-4 rounded-xl border border-slate-200">
+              <div className="bg-white p-3.5 sm:p-4 rounded-lg border border-slate-200 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                 <div>
                   <div className="text-xs font-mono text-slate-500">
                     60-30-10 RESTRAINT SPECIMEN
@@ -1689,7 +1692,7 @@ export const InteractiveStage: React.FC<InteractiveStageProps> = ({
                 </div>
                 <button
                   type="button"
-                  className="px-4 py-2 rounded-lg text-xs font-semibold text-white whitespace-nowrap shrink-0"
+                  className="min-h-[40px] px-4 py-2 rounded-lg text-xs font-semibold text-white whitespace-nowrap shrink-0"
                   style={{ backgroundColor: accent }}
                 >
                   Primary Action (10%)
@@ -1698,10 +1701,10 @@ export const InteractiveStage: React.FC<InteractiveStageProps> = ({
             </div>
           ) : (
             <div
-              className="p-4 rounded-xl border-2 text-white"
+              className="p-3.5 sm:p-4 rounded-xl border-2 text-white"
               style={{ backgroundColor: accent, borderColor: accent }}
             >
-              <div className="p-4 rounded-lg bg-white/20 flex items-center justify-between gap-4">
+              <div className="p-3.5 sm:p-4 rounded-lg bg-white/20 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                 <div>
                   <div className="text-xs font-mono text-white/90">
                     OVER-SATURATED ANTI-PATTERN (80% ACCENT)
@@ -1710,7 +1713,7 @@ export const InteractiveStage: React.FC<InteractiveStageProps> = ({
                     When everything shouts in brand color, nothing stands out
                   </div>
                 </div>
-                <span className="px-4 py-2 rounded-lg text-xs font-semibold bg-white text-slate-900 whitespace-nowrap">
+                <span className="px-4 py-2 rounded-lg text-xs font-semibold bg-white text-slate-900 whitespace-nowrap text-center">
                   Lost CTA
                 </span>
               </div>
@@ -1846,19 +1849,19 @@ export const InteractiveStage: React.FC<InteractiveStageProps> = ({
 
       return style === 'hairline' ? (
         <div className="w-full bg-white border border-slate-200 rounded-xl divide-y divide-slate-200 overflow-hidden">
-          <div className="px-4 py-2.5 flex items-center justify-between text-xs">
+          <div className="px-4 py-2.5 flex flex-wrap items-center justify-between gap-1 text-xs">
             <span className="font-semibold text-slate-900">
               Single-Elevation Hairline Grid (1 Outer Border + divide-x)
             </span>
             <span className="font-mono text-emerald-700">CLEAN SWISS ARCHITECTURE</span>
           </div>
-          <div className="grid grid-cols-3 divide-x divide-slate-200">
+          <div className="grid grid-cols-1 sm:grid-cols-3 divide-y sm:divide-y-0 sm:divide-x divide-slate-200">
             {[
               { k: 'Latency', v: '14.2ms', m: 'Nominal · P95' },
               { k: 'Bundle', v: '38.4kb', m: 'Gzipped · Tree-shaken' },
               { k: 'Contrast', v: '11.4:1', m: 'AAA Verified' },
             ].map((item) => (
-              <div key={item.k} className="p-4 space-y-1">
+              <div key={item.k} className="p-3.5 sm:p-4 space-y-1">
                 <div className="text-xs text-slate-500">{item.k}</div>
                 <div className="text-lg font-display font-bold text-slate-900 tabular-nums">
                   {item.v}
@@ -1869,11 +1872,11 @@ export const InteractiveStage: React.FC<InteractiveStageProps> = ({
           </div>
         </div>
       ) : (
-        <div className="w-full bg-white border-2 border-slate-300 shadow-lg rounded-2xl p-4 space-y-3">
+        <div className="w-full bg-white border-2 border-slate-300 shadow-lg rounded-2xl p-3.5 sm:p-4 space-y-3">
           <div className="text-xs font-mono text-amber-700">
             ANTI-PATTERN: Box-in-Box-in-Box + Pill Badge Clutter
           </div>
-          <div className="grid grid-cols-3 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
             {['14.2ms', '38.4kb', '11.4:1'].map((v) => (
               <div
                 key={v}
@@ -1991,15 +1994,15 @@ export const InteractiveStage: React.FC<InteractiveStageProps> = ({
       const moved = raceTrigger % 2 === 1;
 
       return (
-        <div className="w-full bg-white border border-slate-200 rounded-xl p-5 space-y-4">
-          <div className="flex items-center justify-between">
+        <div className="w-full bg-white border border-slate-200 rounded-xl p-4 sm:p-5 space-y-4">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">
             <span className="text-xs font-mono text-slate-600">
-              Click button to race the 3 motion curves side-by-side:
+              Tap button to race the 3 motion curves side-by-side:
             </span>
             <button
               type="button"
               onClick={() => setRaceTrigger((n) => n + 1)}
-              className="px-3.5 py-1.5 text-xs font-semibold bg-slate-900 text-white rounded-lg hover:bg-slate-800 transition-colors"
+              className="min-h-[40px] sm:min-h-[34px] px-3.5 py-1.5 text-xs font-semibold bg-slate-900 text-white rounded-lg hover:bg-slate-800 transition-colors self-start sm:self-auto"
             >
               Trigger Motion Impulse →
             </button>
@@ -2029,12 +2032,14 @@ export const InteractiveStage: React.FC<InteractiveStageProps> = ({
                   preset === track.id ? 'border-sky-500 bg-sky-50/40' : 'border-slate-200 bg-slate-50'
                 }`}
               >
-                <div className="text-[11px] font-mono text-slate-600 mb-1.5">{track.label}</div>
-                <div className="w-full h-7 bg-white border border-slate-200 rounded-md p-1 flex items-center">
+                <div className="text-[11px] font-mono text-slate-600 mb-1.5 truncate">
+                  {track.label}
+                </div>
+                <div className="w-full h-7 bg-white border border-slate-200 rounded-md p-1 flex items-center overflow-hidden">
                   <div
                     className="w-16 h-5 rounded bg-slate-900 text-white text-[10px] font-mono flex items-center justify-center"
                     style={{
-                      transform: moved ? 'translateX(220px)' : 'translateX(0px)',
+                      transform: moved ? 'translateX(min(180px, 42vw))' : 'translateX(0px)',
                       transitionProperty: 'transform',
                       transitionDuration: '450ms',
                       transitionTimingFunction: track.timing,
@@ -2058,11 +2063,11 @@ export const InteractiveStage: React.FC<InteractiveStageProps> = ({
       const alpha = Number(controlValues.surfaceAlpha ?? 75);
 
       return (
-        <div className="w-full h-[210px] rounded-xl border border-slate-200 relative overflow-hidden p-4 flex items-center justify-center bg-white">
+        <div className="w-full h-[210px] rounded-xl border border-slate-200 relative overflow-hidden p-3.5 sm:p-4 flex items-center justify-center bg-white">
           <div className="absolute inset-0 p-4 space-y-2 select-none">
             <div className="flex gap-3">
-              <div className="w-28 h-20 rounded-xl bg-sky-500" />
-              <div className="w-32 h-20 rounded-xl bg-amber-400" />
+              <div className="w-24 sm:w-28 h-20 rounded-xl bg-sky-500" />
+              <div className="w-28 sm:w-32 h-20 rounded-xl bg-amber-400" />
               <div className="flex-1 h-20 rounded-xl bg-emerald-500" />
             </div>
             <p className="text-xs font-mono text-slate-700">
@@ -2072,22 +2077,22 @@ export const InteractiveStage: React.FC<InteractiveStageProps> = ({
           </div>
 
           <div
-            className="relative z-10 w-full max-w-md rounded-xl p-4 shadow-lg border border-white/70 flex items-center justify-between"
+            className="relative z-10 w-full max-w-md rounded-xl p-3.5 sm:p-4 shadow-lg border border-white/70 flex items-center justify-between gap-2"
             style={{
               backgroundColor: `rgba(255, 255, 255, ${alpha / 100})`,
               backdropFilter: `blur(${blurPx}px) saturate(160%)`,
               WebkitBackdropFilter: `blur(${blurPx}px) saturate(160%)`,
             }}
           >
-            <div>
-              <div className="text-[11px] font-mono text-sky-800 font-semibold">
+            <div className="min-w-0">
+              <div className="text-[11px] font-mono text-sky-800 font-semibold truncate">
                 backdrop-filter: blur({blurPx}px) · bg-white/{alpha}
               </div>
-              <div className="text-sm font-display font-bold text-slate-900 mt-0.5">
+              <div className="text-xs sm:text-sm font-display font-bold text-slate-900 mt-0.5 truncate">
                 100% Crisp Foreground Typography
               </div>
             </div>
-            <span className="px-3 py-1.5 text-xs font-semibold bg-slate-900 text-white rounded-lg">
+            <span className="px-3 py-1.5 text-xs font-semibold bg-slate-900 text-white rounded-lg shrink-0">
               Sticky Bar
             </span>
           </div>
@@ -2102,16 +2107,16 @@ export const InteractiveStage: React.FC<InteractiveStageProps> = ({
       const mode = String(controlValues.latencyMode || 'optimistic');
 
       return (
-        <div className="w-full bg-white border border-slate-200 rounded-xl p-5 flex items-center justify-between gap-4">
+        <div className="w-full bg-white border border-slate-200 rounded-xl p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-3.5">
           <div className="space-y-1">
             <div className="text-xs font-mono text-sky-700">
               MODE: {mode === 'optimistic' ? 'OPTIMISTIC (<16ms Instant Mutation)' : 'PESSIMISTIC (850ms Network Wait)'}
             </div>
             <div className="text-sm font-display font-bold text-slate-900">
-              Click the Bookmark button to feel the latency difference
+              Tap the Bookmark button to feel the latency difference
             </div>
             <p className="text-xs text-slate-500">
-              Optimistic UI mutates state on pointer click and reconciles in the background.
+              Optimistic UI mutates state on pointer tap and reconciles in the background.
             </p>
           </div>
 
@@ -2119,7 +2124,7 @@ export const InteractiveStage: React.FC<InteractiveStageProps> = ({
             type="button"
             onClick={handleOptimisticClick}
             disabled={optimisticPending}
-            className={`px-4 py-2.5 rounded-xl text-xs font-semibold flex items-center gap-2 border transition-all whitespace-nowrap shrink-0 tabular-nums ${
+            className={`min-h-[42px] w-full sm:w-auto justify-center px-4 py-2.5 rounded-xl text-xs font-semibold flex items-center gap-2 border transition-all whitespace-nowrap shrink-0 tabular-nums ${
               optimisticSaved
                 ? 'bg-emerald-50 border-emerald-300 text-emerald-900'
                 : 'bg-slate-900 border-slate-900 text-white hover:bg-slate-800'
@@ -2153,14 +2158,14 @@ export const InteractiveStage: React.FC<InteractiveStageProps> = ({
       const offset = Number(controlValues.ringOffset ?? 2);
 
       return (
-        <div className="w-full bg-white border border-slate-200 rounded-xl p-6 flex flex-col items-center justify-center space-y-4">
-          <div className="text-xs font-mono text-slate-500">
+        <div className="w-full bg-white border border-slate-200 rounded-xl p-4 sm:p-6 flex flex-col items-center justify-center space-y-4">
+          <div className="text-xs font-mono text-slate-500 text-center">
             Simulated `:focus-visible` Double-Ring with {offset}px Offset Gap
           </div>
-          <div className="flex items-center gap-6">
+          <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-6">
             <button
               type="button"
-              className="px-4 py-2 text-xs font-semibold bg-slate-900 text-white rounded-lg"
+              className="min-h-[40px] px-4 py-2 text-xs font-semibold bg-slate-900 text-white rounded-lg"
               style={{
                 outline: '2px solid #0284C7',
                 outlineOffset: `${offset}px`,
@@ -2170,12 +2175,12 @@ export const InteractiveStage: React.FC<InteractiveStageProps> = ({
             </button>
             <button
               type="button"
-              className="px-4 py-2 text-xs font-semibold bg-slate-100 text-slate-700 rounded-lg border border-slate-200"
+              className="min-h-[40px] px-4 py-2 text-xs font-semibold bg-slate-100 text-slate-700 rounded-lg border border-slate-200"
             >
               Unfocused Sibling
             </button>
           </div>
-          <div className="text-[11px] font-mono text-slate-500">
+          <div className="text-[11px] font-mono text-slate-500 text-center">
             outline: 2px solid #0284C7; outline-offset: {offset}px;
           </div>
         </div>
@@ -2189,20 +2194,20 @@ export const InteractiveStage: React.FC<InteractiveStageProps> = ({
       const step = Number(controlValues.staggerStep ?? 40);
 
       return (
-        <div className="w-full bg-white border border-slate-200 rounded-xl p-5 space-y-4">
-          <div className="flex items-center justify-between">
+        <div className="w-full bg-white border border-slate-200 rounded-xl p-4 sm:p-5 space-y-4">
+          <div className="flex flex-wrap items-center justify-between gap-2">
             <span className="text-xs font-mono text-slate-600">
               Stagger Delay: calc(index * {step}ms) · 8px Y-Axis Lift
             </span>
             <button
               type="button"
               onClick={() => setStaggerTrigger((n) => n + 1)}
-              className="px-3 py-1.5 text-xs font-semibold bg-slate-900 text-white rounded-lg hover:bg-slate-800 transition-colors"
+              className="min-h-[38px] px-3 py-1.5 text-xs font-semibold bg-slate-900 text-white rounded-lg hover:bg-slate-800 transition-colors"
             >
               Replay Stagger Entrance ↻
             </button>
           </div>
-          <div key={staggerTrigger} className="grid grid-cols-4 gap-3">
+          <div key={staggerTrigger} className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 sm:gap-3">
             {[0, 1, 2, 3].map((idx) => (
               <div
                 key={idx}
@@ -2230,8 +2235,9 @@ export const InteractiveStage: React.FC<InteractiveStageProps> = ({
       const showBrackets = String(controlValues.reticleStyle || 'brackets') === 'brackets';
 
       return (
-        <div className="w-full bg-slate-950 p-6 rounded-xl relative overflow-hidden text-white">
-          <div className="relative p-5 border border-sky-500/30 bg-slate-900/90"
+        <div className="w-full bg-slate-950 p-3.5 sm:p-6 rounded-xl relative overflow-hidden text-white">
+          <div
+            className="relative p-4 sm:p-5 border border-sky-500/30 bg-slate-900/90"
             style={{
               clipPath: `polygon(0 0, calc(100% - ${bevel}px) 0, 100% ${bevel}px, 100% 100%, ${bevel}px 100%, 0 calc(100% - ${bevel}px))`,
             }}
@@ -2249,7 +2255,7 @@ export const InteractiveStage: React.FC<InteractiveStageProps> = ({
               <span className="tabular-nums">AZ {liveCounter.toFixed(1)}°</span>
             </div>
 
-            <div className="grid grid-cols-3 gap-4 pt-3 font-mono">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 sm:gap-4 pt-3 font-mono">
               <div>
                 <div className="text-[10px] text-slate-400">VECTOR LOCK</div>
                 <div className="text-sm font-bold text-white tabular-nums">042.88 KM</div>
@@ -2509,10 +2515,11 @@ export const InteractiveStage: React.FC<InteractiveStageProps> = ({
       return (
         <div className="w-full bg-slate-950 rounded-xl border border-slate-800 overflow-hidden text-white">
           {/* Interactive Topology Toolbar */}
-          <div className="px-3.5 py-2 bg-slate-900/90 border-b border-slate-800 flex flex-wrap items-center justify-between gap-2 text-[11px] font-mono">
+          <div className="px-3.5 py-2.5 bg-slate-900/90 border-b border-slate-800 flex flex-wrap items-center justify-between gap-2 text-[11px] font-mono">
             <div className="flex items-center gap-2 text-slate-300">
-              <span className="w-2 h-2 rounded-full bg-sky-400 animate-pulse" />
-              <span>DAG PATCH CANVAS · SOCKET-LOCKED {spline === 'bezier' ? 'CUBIC-BEZIER' : 'ORTHOGONAL'} WIRES</span>
+              <span className="font-semibold text-sky-300">
+                DAG PATCH CANVAS · SOCKET-LOCKED {spline === 'bezier' ? 'CUBIC-BEZIER' : 'ORTHOGONAL'} WIRES
+              </span>
             </div>
             <div className="flex items-center gap-1.5">
               <span className="text-slate-400 text-[10px]">Move Node 02:</span>
@@ -2525,7 +2532,7 @@ export const InteractiveStage: React.FC<InteractiveStageProps> = ({
                   key={pos.label}
                   type="button"
                   onClick={() => setNodeRouterY(pos.y)}
-                  className={`px-2 py-0.5 rounded text-[10px] border transition-colors ${
+                  className={`min-h-[30px] px-2.5 py-1 rounded text-[10px] border transition-colors ${
                     nodeRouterY === pos.y
                       ? 'bg-sky-500/20 border-sky-400 text-sky-300 font-semibold'
                       : 'bg-slate-950 border-slate-700 text-slate-400 hover:text-white'

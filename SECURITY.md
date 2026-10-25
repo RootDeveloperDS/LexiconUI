@@ -12,6 +12,6 @@ LexiconUI is a static, client-side educational and prompt-engineering web applic
 
 If you discover a security vulnerability (such as a Cross-Site Scripting issue in user-supplied input or a dependency vulnerability), please **do not** open a public GitHub issue.
 
-Instead, please report it privately via **GitHub Security Advisories** (`Security` tab -> `Report a vulnerability`) in the repository.
+Instead, please report it privately via **GitHub Security Advisories** ([`https://github.com/RootDeveloperDS/LexicanUI/security/advisories`](https://github.com/RootDeveloperDS/LexicanUI/security/advisories)) in the `RootDeveloperDS/LexicanUI` repository.
 
 We will acknowledge receipt within **48 hours** and provide a fix and disclosure timeline within **7 days**.

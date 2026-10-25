@@ -5,16 +5,11 @@ import {
   AnatomyHotspot,
 } from '../data/anatomyData';
 import {
-  Eye,
   Copy,
   Check,
-  Plus,
   ArrowUpRight,
-  Layers,
   Crosshair,
   Ruler,
-  Search,
-  ChevronRight,
   AlertCircle,
   CheckCircle2,
 } from 'lucide-react';
@@ -61,7 +56,7 @@ export const AnatomyInspectorView: React.FC<AnatomyInspectorViewProps> = ({
     setTimeout(() => setCopiedId(null), 1800);
   };
 
-  // Helper to render a clickable Swiss Vermilion / Klein Blue X-Ray Callout Pin
+  // Helper to render a clickable Swiss Vermilion / Klein Blue X-Ray Callout Pin (28px mobile tap size)
   const renderCalloutPin = (pinNumber: string, hotspotId: string) => {
     const isSelected = selectedHotspotId === hotspotId;
     if (!xRayMode) return null;
@@ -71,7 +66,7 @@ export const AnatomyInspectorView: React.FC<AnatomyInspectorViewProps> = ({
           e.stopPropagation();
           setSelectedHotspotId(hotspotId);
         }}
-        className={`inline-flex items-center justify-center w-6 h-6 rounded-full font-mono text-[11px] font-bold cursor-pointer transition-transform select-none shadow-sm ${
+        className={`inline-flex items-center justify-center w-7 h-7 sm:w-6 sm:h-6 rounded-full font-mono text-[11px] font-bold cursor-pointer transition-transform select-none shadow-sm shrink-0 ${
           isSelected
             ? 'bg-[#DC2626] text-white scale-110 ring-4 ring-[#DC2626]/25'
             : 'bg-[#0284C7] text-white hover:scale-105'
@@ -84,26 +79,26 @@ export const AnatomyInspectorView: React.FC<AnatomyInspectorViewProps> = ({
   };
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-6 sm:space-y-8">
       {/* Top Control Header */}
-      <div className="bg-white border border-slate-200 rounded-2xl p-6 flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+      <div className="bg-white border border-slate-200 rounded-2xl p-4 sm:p-6 flex flex-col lg:flex-row lg:items-center justify-between gap-4">
         <div className="space-y-1">
           <div className="text-xs font-mono text-sky-700 font-semibold">
             VISUAL ANATOMY X-RAY INSPECTOR
           </div>
-          <h2 className="font-display text-2xl font-bold text-slate-900 tracking-tight">
+          <h2 className="font-display text-xl sm:text-2xl font-bold text-slate-900 tracking-tight">
             Click any part of a real interface to learn its exact UI/UX name
           </h2>
-          <p className="text-xs text-slate-600 max-w-2xl">
+          <p className="text-xs text-slate-600 max-w-2xl leading-relaxed">
             Stop guessing how to describe layout zones. Select an industry blueprint below and
-            click any numbered callout pin or structural container to reveal its architectural
+            tap any numbered callout pin or structural container to reveal its architectural
             specification and copy-ready AI agent prompt.
           </p>
         </div>
 
-        <div className="flex flex-wrap items-center gap-3 shrink-0">
-          {/* Template Switcher Segmented Control */}
-          <div className="inline-flex p-1 bg-slate-100 rounded-xl border border-slate-200">
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5 sm:gap-3 shrink-0">
+          {/* Template Switcher Segmented Control (Swipeable on mobile) */}
+          <div className="flex p-1 bg-slate-100 rounded-xl border border-slate-200 overflow-x-auto no-scrollbar snap-x">
             {ANATOMY_TEMPLATES.map((tpl) => {
               const isSelected = tpl.id === activeTemplateId;
               return (
@@ -111,7 +106,7 @@ export const AnatomyInspectorView: React.FC<AnatomyInspectorViewProps> = ({
                   key={tpl.id}
                   type="button"
                   onClick={() => handleSelectTemplate(tpl.id)}
-                  className={`px-3 py-1.5 text-xs font-medium rounded-lg transition-colors whitespace-nowrap ${
+                  className={`min-h-[40px] sm:min-h-[34px] px-3 py-1.5 text-xs font-medium rounded-lg transition-colors whitespace-nowrap shrink-0 snap-start ${
                     isSelected
                       ? 'bg-white text-slate-900 shadow-2xs font-semibold'
                       : 'text-slate-600 hover:text-slate-900'
@@ -127,62 +122,64 @@ export const AnatomyInspectorView: React.FC<AnatomyInspectorViewProps> = ({
           <button
             type="button"
             onClick={() => setXRayMode((x) => !x)}
-            className={`px-3.5 py-2 text-xs font-semibold rounded-xl border transition-colors flex items-center gap-1.5 whitespace-nowrap ${
+            className={`min-h-[42px] sm:min-h-[38px] px-3.5 py-2 text-xs font-semibold rounded-xl border transition-colors flex items-center justify-center gap-1.5 whitespace-nowrap ${
               xRayMode
                 ? 'bg-[#DC2626] border-[#DC2626] text-white'
                 : 'bg-white border-slate-200 text-slate-700 hover:bg-slate-50'
             }`}
           >
-            <Crosshair className="w-3.5 h-3.5" />
+            <Crosshair className="w-3.5 h-3.5 shrink-0" />
             <span>{xRayMode ? 'X-Ray Pins: Active' : 'X-Ray Pins: Hidden'}</span>
           </button>
         </div>
       </div>
 
       {/* Main Split: Left Interactive Blueprint Dissector (7 cols) | Right Synced Anatomy Spec Sheet (5 cols) */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 sm:gap-6 items-start">
         {/* LEFT 7 COLUMNS: Interactive Reference Mockup with Clickable Regions */}
         <div className="lg:col-span-7 bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-2xs">
           {/* Mockup Window Header */}
-          <div className="px-5 py-3 border-b border-slate-200 bg-slate-50 flex items-center justify-between gap-4">
-            <div className="flex items-center gap-2 text-xs font-mono text-slate-600 truncate">
+          <div className="px-3.5 sm:px-5 py-3 border-b border-slate-200 bg-slate-50 flex flex-col sm:flex-row sm:items-center justify-between gap-1.5 sm:gap-4">
+            <div className="flex items-center gap-2 text-xs font-mono text-slate-600 min-w-0">
               <Ruler className="w-3.5 h-3.5 text-sky-600 shrink-0" />
-              <span className="font-semibold text-slate-900">{activeTemplate.name}</span>
-              <span>·</span>
-              <span className="text-slate-500 truncate">{activeTemplate.subtitle}</span>
+              <span className="font-semibold text-slate-900 truncate">{activeTemplate.name}</span>
+              <span className="hidden sm:inline">·</span>
+              <span className="hidden sm:inline text-slate-500 truncate">
+                {activeTemplate.subtitle}
+              </span>
             </div>
             <span className="text-[11px] font-mono text-[#DC2626] shrink-0">
-              Click any region or pin (01–0{activeTemplate.hotspots.length})
+              Tap any region or pin (01–0{activeTemplate.hotspots.length})
             </span>
           </div>
 
           {/* =================================================================
-              TEMPLATE 1: SAAS ANALYTICS & DEVELOPER CONSOLE
+              TEMPLATE 1: SAAS ANALYTICS & DEVELOPER CONSOLE (Responsive Stack on Mobile)
           ================================================================= */}
           {activeTemplate.id === 'saas-workspace' && (
-            <div className="h-[490px] flex bg-[#F8FAFC] overflow-hidden select-none">
+            <div className="h-auto md:h-[490px] flex flex-col md:flex-row bg-[#F8FAFC] overflow-hidden select-none">
               {/* 01. Persistent Left Navigation Rail */}
               <div
                 onClick={() => setSelectedHotspotId('saas-sidebar')}
-                className={`w-44 shrink-0 border-r p-3 flex flex-col justify-between cursor-pointer transition-all relative ${
+                className={`w-full md:w-44 shrink-0 border-b md:border-b-0 md:border-r p-3 flex flex-col justify-between cursor-pointer transition-all relative ${
                   selectedHotspotId === 'saas-sidebar'
                     ? 'bg-sky-50/70 border-sky-500 ring-2 ring-inset ring-sky-500'
                     : 'bg-slate-50 border-slate-200 hover:bg-slate-100/70'
                 }`}
               >
-                <div className="space-y-3">
+                <div className="space-y-2.5">
                   <div className="flex items-center justify-between">
                     <span className="font-display font-bold text-xs text-slate-900">
                       Nexus Cloud
                     </span>
                     {renderCalloutPin('01', 'saas-sidebar')}
                   </div>
-                  <div className="space-y-1 text-xs">
+                  <div className="flex md:flex-col gap-1 overflow-x-auto no-scrollbar text-xs">
                     {['Overview', 'Live Traces', 'Token Schemas', 'Edge Logs', 'Billing'].map(
                       (item, i) => (
                         <div
                           key={item}
-                          className={`px-2.5 py-1.5 rounded-md ${
+                          className={`px-2.5 py-1.5 rounded-md whitespace-nowrap shrink-0 ${
                             i === 1
                               ? 'bg-slate-900 text-white font-medium'
                               : 'text-slate-600'
@@ -194,7 +191,7 @@ export const AnatomyInspectorView: React.FC<AnatomyInspectorViewProps> = ({
                     )}
                   </div>
                 </div>
-                <div className="p-2 rounded-lg border border-slate-200 bg-white text-[10px] font-mono text-slate-500">
+                <div className="hidden md:block p-2 rounded-lg border border-slate-200 bg-white text-[10px] font-mono text-slate-500">
                   w-60 · shrink-0 · border-r
                 </div>
               </div>
@@ -204,23 +201,23 @@ export const AnatomyInspectorView: React.FC<AnatomyInspectorViewProps> = ({
                 {/* 02. Contextual Top Bar & Breadcrumb Trail */}
                 <div
                   onClick={() => setSelectedHotspotId('saas-topbar')}
-                  className={`h-13 border-b px-4 flex items-center justify-between cursor-pointer transition-all ${
+                  className={`min-h-[48px] border-b px-3.5 sm:px-4 py-2 flex flex-wrap items-center justify-between gap-2 cursor-pointer transition-all ${
                     selectedHotspotId === 'saas-topbar'
                       ? 'bg-sky-50/80 border-sky-500 ring-2 ring-inset ring-sky-500'
                       : 'bg-white border-slate-200 hover:bg-slate-50'
                   }`}
                 >
-                  <div className="flex items-center gap-2 text-xs">
+                  <div className="flex items-center gap-1.5 sm:gap-2 text-xs min-w-0">
                     {renderCalloutPin('02', 'saas-topbar')}
-                    <span className="text-slate-400">Production</span>
+                    <span className="text-slate-400 truncate">Production</span>
                     <span className="text-slate-300">/</span>
-                    <span className="text-slate-400">us-east-1</span>
-                    <span className="text-slate-300">/</span>
-                    <span className="font-semibold text-slate-900">Live Traces</span>
+                    <span className="hidden sm:inline text-slate-400">us-east-1</span>
+                    <span className="hidden sm:inline text-slate-300">/</span>
+                    <span className="font-semibold text-slate-900 truncate">Live Traces</span>
                   </div>
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-2 shrink-0">
                     <span className="px-2 py-1 text-[10px] font-mono bg-slate-100 border border-slate-200 rounded text-slate-600">
-                      ⌘K Search
+                      ⌘K
                     </span>
                     <span className="px-2.5 py-1 text-[11px] font-semibold bg-slate-900 text-white rounded-md">
                       Export CSV
@@ -229,19 +226,19 @@ export const AnatomyInspectorView: React.FC<AnatomyInspectorViewProps> = ({
                 </div>
 
                 {/* Main Scrollable Stage */}
-                <div className="flex-1 p-4 space-y-3.5 overflow-y-auto">
+                <div className="flex-1 p-3 sm:p-4 space-y-3 sm:space-y-3.5 overflow-y-auto">
                   {/* 03. Segmented Control & Filter Bar */}
                   <div
                     onClick={() => setSelectedHotspotId('saas-segmented')}
-                    className={`p-2.5 rounded-xl border flex items-center justify-between cursor-pointer transition-all ${
+                    className={`p-2.5 rounded-xl border flex flex-wrap items-center justify-between gap-2 cursor-pointer transition-all ${
                       selectedHotspotId === 'saas-segmented'
                         ? 'bg-sky-50/80 border-sky-500 ring-2 ring-sky-500'
                         : 'bg-white border-slate-200 hover:border-slate-300'
                     }`}
                   >
-                    <div className="flex items-center gap-2">
+                    <div className="flex items-center gap-2 overflow-x-auto no-scrollbar">
                       {renderCalloutPin('03', 'saas-segmented')}
-                      <div className="inline-flex p-0.5 bg-slate-100 rounded-lg border border-slate-200 text-[11px]">
+                      <div className="inline-flex p-0.5 bg-slate-100 rounded-lg border border-slate-200 text-[11px] whitespace-nowrap">
                         <span className="px-2.5 py-1 bg-white text-slate-900 font-semibold rounded-md shadow-2xs">
                           All Traces
                         </span>
@@ -249,7 +246,7 @@ export const AnatomyInspectorView: React.FC<AnatomyInspectorViewProps> = ({
                         <span className="px-2.5 py-1 text-slate-600">Slow (&gt;250ms)</span>
                       </div>
                     </div>
-                    <span className="text-[10px] font-mono text-slate-400">
+                    <span className="hidden sm:inline text-[10px] font-mono text-slate-400">
                       Segmented Control Track
                     </span>
                   </div>
@@ -264,18 +261,20 @@ export const AnatomyInspectorView: React.FC<AnatomyInspectorViewProps> = ({
                     }`}
                   >
                     <div className="px-3 py-1.5 bg-slate-50 border-b border-slate-200 flex items-center justify-between text-[10px] font-mono text-slate-500">
-                      <span>SINGLE-ELEVATION HAIRLINE KPI STRIP (divide-x)</span>
+                      <span className="truncate">SINGLE-ELEVATION HAIRLINE KPI STRIP (divide-x)</span>
                       {renderCalloutPin('04', 'saas-kpi-strip')}
                     </div>
                     <div className="grid grid-cols-3 divide-x divide-slate-200">
                       {[
-                        { label: 'Total Requests', val: '1,420,910' },
+                        { label: 'Requests', val: '1,420,910' },
                         { label: 'P95 Latency', val: '18.4 ms' },
                         { label: 'Error Rate', val: '0.02%' },
                       ].map((kpi) => (
-                        <div key={kpi.label} className="p-3">
-                          <div className="text-[11px] text-slate-500">{kpi.label}</div>
-                          <div className="text-sm font-display font-bold text-slate-900 font-mono tabular-nums mt-0.5">
+                        <div key={kpi.label} className="p-2.5 sm:p-3 min-w-0">
+                          <div className="text-[10px] sm:text-[11px] text-slate-500 truncate">
+                            {kpi.label}
+                          </div>
+                          <div className="text-xs sm:text-sm font-display font-bold text-slate-900 font-mono tabular-nums mt-0.5 truncate">
                             {kpi.val}
                           </div>
                         </div>
@@ -292,9 +291,9 @@ export const AnatomyInspectorView: React.FC<AnatomyInspectorViewProps> = ({
                         : 'border-slate-200 hover:border-slate-300'
                     }`}
                   >
-                    <div className="px-3.5 py-2 bg-slate-50 border-b border-slate-200 flex items-center justify-between text-xs">
-                      <span className="font-semibold text-slate-800">
-                        High-Density Data Grid (Right-Aligned tabular-nums)
+                    <div className="px-3 sm:px-3.5 py-2 bg-slate-50 border-b border-slate-200 flex items-center justify-between gap-2 text-xs">
+                      <span className="font-semibold text-slate-800 truncate">
+                        High-Density Data Grid (tabular-nums)
                       </span>
                       {renderCalloutPin('05', 'saas-data-grid')}
                     </div>
@@ -302,20 +301,20 @@ export const AnatomyInspectorView: React.FC<AnatomyInspectorViewProps> = ({
                       {[
                         { path: 'POST /v1/chat/completions', status: '200 OK', ms: '142.8 ms' },
                         { path: 'GET /v1/models/lexicon-spec', status: '200 OK', ms: '19.2 ms' },
-                        { path: 'POST /v1/embeddings/batch', status: '202 ACCEPTED', ms: '84.0 ms' },
+                        { path: 'POST /v1/embeddings/batch', status: '202 OK', ms: '84.0 ms' },
                       ].map((row, idx) => (
                         <div
                           key={row.path}
-                          className={`px-3.5 py-2.5 flex items-center justify-between ${
+                          className={`px-3 sm:px-3.5 py-2.5 flex items-center justify-between gap-2 ${
                             idx === 0 ? 'bg-sky-50/60 font-medium' : ''
                           }`}
                         >
                           <span className="font-mono text-[11px] text-slate-800 truncate">
                             {row.path}
                           </span>
-                          <div className="flex items-center gap-4 shrink-0 font-mono tabular-nums text-[11px]">
+                          <div className="flex items-center gap-2 sm:gap-4 shrink-0 font-mono tabular-nums text-[11px]">
                             <span className="text-emerald-700">{row.status}</span>
-                            <span className="text-slate-900 w-16 text-right">{row.ms}</span>
+                            <span className="text-slate-900 w-14 text-right">{row.ms}</span>
                           </div>
                         </div>
                       ))}
@@ -327,7 +326,7 @@ export const AnatomyInspectorView: React.FC<AnatomyInspectorViewProps> = ({
               {/* 06. Right Docked Inspector / Slide-Over Sheet */}
               <div
                 onClick={() => setSelectedHotspotId('saas-drawer')}
-                className={`w-52 shrink-0 border-l flex flex-col justify-between p-3 cursor-pointer transition-all ${
+                className={`w-full md:w-52 shrink-0 border-t md:border-t-0 md:border-l flex flex-col justify-between p-3 cursor-pointer transition-all ${
                   selectedHotspotId === 'saas-drawer'
                     ? 'bg-sky-50/70 border-sky-500 ring-2 ring-inset ring-sky-500'
                     : 'bg-white border-slate-200 hover:bg-slate-50'
@@ -341,15 +340,13 @@ export const AnatomyInspectorView: React.FC<AnatomyInspectorViewProps> = ({
                     {renderCalloutPin('06', 'saas-drawer')}
                   </div>
                   <div className="text-[11px] font-mono text-slate-500 space-y-1.5">
-                    <div>id: &quot;req_99281a&quot;</div>
-                    <div>region: &quot;iad-01&quot;</div>
-                    <div>latency: 142.8ms</div>
+                    <div>id: &quot;req_99281a&quot; · iad-01 · 142.8ms</div>
                     <div className="p-2 rounded bg-slate-900 text-sky-300 text-[10px]">
                       {`{ "stream": true, "tokens": 412 }`}
                     </div>
                   </div>
                 </div>
-                <div className="pt-2 border-t border-slate-200 flex justify-end">
+                <div className="pt-2.5 mt-2 border-t border-slate-200 flex justify-end">
                   <span className="w-full text-center py-1.5 bg-slate-900 text-white rounded text-[11px] font-medium">
                     Replay Request
                   </span>
@@ -362,11 +359,11 @@ export const AnatomyInspectorView: React.FC<AnatomyInspectorViewProps> = ({
               TEMPLATE 2: EDITORIAL PRODUCT LAUNCH LANDING PAGE
           ================================================================= */}
           {activeTemplate.id === 'editorial-landing' && (
-            <div className="p-5 space-y-5 bg-[#F8FAFC] select-none">
+            <div className="p-3.5 sm:p-5 space-y-4 sm:space-y-5 bg-[#F8FAFC] select-none">
               {/* 01. 3-Zone Top Bar Contract */}
               <div
                 onClick={() => setSelectedHotspotId('landing-topbar')}
-                className={`px-4 py-3 rounded-xl border flex items-center justify-between cursor-pointer transition-all ${
+                className={`px-3.5 sm:px-4 py-3 rounded-xl border flex items-center justify-between gap-2 cursor-pointer transition-all ${
                   selectedHotspotId === 'landing-topbar'
                     ? 'bg-sky-50 border-sky-500 ring-2 ring-sky-500'
                     : 'bg-white/85 backdrop-blur-md border-slate-200 hover:border-slate-300'
@@ -388,24 +385,24 @@ export const AnatomyInspectorView: React.FC<AnatomyInspectorViewProps> = ({
               </div>
 
               {/* 02 & 03. Split-Screen Hero (7:5) */}
-              <div className="grid grid-cols-1 md:grid-cols-12 gap-4 items-stretch">
+              <div className="grid grid-cols-1 md:grid-cols-12 gap-3.5 sm:gap-4 items-stretch">
                 {/* 02. 7-Column Balanced Typographic Stack */}
                 <div
                   onClick={() => setSelectedHotspotId('landing-hero-copy')}
-                  className={`md:col-span-7 p-5 rounded-xl border flex flex-col justify-between cursor-pointer transition-all ${
+                  className={`md:col-span-7 p-4 sm:p-5 rounded-xl border flex flex-col justify-between cursor-pointer transition-all ${
                     selectedHotspotId === 'landing-hero-copy'
                       ? 'bg-sky-50/70 border-sky-500 ring-2 ring-sky-500'
                       : 'bg-white border-slate-200 hover:border-slate-300'
                   }`}
                 >
                   <div className="space-y-2.5">
-                    <div className="flex items-center justify-between">
+                    <div className="flex items-center justify-between gap-2">
                       <span className="text-[11px] font-mono text-sky-700">
                         Release 3.0 · Precision Engine
                       </span>
                       {renderCalloutPin('02', 'landing-hero-copy')}
                     </div>
-                    <h3 className="font-display text-xl font-bold text-slate-900 text-balance leading-tight">
+                    <h3 className="font-display text-lg sm:text-xl font-bold text-slate-900 text-balance leading-tight">
                       Deterministic infrastructure for design-led engineering teams.
                     </h3>
                     <p className="text-xs text-slate-600 leading-relaxed">
@@ -413,7 +410,7 @@ export const AnatomyInspectorView: React.FC<AnatomyInspectorViewProps> = ({
                       balanced headline line-wrapping.
                     </p>
                   </div>
-                  <div className="flex items-center gap-2.5 pt-3">
+                  <div className="flex flex-wrap items-center gap-2.5 pt-3">
                     <span className="px-3.5 py-2 bg-slate-900 text-white text-xs font-semibold rounded-lg">
                       Deploy Cluster
                     </span>
@@ -439,7 +436,7 @@ export const AnatomyInspectorView: React.FC<AnatomyInspectorViewProps> = ({
                     {renderCalloutPin('03', 'landing-hero-stage')}
                   </div>
                   <div className="bg-slate-800 rounded-[8px] p-3.5 border border-slate-700 space-y-2 flex-1 flex flex-col justify-between">
-                    <div className="text-xs font-mono text-emerald-400">● CLUSTER READY</div>
+                    <div className="text-xs font-mono text-emerald-400">CLUSTER READY</div>
                     <div className="text-lg font-display font-bold tabular-nums">
                       0.42 ms P99
                     </div>
@@ -453,28 +450,28 @@ export const AnatomyInspectorView: React.FC<AnatomyInspectorViewProps> = ({
               {/* 04. Asymmetric Bento Grid */}
               <div
                 onClick={() => setSelectedHotspotId('landing-bento')}
-                className={`p-4 rounded-xl border cursor-pointer transition-all space-y-3 ${
+                className={`p-3.5 sm:p-4 rounded-xl border cursor-pointer transition-all space-y-3 ${
                   selectedHotspotId === 'landing-bento'
                     ? 'bg-sky-50/70 border-sky-500 ring-2 ring-sky-500'
                     : 'bg-white border-slate-200 hover:border-slate-300'
                 }`}
               >
-                <div className="flex items-center justify-between">
+                <div className="flex items-center justify-between gap-2">
                   <span className="text-xs font-mono font-semibold text-slate-700">
                     BELOW-THE-FOLD ASYMMETRIC BENTO GRID (2:1 SPAN)
                   </span>
                   {renderCalloutPin('04', 'landing-bento')}
                 </div>
-                <div className="grid grid-cols-3 gap-3">
-                  <div className="col-span-2 bg-slate-50 border border-slate-200 rounded-lg p-3">
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                  <div className="sm:col-span-2 bg-slate-50 border border-slate-200 rounded-lg p-3">
                     <div className="text-xs font-bold text-slate-900">
-                      Primary Anchor Cell (md:col-span-2)
+                      Primary Anchor Cell (sm:col-span-2)
                     </div>
                     <div className="text-[11px] text-slate-500 mt-0.5">
                       Carries the primary interactive product diagram
                     </div>
                   </div>
-                  <div className="col-span-1 bg-slate-50 border border-slate-200 rounded-lg p-3">
+                  <div className="sm:col-span-1 bg-slate-50 border border-slate-200 rounded-lg p-3">
                     <div className="text-xs font-bold text-slate-900">1x1 Proof Cell</div>
                     <div className="text-[11px] text-slate-500 mt-0.5 tabular-nums">+140% Speed</div>
                   </div>
@@ -484,14 +481,14 @@ export const AnatomyInspectorView: React.FC<AnatomyInspectorViewProps> = ({
           )}
 
           {/* =================================================================
-              TEMPLATE 3: MODERN E-COMMERCE & CATALOG STUDIO
+              TEMPLATE 3: MODERN E-COMMERCE & CATALOG STUDIO (Responsive on Mobile)
           ================================================================= */}
           {activeTemplate.id === 'ecommerce-studio' && (
-            <div className="p-5 bg-[#F8FAFC] flex gap-4 select-none">
+            <div className="p-3.5 sm:p-5 bg-[#F8FAFC] flex flex-col sm:flex-row gap-4 select-none">
               {/* 01. Sticky Facet Filter Rail */}
               <div
                 onClick={() => setSelectedHotspotId('ecom-sticky-facets')}
-                className={`w-44 shrink-0 p-3.5 rounded-xl border self-start cursor-pointer transition-all space-y-3 ${
+                className={`w-full sm:w-44 shrink-0 p-3.5 rounded-xl border self-start cursor-pointer transition-all space-y-2.5 ${
                   selectedHotspotId === 'ecom-sticky-facets'
                     ? 'bg-sky-50 border-sky-500 ring-2 ring-sky-500'
                     : 'bg-white border-slate-200 hover:border-slate-300'
@@ -523,11 +520,11 @@ export const AnatomyInspectorView: React.FC<AnatomyInspectorViewProps> = ({
               </div>
 
               {/* Right Catalog Column */}
-              <div className="flex-1 space-y-4">
+              <div className="flex-1 space-y-4 min-w-0">
                 {/* 02. Editorial Collection Banner with Scrim */}
                 <div
                   onClick={() => setSelectedHotspotId('ecom-scrim-banner')}
-                  className={`h-32 rounded-xl overflow-hidden relative cursor-pointer border transition-all flex flex-col justify-end p-4 ${
+                  className={`h-32 rounded-xl overflow-hidden relative cursor-pointer border transition-all flex flex-col justify-end p-3.5 sm:p-4 ${
                     selectedHotspotId === 'ecom-scrim-banner'
                       ? 'border-sky-500 ring-2 ring-sky-500'
                       : 'border-slate-300'
@@ -538,12 +535,12 @@ export const AnatomyInspectorView: React.FC<AnatomyInspectorViewProps> = ({
                   }}
                 >
                   <div className="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-950/35 to-transparent" />
-                  <div className="relative z-10 flex items-end justify-between text-white">
+                  <div className="relative z-10 flex items-end justify-between gap-2 text-white">
                     <div>
                       <div className="text-[10px] font-mono text-sky-300">
                         Autumn Architectural Objects · 2026
                       </div>
-                      <div className="text-base font-display font-bold">
+                      <div className="text-sm sm:text-base font-display font-bold">
                         Protected by Luminance Contrast Scrim
                       </div>
                     </div>
@@ -552,7 +549,7 @@ export const AnatomyInspectorView: React.FC<AnatomyInspectorViewProps> = ({
                 </div>
 
                 {/* 03 & 04. Product Card Grid */}
-                <div className="grid grid-cols-2 gap-3.5">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
                   <div
                     onClick={() => setSelectedHotspotId('ecom-product-card')}
                     className={`p-3 rounded-[20px] border bg-white cursor-pointer transition-all space-y-2.5 ${
@@ -580,7 +577,7 @@ export const AnatomyInspectorView: React.FC<AnatomyInspectorViewProps> = ({
 
                   <div
                     onClick={() => setSelectedHotspotId('ecom-optimistic-action')}
-                    className={`p-3 rounded-[20px] border bg-white cursor-pointer transition-all flex flex-col justify-between ${
+                    className={`p-3 rounded-[20px] border bg-white cursor-pointer transition-all flex flex-col justify-between gap-2.5 ${
                       selectedHotspotId === 'ecom-optimistic-action'
                         ? 'border-sky-500 ring-2 ring-sky-500'
                         : 'border-slate-200 hover:border-slate-300'
@@ -608,7 +605,7 @@ export const AnatomyInspectorView: React.FC<AnatomyInspectorViewProps> = ({
               TEMPLATE 4: SCI-FI TACTICAL HUD & ORBITAL CONSOLE (FUI)
           ================================================================= */}
           {activeTemplate.id === 'fui-orbital-hud' && (
-            <div className="p-5 bg-slate-950 text-cyan-300 font-mono select-none space-y-4">
+            <div className="p-3.5 sm:p-5 bg-slate-950 text-cyan-300 font-mono select-none space-y-4">
               {/* 01. Chamfered HUD Frame & Corner Reticles */}
               <div
                 onClick={() => setSelectedHotspotId('fui-chamfer')}
@@ -622,18 +619,18 @@ export const AnatomyInspectorView: React.FC<AnatomyInspectorViewProps> = ({
                     'polygon(0 0, calc(100% - 18px) 0, 100% 18px, 100% 100%, 18px 100%, 0 calc(100% - 18px))',
                 }}
               >
-                <div className="flex items-center justify-between text-xs">
-                  <div className="flex items-center gap-2">
+                <div className="flex flex-wrap items-center justify-between gap-2 text-xs">
+                  <div className="flex items-center gap-2 min-w-0">
                     {renderCalloutPin('01', 'fui-chamfer')}
-                    <span className="font-bold tracking-wider text-cyan-200 uppercase">
-                      SYS.ORBITAL // CHAMFERED HUD VIEWPORT (45° CLIP-PATH)
+                    <span className="font-bold tracking-wider text-cyan-200 truncate">
+                      CHAMFERED HUD VIEWPORT (45° CLIP-PATH)
                     </span>
                   </div>
                   <span className="text-[11px] text-cyan-400 tabular-nums">
                     AZIMUTH: 284.12° · LOCK
                   </span>
                 </div>
-                <div className="text-[11px] text-cyan-400/80 mt-1">
+                <div className="text-[11px] text-cyan-400/80 mt-1 truncate">
                   Corner reticle ticks + polygon(0 0, calc(100% - 18px) 0, 100% 18px...)
                 </div>
               </div>
@@ -692,7 +689,7 @@ export const AnatomyInspectorView: React.FC<AnatomyInspectorViewProps> = ({
 
                   <svg
                     viewBox="0 0 360 112"
-                    className="w-full h-32 my-1 rounded-lg bg-slate-950/90 border border-cyan-500/20"
+                    className="w-full h-auto my-1 rounded-lg bg-slate-950/90 border border-cyan-500/20"
                   >
                     {/* Cubic Bezier Noodle from (132, 42) to (222, 74) */}
                     <path
@@ -750,7 +747,7 @@ export const AnatomyInspectorView: React.FC<AnatomyInspectorViewProps> = ({
                     <circle cx="222" cy="74" r="2" fill="#34d399" />
                   </svg>
 
-                  <div className="text-[10px] text-cyan-400/80">
+                  <div className="text-[10px] text-cyan-400/80 truncate">
                     SVG &lt;path d=&quot;M 132 42 C 178 42, 176 74, 222 74&quot; /&gt;
                   </div>
                 </div>
@@ -772,15 +769,15 @@ export const AnatomyInspectorView: React.FC<AnatomyInspectorViewProps> = ({
                       'repeating-linear-gradient(to bottom, transparent 0px, transparent 2px, rgba(0, 0, 0, 0.85) 3px, rgba(0, 0, 0, 0.85) 4px)',
                   }}
                 />
-                <div className="relative z-10 flex items-center justify-between">
+                <div className="relative z-10 flex items-center justify-between gap-2">
                   <div
-                    className="text-xs text-amber-300 space-y-0.5"
+                    className="text-xs text-amber-300 space-y-0.5 min-w-0"
                     style={{ textShadow: '0 0 8px rgba(251, 191, 36, 0.65)' }}
                   >
-                    <div className="font-bold">
-                      &gt; CRT PHOSPHOR SCANLINE LOG // CHROMATIC BLOOM ACTIVE
+                    <div className="font-bold truncate">
+                      &gt; CRT PHOSPHOR SCANLINE LOG · CHROMATIC BLOOM
                     </div>
-                    <div className="text-[11px] text-amber-400/90 tabular-nums">
+                    <div className="text-[11px] text-amber-400/90 tabular-nums truncate">
                       [00:42:19.08] THRUSTER_GIMBAL_SYNC: OK · P99 JITTER 0.04ms
                     </div>
                   </div>
@@ -790,9 +787,9 @@ export const AnatomyInspectorView: React.FC<AnatomyInspectorViewProps> = ({
             </div>
           )}
 
-          {/* Bottom Hotspot Strip Selector */}
-          <div className="px-5 py-3 bg-slate-50 border-t border-slate-200 flex flex-wrap items-center gap-2">
-            <span className="text-xs font-mono text-slate-500 mr-1">Hotspots:</span>
+          {/* Bottom Hotspot Strip Selector (Swipeable on mobile with 40px+ touch targets) */}
+          <div className="px-3.5 sm:px-5 py-3 bg-slate-50 border-t border-slate-200 flex items-center gap-2 overflow-x-auto no-scrollbar">
+            <span className="text-xs font-mono text-slate-500 mr-1 shrink-0">Hotspots:</span>
             {activeTemplate.hotspots.map((h) => {
               const isSelected = h.id === selectedHotspotId;
               return (
@@ -800,9 +797,9 @@ export const AnatomyInspectorView: React.FC<AnatomyInspectorViewProps> = ({
                   key={h.id}
                   type="button"
                   onClick={() => setSelectedHotspotId(h.id)}
-                  className={`px-2.5 py-1 rounded-lg text-xs font-medium transition-colors flex items-center gap-1.5 ${
+                  className={`min-h-[38px] sm:min-h-[32px] px-3 py-1.5 rounded-lg text-xs font-medium transition-colors flex items-center gap-1.5 whitespace-nowrap shrink-0 ${
                     isSelected
-                      ? 'bg-slate-900 text-white'
+                      ? 'bg-slate-900 text-white font-semibold'
                       : 'bg-white border border-slate-200 text-slate-700 hover:bg-slate-100'
                   }`}
                 >
@@ -815,15 +812,15 @@ export const AnatomyInspectorView: React.FC<AnatomyInspectorViewProps> = ({
         </div>
 
         {/* RIGHT 5 COLUMNS: Synced Anatomy Specification Sheet */}
-        <div className="lg:col-span-5 bg-white border border-slate-200 rounded-2xl p-6 space-y-5 shadow-2xs sticky top-24">
+        <div className="lg:col-span-5 bg-white border border-slate-200 rounded-2xl p-4 sm:p-6 space-y-4 sm:space-y-5 shadow-2xs lg:sticky lg:top-24">
           <div className="flex items-start justify-between gap-3 border-b border-slate-200 pb-4">
-            <div className="space-y-1">
+            <div className="space-y-1 min-w-0">
               <div className="flex items-center gap-2 text-xs font-mono text-[#DC2626] font-semibold">
                 <span>PIN {activeHotspot.pinNumber}</span>
                 <span>·</span>
-                <span>{activeHotspot.zoneLabel}</span>
+                <span className="truncate">{activeHotspot.zoneLabel}</span>
               </div>
-              <h3 className="font-display text-xl font-bold text-slate-900">
+              <h3 className="font-display text-lg sm:text-xl font-bold text-slate-900">
                 {activeHotspot.termName}
               </h3>
             </div>
@@ -831,7 +828,7 @@ export const AnatomyInspectorView: React.FC<AnatomyInspectorViewProps> = ({
             <button
               type="button"
               onClick={() => onJumpToTerm(activeHotspot.linkedTermId)}
-              className="px-3 py-1.5 text-xs font-semibold text-sky-700 bg-sky-50 hover:bg-sky-100 border border-sky-200 rounded-lg flex items-center gap-1 whitespace-nowrap shrink-0"
+              className="min-h-[40px] sm:min-h-[34px] px-3 py-1.5 text-xs font-semibold text-sky-700 bg-sky-50 hover:bg-sky-100 border border-sky-200 rounded-xl sm:rounded-lg flex items-center gap-1 whitespace-nowrap shrink-0"
             >
               <span>Open Sandbox</span>
               <ArrowUpRight className="w-3.5 h-3.5" />
@@ -844,67 +841,69 @@ export const AnatomyInspectorView: React.FC<AnatomyInspectorViewProps> = ({
               <div className="text-xs font-mono font-semibold text-slate-500">
                 ARCHITECTURAL PURPOSE
               </div>
-              <p className="text-sm text-slate-700 mt-1 leading-relaxed">
+              <p className="text-xs sm:text-sm text-slate-700 mt-1 leading-relaxed">
                 {activeHotspot.uxPurpose}
               </p>
             </div>
 
             <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200 space-y-1">
               <div className="text-xs font-mono font-semibold text-slate-700">
-                SPATIAL & GEOMETRIC RULE
+                SPATIAL &amp; GEOMETRIC RULE
               </div>
-              <p className="text-xs font-mono text-sky-800">{activeHotspot.spatialRule}</p>
+              <p className="text-xs font-mono text-sky-800 break-words">
+                {activeHotspot.spatialRule}
+              </p>
             </div>
 
             <div className="p-3.5 rounded-xl bg-amber-50/60 border border-amber-200 space-y-1">
               <div className="flex items-center gap-1.5 text-xs font-mono font-semibold text-amber-800">
-                <AlertCircle className="w-3.5 h-3.5 text-amber-600" />
+                <AlertCircle className="w-3.5 h-3.5 text-amber-600 shrink-0" />
                 <span>COMMON VIBE-CODING MISTAKE</span>
               </div>
-              <p className="text-xs text-amber-950">{activeHotspot.vibeMistake}</p>
+              <p className="text-xs text-amber-950 leading-relaxed">{activeHotspot.vibeMistake}</p>
             </div>
           </div>
 
           {/* Exact Prompt for This Region */}
-          <div className="p-4 rounded-xl border border-emerald-300 bg-emerald-50/50 space-y-2.5">
-            <div className="flex items-center justify-between">
+          <div className="p-3.5 sm:p-4 rounded-xl border border-emerald-300 bg-emerald-50/50 space-y-2.5">
+            <div className="flex flex-wrap items-center justify-between gap-2">
               <div className="flex items-center gap-1.5 text-xs font-mono font-semibold text-emerald-900">
-                <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
+                <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
                 <span>EXACT PROMPT FOR THIS REGION</span>
               </div>
               <button
                 type="button"
                 onClick={() => handleCopyHotspotPrompt(activeHotspot)}
-                className="px-2.5 py-1 text-xs font-semibold bg-emerald-800 text-white rounded-md hover:bg-emerald-900 transition-colors flex items-center gap-1.5"
+                className="min-h-[38px] sm:min-h-[32px] px-3 py-1.5 text-xs font-semibold bg-emerald-800 text-white rounded-lg hover:bg-emerald-900 transition-colors flex items-center gap-1.5"
               >
                 {copiedId === activeHotspot.id ? (
                   <>
-                    <Check className="w-3 h-3" />
+                    <Check className="w-3.5 h-3.5" />
                     <span>Copied</span>
                   </>
                 ) : (
                   <>
-                    <Copy className="w-3 h-3" />
+                    <Copy className="w-3.5 h-3.5" />
                     <span>Copy Prompt</span>
                   </>
                 )}
               </button>
             </div>
-            <p className="text-xs font-mono text-slate-900 bg-white p-3 rounded-lg border border-emerald-200 leading-relaxed">
+            <p className="text-xs font-mono text-slate-900 bg-white p-3 rounded-lg border border-emerald-200 leading-relaxed break-words">
               {activeHotspot.agentPrompt}
             </p>
           </div>
 
           {/* CSS Signature + Add to Spec Cart */}
-          <div className="pt-2 border-t border-slate-200 flex items-center justify-between gap-3">
-            <code className="text-[11px] font-mono text-slate-600 bg-slate-100 px-2.5 py-1 rounded truncate">
+          <div className="pt-2 border-t border-slate-200 flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">
+            <code className="text-[11px] font-mono text-slate-600 bg-slate-100 px-2.5 py-1.5 rounded truncate">
               {activeHotspot.cssSignature}
             </code>
 
             <button
               type="button"
               onClick={() => onToggleSpecCart(activeHotspot.linkedTermId)}
-              className={`px-3 py-1.5 text-xs font-semibold rounded-lg border transition-colors whitespace-nowrap shrink-0 ${
+              className={`min-h-[42px] sm:min-h-[36px] px-3.5 py-2 sm:py-1.5 text-xs font-semibold rounded-xl sm:rounded-lg border transition-colors whitespace-nowrap shrink-0 ${
                 specCartIds.includes(activeHotspot.linkedTermId)
                   ? 'bg-emerald-50 border-emerald-300 text-emerald-900'
                   : 'bg-slate-900 border-slate-900 text-white hover:bg-slate-800'
