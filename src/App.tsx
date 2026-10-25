@@ -29,6 +29,7 @@ import { ComparisonMatrixView } from './components/ComparisonMatrixView';
 import { ContributorStudioView } from './components/ContributorStudioView';
 import { CommandPaletteModal, SpecCartDrawer } from './components/Overlays';
 import { LexiconLogo } from './components/LexiconLogo';
+import { Footer } from './components/Footer';
 
 export type ActiveWorkspaceTab =
   | 'encyclopedia'
@@ -765,57 +766,17 @@ export default function App() {
       </main>
 
       {/* =====================================================================
-          QUIET ARCHITECTURAL FOOTER WITH OFFICIAL GITHUB REPO LINK
+          PRODUCTION-READY FOOTER WITH EMBEDDED FEEDBACK & TELEMETRY WIDGET
       ===================================================================== */}
-      <footer className="border-t border-slate-200 bg-white mt-10 sm:mt-16">
-        <div className="max-w-[1360px] mx-auto px-4 sm:px-6 py-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 text-xs text-slate-500">
-          <div className="flex items-start sm:items-center gap-2.5">
-            <LexiconLogo size={22} className="shrink-0 mt-0.5 sm:mt-0" />
-            <span className="leading-relaxed">
-              <strong className="font-display text-slate-900">LexiconUI</strong> · Open-Source
-              Interactive UI/UX Terminology &amp; Prompt-Engineering Encyclopedia · MIT License
-            </span>
-          </div>
-          <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
-            <a
-              href={GITHUB_REPO_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="min-h-[36px] inline-flex items-center gap-1 font-medium text-slate-700 hover:text-sky-700 transition-colors"
-            >
-              <span>GitHub: RootDeveloperDS/LexicanUI</span>
-              <ArrowUpRight className="w-3.5 h-3.5" />
-            </a>
-            <span aria-hidden="true">·</span>
-            <button
-              type="button"
-              onClick={() => {
-                setActiveTab('contribute');
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-              }}
-              className="min-h-[36px] hover:text-slate-900 transition-colors"
-            >
-              Contributor Studio &amp; PR Guide
-            </button>
-            <span aria-hidden="true">·</span>
-            <button
-              type="button"
-              onClick={() => setCmdPaletteOpen(true)}
-              className="min-h-[36px] hover:text-slate-900 transition-colors"
-            >
-              Search (⌘K)
-            </button>
-            <span aria-hidden="true">·</span>
-            <button
-              type="button"
-              onClick={() => setSpecDrawerOpen(true)}
-              className="min-h-[36px] hover:text-slate-900 transition-colors"
-            >
-              Export DESIGN_SPEC.md ({specCartIds.length})
-            </button>
-          </div>
-        </div>
-      </footer>
+      <Footer
+        activeTab={activeTab}
+        specCartCount={specCartIds.length}
+        totalConceptsCount={DESIGN_TERMS.length}
+        githubRepoUrl={GITHUB_REPO_URL}
+        onSelectWorkspaceTab={(tab, targetId) => scrollToWorkspace(tab, targetId)}
+        onOpenCommandPalette={() => setCmdPaletteOpen(true)}
+        onOpenSpecDrawer={() => setSpecDrawerOpen(true)}
+      />
 
       {/* =====================================================================
           FIXED MOBILE BOTTOM THUMB-ZONE TAB BAR (< md VIEWPORTS)

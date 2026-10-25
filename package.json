@@ -1,7 +1,7 @@
 {
   "name": "lexican-ui",
   "private": true,
-  "version": "1.6.0",
+  "version": "1.7.0",
   "description": "The Open-Source Interactive UI/UX Terminology & Prompt-Engineering Encyclopedia for Developers and AI Vibe Coders",
   "homepage": "https://github.com/RootDeveloperDS/LexicanUI",
   "repository": {
