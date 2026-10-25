@@ -1,0 +1,6 @@
+{
+  "name": "LexiconUI — Interactive UI/UX Terminology & Prompt Encyclopedia",
+  "description": "An open-source interactive UI/UX design terminology encyclopedia, visual anatomy X-ray inspector, live component sandbox, and vibe-to-spec AI prompt translator.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
