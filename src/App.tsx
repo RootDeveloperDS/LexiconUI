@@ -30,6 +30,7 @@ import { ContributorStudioView } from './components/ContributorStudioView';
 import { CommandPaletteModal, SpecCartDrawer } from './components/Overlays';
 import { LexiconLogo } from './components/LexiconLogo';
 import { Footer } from './components/Footer';
+import { Analytics } from '@vercel/analytics/react';
 
 export type ActiveWorkspaceTab =
   | 'encyclopedia'
@@ -132,6 +133,45 @@ export default function App() {
     };
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
+
+  // Universal Desktop Mouse-Wheel-to-Horizontal-Scroll for all horizontal strips across the app
+  useEffect(() => {
+    const handleGlobalWheel = (e: WheelEvent) => {
+      // Only intercept predominantly vertical mouse wheel events (standard desktop scroll wheel)
+      if (e.ctrlKey || Math.abs(e.deltaY) <= Math.abs(e.deltaX)) return;
+
+      let node = e.target as HTMLElement | null;
+      while (node && node !== document.body && node !== document.documentElement) {
+        const tag = node.tagName;
+        if (tag === 'TEXTAREA' || tag === 'PRE' || tag === 'SELECT') return;
+
+        const maxScrollLeft = node.scrollWidth - node.clientWidth;
+        if (maxScrollLeft > 4) {
+          const style = window.getComputedStyle(node);
+          const overflowX = style.overflowX;
+          const isHorizScrollable = overflowX === 'auto' || overflowX === 'scroll';
+          // Ensure it's a horizontal strip, not a vertically scrolling container
+          const isVertScrollable =
+            (style.overflowY === 'auto' || style.overflowY === 'scroll') &&
+            node.scrollHeight > node.clientHeight + 12;
+
+          if (isHorizScrollable && !isVertScrollable) {
+            const canGoRight = e.deltaY > 0 && node.scrollLeft < maxScrollLeft - 1;
+            const canGoLeft = e.deltaY < 0 && node.scrollLeft > 1;
+            if (canGoRight || canGoLeft) {
+              e.preventDefault();
+              node.scrollLeft += e.deltaY;
+              return;
+            }
+          }
+        }
+        node = node.parentElement;
+      }
+    };
+
+    window.addEventListener('wheel', handleGlobalWheel, { passive: false });
+    return () => window.removeEventListener('wheel', handleGlobalWheel);
   }, []);
 
   const triggerToast = (message: string) => {
@@ -844,6 +884,8 @@ export default function App() {
           <span className="truncate">{toastMessage}</span>
         </div>
       )}
+
+      <Analytics />
     </div>
   );
 }

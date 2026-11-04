@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, useRef, useCallback } from 'react';
 import {
   Search,
   Copy,
@@ -15,6 +15,7 @@ import {
   ChevronRight,
   MousePointerClick,
   LayoutGrid,
+  MoveHorizontal,
 } from 'lucide-react';
 import {
   DESIGN_TERMS,
@@ -45,6 +46,20 @@ export const EncyclopediaView: React.FC<EncyclopediaViewProps> = ({
   const [showBlueprint, setShowBlueprint] = useState(true);
   const [copiedPrompt, setCopiedPrompt] = useState(false);
   const [copiedCss, setCopiedCss] = useState(false);
+
+  // Horizontal concept carousel scroll state & drag support
+  const carouselRef = useRef<HTMLDivElement | null>(null);
+  const cardRefs = useRef<Record<string, HTMLButtonElement | null>>({});
+  const [canScrollLeft, setCanScrollLeft] = useState(false);
+  const [canScrollRight, setCanScrollRight] = useState(true);
+  const [scrollProgress, setScrollProgress] = useState(0);
+  const [isDraggingStrip, setIsDraggingStrip] = useState(false);
+  const dragStateRef = useRef({
+    isDown: false,
+    startX: 0,
+    scrollLeft: 0,
+    hasMoved: false,
+  });
 
   const activeTermIndex = useMemo(() => {
     const idx = DESIGN_TERMS.findIndex((t) => t.id === selectedTermId);
@@ -110,6 +125,98 @@ export const EncyclopediaView: React.FC<EncyclopediaViewProps> = ({
     });
   }, [activeCategory, searchQuery]);
 
+  const updateScrollIndicators = useCallback(() => {
+    const el = carouselRef.current;
+    if (!el) return;
+    const maxScroll = el.scrollWidth - el.clientWidth;
+    if (maxScroll <= 2) {
+      setCanScrollLeft(false);
+      setCanScrollRight(false);
+      setScrollProgress(100);
+      return;
+    }
+    setCanScrollLeft(el.scrollLeft > 6);
+    setCanScrollRight(el.scrollLeft < maxScroll - 6);
+    setScrollProgress(Math.min(100, Math.max(0, Math.round((el.scrollLeft / maxScroll) * 100))));
+  }, []);
+
+  useEffect(() => {
+    updateScrollIndicators();
+    window.addEventListener('resize', updateScrollIndicators);
+    return () => window.removeEventListener('resize', updateScrollIndicators);
+  }, [filteredTerms, updateScrollIndicators]);
+
+  // Keep active concept card visible inside the horizontal strip when changed
+  useEffect(() => {
+    const container = carouselRef.current;
+    const card = cardRefs.current[activeTerm.id];
+    if (!container || !card) return;
+    const cardLeft = card.offsetLeft;
+    const cardRight = cardLeft + card.offsetWidth;
+    const viewLeft = container.scrollLeft;
+    const viewRight = viewLeft + container.clientWidth;
+
+    if (cardLeft < viewLeft + 48 || cardRight > viewRight - 48) {
+      const targetScroll = Math.max(
+        0,
+        cardLeft - container.clientWidth / 2 + card.offsetWidth / 2
+      );
+      container.scrollTo({ left: targetScroll, behavior: 'smooth' });
+    }
+  }, [activeTerm.id]);
+
+  const handleScrollStrip = (direction: 'left' | 'right') => {
+    const el = carouselRef.current;
+    if (!el) return;
+    const step = Math.max(260, Math.floor(el.clientWidth * 0.68));
+    el.scrollBy({
+      left: direction === 'left' ? -step : step,
+      behavior: 'smooth',
+    });
+  };
+
+  const handleMouseDownStrip = (e: React.MouseEvent<HTMLDivElement>) => {
+    const el = carouselRef.current;
+    if (!el) return;
+    dragStateRef.current = {
+      isDown: true,
+      startX: e.pageX - el.offsetLeft,
+      scrollLeft: el.scrollLeft,
+      hasMoved: false,
+    };
+  };
+
+  const handleMouseMoveStrip = (e: React.MouseEvent<HTMLDivElement>) => {
+    const el = carouselRef.current;
+    if (!el || !dragStateRef.current.isDown) return;
+    const x = e.pageX - el.offsetLeft;
+    const walk = x - dragStateRef.current.startX;
+    if (Math.abs(walk) > 6) {
+      dragStateRef.current.hasMoved = true;
+      setIsDraggingStrip(true);
+      el.scrollLeft = dragStateRef.current.scrollLeft - walk * 1.25;
+    }
+  };
+
+  const handleMouseUpOrLeaveStrip = () => {
+    dragStateRef.current.isDown = false;
+    setTimeout(() => {
+      setIsDraggingStrip(false);
+    }, 0);
+  };
+
+  const handleScrubTrackClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    const el = carouselRef.current;
+    if (!el) return;
+    const rect = e.currentTarget.getBoundingClientRect();
+    const clickRatio = Math.min(1, Math.max(0, (e.clientX - rect.left) / rect.width));
+    const maxScroll = el.scrollWidth - el.clientWidth;
+    el.scrollTo({
+      left: maxScroll * clickRatio,
+      behavior: 'smooth',
+    });
+  };
+
   const handleCopyPrompt = () => {
     navigator.clipboard.writeText(compiledDynamicPrompt);
     setCopiedPrompt(true);
@@ -150,7 +257,7 @@ export const EncyclopediaView: React.FC<EncyclopediaViewProps> = ({
               CONCEPTS)
             </div>
             <h2 className="font-display text-base sm:text-lg font-bold text-slate-900">
-              Filter by Category or Click Any Concept Card in the Strip Below
+              Filter by Category or Scroll the Concept Strip Below
             </h2>
           </div>
 
@@ -191,8 +298,8 @@ export const EncyclopediaView: React.FC<EncyclopediaViewProps> = ({
           </div>
         </div>
 
-        {/* Category Filter Tabs */}
-        <div className="flex items-center gap-1 p-1 bg-slate-100 rounded-xl border border-slate-200 overflow-x-auto no-scrollbar snap-x">
+        {/* Category Filter Tabs (Wrapped on desktop so all categories are visible at once; scrollable on mobile) */}
+        <div className="flex sm:flex-wrap items-center gap-1 p-1 bg-slate-100 rounded-xl border border-slate-200 overflow-x-auto no-scrollbar snap-x">
           <button
             type="button"
             onClick={() => setActiveCategory('all')}
@@ -227,7 +334,7 @@ export const EncyclopediaView: React.FC<EncyclopediaViewProps> = ({
           })}
         </div>
 
-        {/* Always-Visible Horizontal Interactive Concept Carousel */}
+        {/* Always-Visible Horizontal Interactive Concept Carousel with Explicit Scroll Controls */}
         {filteredTerms.length === 0 ? (
           <div className="p-4 rounded-xl border border-dashed border-slate-300 text-center flex flex-wrap items-center justify-center gap-3 text-xs text-slate-600">
             <span>No concepts matched &ldquo;{searchQuery}&rdquo; in this category.</span>
@@ -243,45 +350,161 @@ export const EncyclopediaView: React.FC<EncyclopediaViewProps> = ({
             </button>
           </div>
         ) : (
-          <div className="flex items-stretch gap-2.5 overflow-x-auto pb-1.5 pt-0.5 no-scrollbar snap-x">
-            {filteredTerms.map((term) => {
-              const isSelected = term.id === activeTerm.id;
-              return (
-                <button
-                  key={term.id}
-                  type="button"
-                  onClick={() => onSelectTerm(term.id)}
-                  className={`min-w-[210px] sm:min-w-[235px] max-w-[250px] p-3 rounded-xl border text-left transition-all shrink-0 snap-start flex flex-col justify-between gap-1.5 ${
-                    isSelected
-                      ? 'bg-sky-50/90 border-sky-600 ring-2 ring-sky-600/20 shadow-2xs'
-                      : 'bg-slate-50/60 border-slate-200 hover:bg-white hover:border-slate-400'
-                  }`}
+          <div className="space-y-2">
+            {/* Explicit Scroll Navigation Bar & Interactive Progress Track */}
+            <div className="flex flex-wrap items-center justify-between gap-2 px-1">
+              <div className="flex items-center gap-2 text-xs text-slate-600">
+                <MoveHorizontal className="w-3.5 h-3.5 text-sky-600 shrink-0" />
+                <span className="font-medium text-slate-700 tabular-nums">
+                  Scrollable Strip ({filteredTerms.length} concepts)
+                </span>
+                <span className="hidden sm:inline text-slate-400" aria-hidden="true">
+                  ·
+                </span>
+                <span className="hidden sm:inline text-slate-500">
+                  Roll your mouse wheel over the strip, drag sideways, or use the buttons
+                </span>
+              </div>
+
+              <div className="flex items-center gap-2 ml-auto">
+                {/* Interactive Mini Progress Track (Click to Jump) */}
+                <div
+                  role="progressbar"
+                  aria-valuenow={scrollProgress}
+                  aria-valuemin={0}
+                  aria-valuemax={100}
+                  aria-label="Concept strip horizontal scroll progress"
+                  onClick={handleScrubTrackClick}
+                  title="Click anywhere on track to jump across the concept strip"
+                  className="hidden md:flex items-center w-28 h-2 bg-slate-200 rounded-full overflow-hidden cursor-pointer p-0.5"
                 >
-                  <div className="flex items-center justify-between gap-2 text-[10px] font-mono">
-                    <span
-                      className={`font-bold tabular-nums ${
-                        isSelected ? 'text-sky-700' : 'text-slate-500'
+                  <div
+                    className="h-full bg-sky-600 rounded-full transition-all duration-150"
+                    style={{ width: `${Math.max(12, scrollProgress)}%` }}
+                  />
+                </div>
+
+                <div className="inline-flex items-center gap-1">
+                  <button
+                    type="button"
+                    onClick={() => handleScrollStrip('left')}
+                    disabled={!canScrollLeft}
+                    aria-label="Scroll concepts left"
+                    className={`min-h-[34px] px-2.5 py-1 rounded-lg border text-xs font-semibold flex items-center gap-1 transition-all whitespace-nowrap shrink-0 ${
+                      canScrollLeft
+                        ? 'bg-white border-slate-300 text-slate-800 hover:bg-slate-100 hover:border-slate-400 shadow-2xs active:scale-95'
+                        : 'bg-slate-50 border-slate-200 text-slate-300 cursor-not-allowed'
+                    }`}
+                  >
+                    <ChevronLeft className="w-3.5 h-3.5" />
+                    <span>Scroll Left</span>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => handleScrollStrip('right')}
+                    disabled={!canScrollRight}
+                    aria-label="Scroll concepts right"
+                    className={`min-h-[34px] px-2.5 py-1 rounded-lg border text-xs font-semibold flex items-center gap-1 transition-all whitespace-nowrap shrink-0 ${
+                      canScrollRight
+                        ? 'bg-slate-900 border-slate-900 text-white hover:bg-slate-800 shadow-2xs active:scale-95'
+                        : 'bg-slate-50 border-slate-200 text-slate-300 cursor-not-allowed'
+                    }`}
+                  >
+                    <span>Scroll Right</span>
+                    <ChevronRight className="w-3.5 h-3.5" />
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            {/* Scrollable Container with Edge Fade Masks & Floating Paddle Buttons */}
+            <div className="relative group/strip">
+              {/* Left Fade & Floating Paddle */}
+              {canScrollLeft && (
+                <div className="pointer-events-none absolute left-0 top-0 bottom-3 w-14 bg-gradient-to-r from-white via-white/85 to-transparent z-10 flex items-center justify-start pl-1">
+                  <button
+                    type="button"
+                    onClick={() => handleScrollStrip('left')}
+                    aria-label="Scroll concept strip left"
+                    className="pointer-events-auto h-9 w-9 rounded-full bg-white/95 hover:bg-slate-900 text-slate-800 hover:text-white border border-slate-300 shadow-md flex items-center justify-center transition-colors"
+                  >
+                    <ChevronLeft className="w-4 h-4" />
+                  </button>
+                </div>
+              )}
+
+              {/* Right Fade & Floating Paddle */}
+              {canScrollRight && (
+                <div className="pointer-events-none absolute right-0 top-0 bottom-3 w-20 bg-gradient-to-l from-white via-white/90 to-transparent z-10 flex items-center justify-end pr-1">
+                  <button
+                    type="button"
+                    onClick={() => handleScrollStrip('right')}
+                    aria-label="Scroll concept strip right"
+                    className="pointer-events-auto h-9 px-2.5 rounded-full bg-slate-900/95 hover:bg-sky-600 text-white border border-slate-800 shadow-md flex items-center gap-0.5 text-[11px] font-semibold transition-colors whitespace-nowrap"
+                  >
+                    <span className="hidden sm:inline">More</span>
+                    <ChevronRight className="w-4 h-4" />
+                  </button>
+                </div>
+              )}
+
+              <div
+                ref={carouselRef}
+                onScroll={updateScrollIndicators}
+                onMouseDown={handleMouseDownStrip}
+                onMouseMove={handleMouseMoveStrip}
+                onMouseUp={handleMouseUpOrLeaveStrip}
+                onMouseLeave={handleMouseUpOrLeaveStrip}
+                className={`flex items-stretch gap-2.5 overflow-x-auto pb-3 pt-0.5 concept-scrollbar select-none ${
+                  isDraggingStrip ? 'cursor-grabbing' : 'cursor-grab snap-x'
+                }`}
+              >
+                {filteredTerms.map((term) => {
+                  const isSelected = term.id === activeTerm.id;
+                  return (
+                    <button
+                      key={term.id}
+                      ref={(el) => {
+                        cardRefs.current[term.id] = el;
+                      }}
+                      type="button"
+                      onClick={() => {
+                        if (dragStateRef.current.hasMoved) return;
+                        onSelectTerm(term.id);
+                      }}
+                      className={`min-w-[210px] sm:min-w-[235px] max-w-[250px] p-3 rounded-xl border text-left transition-all shrink-0 snap-start flex flex-col justify-between gap-1.5 ${
+                        isSelected
+                          ? 'bg-sky-50/90 border-sky-600 ring-2 ring-sky-600/20 shadow-2xs'
+                          : 'bg-slate-50/60 border-slate-200 hover:bg-white hover:border-slate-400'
                       }`}
                     >
-                      CONCEPT {term.number}
-                    </span>
-                    <span
-                      className={`truncate ${
-                        isSelected ? 'text-sky-800 font-semibold' : 'text-slate-400'
-                      }`}
-                    >
-                      {isSelected ? 'ACTIVE DEMO' : term.category}
-                    </span>
-                  </div>
-                  <div className="font-display text-xs sm:text-sm font-bold text-slate-900 truncate">
-                    {term.title}
-                  </div>
-                  <div className="text-[11px] text-slate-500 truncate italic">
-                    &ldquo;{term.vibePhrases[0]}&rdquo;
-                  </div>
-                </button>
-              );
-            })}
+                      <div className="flex items-center justify-between gap-2 text-[10px] font-mono">
+                        <span
+                          className={`font-bold tabular-nums ${
+                            isSelected ? 'text-sky-700' : 'text-slate-500'
+                          }`}
+                        >
+                          CONCEPT {term.number}
+                        </span>
+                        <span
+                          className={`truncate ${
+                            isSelected ? 'text-sky-800 font-semibold' : 'text-slate-400'
+                          }`}
+                        >
+                          {isSelected ? 'ACTIVE DEMO' : term.category}
+                        </span>
+                      </div>
+                      <div className="font-display text-xs sm:text-sm font-bold text-slate-900 truncate">
+                        {term.title}
+                      </div>
+                      <div className="text-[11px] text-slate-500 truncate italic">
+                        &ldquo;{term.vibePhrases[0]}&rdquo;
+                      </div>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
           </div>
         )}
       </section>
@@ -680,7 +903,7 @@ export const EncyclopediaView: React.FC<EncyclopediaViewProps> = ({
           FULL 42-CONCEPT VISUAL DIRECTORY GRID (#all-concepts-directory)
       ===================================================================== */}
       <section id="all-concepts-directory" className="space-y-4 sm:space-y-5 scroll-mt-16">
-        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-3 sm:gap-4 border-b border-slate-200 pb-4">
+        <div className="flex flex-col gap-3 border-b border-slate-200 pb-4">
           <div>
             <div className="text-xs font-mono text-sky-700 font-semibold">
               COMPLETE UI/UX ENCYCLOPEDIA DIRECTORY ({filteredTerms.length} OF {DESIGN_TERMS.length}{' '}
@@ -691,8 +914,8 @@ export const EncyclopediaView: React.FC<EncyclopediaViewProps> = ({
             </h3>
           </div>
 
-          {/* Segmented Category Filter */}
-          <div className="flex items-center gap-1 p-1 bg-slate-200/75 rounded-xl border border-slate-200 overflow-x-auto no-scrollbar snap-x">
+          {/* Segmented Category Filter (Full width & wrapped on desktop so all categories are visible without clipping) */}
+          <div className="flex sm:flex-wrap items-center gap-1 p-1 bg-slate-200/75 rounded-xl border border-slate-200 overflow-x-auto no-scrollbar snap-x w-fit max-w-full">
             <button
               type="button"
               onClick={() => setActiveCategory('all')}

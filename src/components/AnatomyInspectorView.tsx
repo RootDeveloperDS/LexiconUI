@@ -97,8 +97,8 @@ export const AnatomyInspectorView: React.FC<AnatomyInspectorViewProps> = ({
         </div>
 
         <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5 sm:gap-3 shrink-0">
-          {/* Template Switcher Segmented Control (Swipeable on mobile) */}
-          <div className="flex p-1 bg-slate-100 rounded-xl border border-slate-200 overflow-x-auto no-scrollbar snap-x">
+          {/* Template Switcher Segmented Control (Wrapped on desktop, swipeable on mobile) */}
+          <div className="flex sm:flex-wrap p-1 bg-slate-100 rounded-xl border border-slate-200 overflow-x-auto no-scrollbar snap-x">
             {ANATOMY_TEMPLATES.map((tpl) => {
               const isSelected = tpl.id === activeTemplateId;
               return (
@@ -787,8 +787,8 @@ export const AnatomyInspectorView: React.FC<AnatomyInspectorViewProps> = ({
             </div>
           )}
 
-          {/* Bottom Hotspot Strip Selector (Swipeable on mobile with 40px+ touch targets) */}
-          <div className="px-3.5 sm:px-5 py-3 bg-slate-50 border-t border-slate-200 flex items-center gap-2 overflow-x-auto no-scrollbar">
+          {/* Bottom Hotspot Strip Selector (Wrapped on desktop, swipeable on mobile with 40px+ touch targets) */}
+          <div className="px-3.5 sm:px-5 py-3 bg-slate-50 border-t border-slate-200 flex sm:flex-wrap items-center gap-2 overflow-x-auto no-scrollbar">
             <span className="text-xs font-mono text-slate-500 mr-1 shrink-0">Hotspots:</span>
             {activeTemplate.hotspots.map((h) => {
               const isSelected = h.id === selectedHotspotId;
