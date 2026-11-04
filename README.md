@@ -7,6 +7,7 @@
 **The Open-Source Interactive UI/UX Terminology & Prompt-Engineering Encyclopedia for Developers and AI Vibe Coders**
 
 [![GitHub Repo](https://img.shields.io/badge/GitHub-RootDeveloperDS%2FLexiconUI-0F172A.svg?logo=github)](https://github.com/RootDeveloperDS/LexiconUI)
+[![CI Build](https://github.com/RootDeveloperDS/LexiconUI/actions/workflows/ci.yml/badge.svg)](https://github.com/RootDeveloperDS/LexiconUI/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-0284C7.svg)](./LICENSE)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-059669.svg)](https://github.com/RootDeveloperDS/LexiconUI/pulls)
 [![Concepts: 42 Interactive Specs](https://img.shields.io/badge/UI%2FUX_Concepts-42_Live_Sandboxes-0F172A.svg)](#3-complete-42-concept-curriculum-taxonomy)
@@ -14,7 +15,7 @@
 [![React 19](https://img.shields.io/badge/React-19-0284C7.svg)](./package.json)
 [![Tailwind CSS v4](https://img.shields.io/badge/Tailwind_CSS-v4.0-38BDF8.svg)](./src/index.css)
 
-[**GitHub Repository**](https://github.com/RootDeveloperDS/LexiconUI) · [**Project Overview**](#1-project-overview--the-problem-we-solve) · [**Interactive Modules**](#2-core-interactive-modules) · [**42-Concept Curriculum**](#3-complete-42-concept-curriculum-taxonomy) · [**Installation**](#4-installation--local-development) · [**Roadmap**](#6-project-roadmap) · [**Contributing**](#7-contribution-guidelines--how-you-can-make-lexiconui-indispensable) · [**MIT License**](#8-license)
+[**GitHub Repository**](https://github.com/RootDeveloperDS/LexiconUI) · [**Project Overview**](#1-project-overview--the-problem-we-solve) · [**Interactive Modules**](#2-core-interactive-modules) · [**42-Concept Curriculum**](#3-complete-42-concept-curriculum-taxonomy) · [**Installation**](#4-installation--local-development) · [**Roadmap**](#6-project-roadmap) · [**Contributing**](./CONTRIBUTING.md) · [**Changelog**](./CHANGELOG.md) · [**MIT License**](./LICENSE)
 
 </div>
 
@@ -180,8 +181,14 @@ LexiconUI/
 ├── .github/
 │   ├── ISSUE_TEMPLATE/
 │   │   ├── bug_report.md               # Issue template for UI or sandbox bugs
+│   │   ├── config.yml                  # Issue chooser links to Discussions & Studio
 │   │   ├── new_anatomy_case_study.md   # Proposal template for X-Ray blueprints
 │   │   └── new_ui_ux_term.md           # Proposal template for new UI/UX terms
+│   ├── workflows/
+│   │   └── ci.yml                      # GitHub Actions CI (TypeScript + Vite build)
+│   ├── CODEOWNERS                      # Automatic PR review routing
+│   ├── dependabot.yml                  # Automated weekly dependency updates
+│   ├── FUNDING.yml                     # GitHub Sponsor & creator links
 │   └── PULL_REQUEST_TEMPLATE.md        # Standardized PR checklist & 6-gate rubric
 ├── src/
 │   ├── components/
@@ -189,6 +196,8 @@ LexiconUI/
 │   │   ├── ComparisonMatrixView.tsx    # Side-by-side pattern decision tables + mobile cards
 │   │   ├── ContributorStudioView.tsx   # In-app OSS hub, Showcase Gallery & PR schema builder
 │   │   ├── EncyclopediaView.tsx        # Two-Zone sandbox & 42-term curriculum directory
+│   │   ├── FeedbackRatingWidget.tsx    # Interactive 1-5 star feedback telemetry widget
+│   │   ├── Footer.tsx                  # 12-column architectural footer & social presence
 │   │   ├── InteractiveStage.tsx        # 42 live React mini-simulations
 │   │   ├── LexiconLogo.tsx             # Custom Swiss-architectural SVG brand mark
 │   │   ├── Overlays.tsx                # Global Cmd+K modal & Slide-Over Spec Cart
@@ -199,12 +208,16 @@ LexiconUI/
 │   ├── App.tsx                         # Application shell, mobile nav & persistent Spec store
 │   ├── index.css                       # Swiss Editorial theme & blueprint utilities
 │   └── main.tsx                        # React 19 DOM entry point
+├── .editorconfig                       # Consistent cross-IDE indentation & UTF-8 rules
 ├── ARCHITECTURE.md                     # Deep technical & ontology extension guide
+├── CHANGELOG.md                        # Semantic Versioning release history
+├── CITATION.cff                        # GitHub native repository citation metadata
 ├── CODE_OF_CONDUCT.md                  # Contributor Covenant v2.1
 ├── CONTRIBUTING.md                     # Complete contributor guide & review rubric
 ├── LICENSE                             # MIT License
 ├── README.md                           # Project overview, roadmap & documentation
-└── SECURITY.md                         # Security policy & vulnerability reporting
+├── SECURITY.md                         # Security policy & vulnerability reporting
+└── SUPPORT.md                          # Community support & help guide
 ```
 
 ---

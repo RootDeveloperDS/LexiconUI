@@ -1,0 +1,9 @@
+# Default owners for everything in the repository
+* @RootDeveloperDS
+
+# Core UI/UX Ontology & Anatomy Data Schemas
+/src/data/ @RootDeveloperDS
+
+# Interactive Sandbox & Core Application Shell
+/src/components/ @RootDeveloperDS
+/src/App.tsx @RootDeveloperDS

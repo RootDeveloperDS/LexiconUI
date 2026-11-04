@@ -1,12 +1,34 @@
 {
   "name": "lexicon-ui",
   "private": true,
-  "version": "1.7.0",
+  "version": "1.10.0",
   "description": "The Open-Source Interactive UI/UX Terminology & Prompt-Engineering Encyclopedia for Developers and AI Vibe Coders",
   "homepage": "https://github.com/RootDeveloperDS/LexiconUI",
   "repository": {
     "type": "git",
     "url": "https://github.com/RootDeveloperDS/LexiconUI.git"
+  },
+  "bugs": {
+    "url": "https://github.com/RootDeveloperDS/LexiconUI/issues"
+  },
+  "author": {
+    "name": "Devansh Sharma (@RootDeveloperDS)",
+    "email": "developersofroot@gmail.com",
+    "url": "https://devanshsharma.vercel.app/"
+  },
+  "keywords": [
+    "ui-ux",
+    "design-systems",
+    "prompt-engineering",
+    "vibe-coding",
+    "frontend-architecture",
+    "tailwindcss",
+    "react",
+    "encyclopedia",
+    "interactive-sandbox"
+  ],
+  "engines": {
+    "node": ">=20.0.0"
   },
   "license": "MIT",
   "type": "module",

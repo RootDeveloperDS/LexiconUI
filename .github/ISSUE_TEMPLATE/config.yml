@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: "💬 Community Discussions & Q&A"
+    url: "https://github.com/RootDeveloperDS/LexiconUI/discussions"
+    about: "Ask questions about UI/UX terminology, prompt engineering, or architecture."
+  - name: "🛠️ In-App OSS Contributor Studio"
+    url: "https://github.com/RootDeveloperDS/LexiconUI#7-contribution-guidelines--how-you-can-make-lexiconui-indispensable"
+    about: "Use the built-in Contributor Studio tab inside LexiconUI to draft and validate new UI/UX concepts and live demos."

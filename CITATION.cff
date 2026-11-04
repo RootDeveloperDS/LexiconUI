@@ -1,0 +1,23 @@
+cff-version: 1.2.0
+title: "LexiconUI: Interactive UI/UX Terminology & Prompt-Engineering Encyclopedia"
+message: "If you use LexiconUI in your research, design system documentation, or developer tooling, please cite it using this metadata."
+type: software
+authors:
+  - given-names: Devansh
+    family-names: Sharma
+    alias: RootDeveloperDS
+    email: developersofroot@gmail.com
+    website: "https://devanshsharma.vercel.app/"
+repository-code: "https://github.com/RootDeveloperDS/LexiconUI"
+url: "https://github.com/RootDeveloperDS/LexiconUI"
+license: MIT
+version: 1.10.0
+date-released: "2026-11-04"
+keywords:
+  - ui-ux
+  - design-systems
+  - prompt-engineering
+  - vibe-coding
+  - frontend-architecture
+  - tailwindcss
+  - react
