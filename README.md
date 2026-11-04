@@ -10,12 +10,12 @@
 [![CI Build](https://github.com/RootDeveloperDS/LexiconUI/actions/workflows/ci.yml/badge.svg)](https://github.com/RootDeveloperDS/LexiconUI/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-0284C7.svg)](./LICENSE)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-059669.svg)](https://github.com/RootDeveloperDS/LexiconUI/pulls)
-[![Concepts: 42 Interactive Specs](https://img.shields.io/badge/UI%2FUX_Concepts-42_Live_Sandboxes-0F172A.svg)](#3-complete-42-concept-curriculum-taxonomy)
+[![Concepts: 48 Interactive Specs](https://img.shields.io/badge/UI%2FUX_Concepts-48_Live_Sandboxes-0F172A.svg)](#3-complete-48-concept-curriculum-taxonomy)
 [![TypeScript](https://img.shields.io/badge/TypeScript-Strict-0F172A.svg)](./tsconfig.json)
 [![React 19](https://img.shields.io/badge/React-19-0284C7.svg)](./package.json)
 [![Tailwind CSS v4](https://img.shields.io/badge/Tailwind_CSS-v4.0-38BDF8.svg)](./src/index.css)
 
-[**GitHub Repository**](https://github.com/RootDeveloperDS/LexiconUI) · [**Project Overview**](#1-project-overview--the-problem-we-solve) · [**Interactive Modules**](#2-core-interactive-modules) · [**42-Concept Curriculum**](#3-complete-42-concept-curriculum-taxonomy) · [**Installation**](#4-installation--local-development) · [**Roadmap**](#6-project-roadmap) · [**Contributing**](./CONTRIBUTING.md) · [**Changelog**](./CHANGELOG.md) · [**MIT License**](./LICENSE)
+[**GitHub Repository**](https://github.com/RootDeveloperDS/LexiconUI) · [**Project Overview**](#1-project-overview--the-problem-we-solve) · [**Interactive Modules**](#2-core-interactive-modules) · [**48-Concept Curriculum**](#3-complete-48-concept-curriculum-taxonomy) · [**Installation**](#4-installation--local-development) · [**Roadmap**](#6-project-roadmap) · [**Contributing**](./CONTRIBUTING.md) · [**Changelog**](./CHANGELOG.md) · [**MIT License**](./LICENSE)
 
 </div>
 
@@ -25,7 +25,7 @@
 
 1. [Project Overview & The Problem We Solve](#1-project-overview--the-problem-we-solve)
 2. [Core Interactive Modules](#2-core-interactive-modules)
-3. [Complete 42-Concept Curriculum Taxonomy (Everyday UI + Sci-Fi FUI)](#3-complete-42-concept-curriculum-taxonomy)
+3. [Complete 48-Concept Curriculum Taxonomy (Everyday UI + Sci-Fi FUI)](#3-complete-48-concept-curriculum-taxonomy)
 4. [Installation & Local Development](#4-installation--local-development)
 5. [Repository Structure & Technical Architecture](#5-repository-structure--technical-architecture)
 6. [Project Roadmap](#6-project-roadmap)
@@ -47,52 +47,28 @@ Whether it is an **everyday mystery pattern** you see a hundred times a day (*Ac
 | *"Put a FAQ list where clicking a question opens the answer."* | Janky `display: none` toggles without ARIA attributes or smooth height transitions. | **"Build a WAI-ARIA Accordion (`aria-expanded`) with single-open progressive disclosure, rotating chevron indicator (`rotate-180`), and `grid-template-rows: 0fr` to `1fr` transition."** |
 | *"Make a cool sci-fi Iron Man / Cyberpunk frame with angled corners and a node graph."* | Standard rounded rectangles (`rounded-lg`) with neon blue borders and straight lines. | **"Apply a 45° Chamfered HUD Polygon (`clip-path: polygon(0 0, calc(100% - 16px) 0, 100% 16px, 100% 100%, 16px 100%, 0 calc(100% - 16px))`) and render a DAG Node-Graph Canvas with SVG cubic Bezier noodles (`M x1 y1 C cx1 cy1, cx2 cy2, x2 y2`)."** |
 
-**LexiconUI** solves this permanently by combining a 42-concept interactive UI/UX encyclopedia, a clickable full-screen Visual Anatomy X-Ray dissector, a deterministic Vibe-to-Spec Prompt Translator, and an in-app Open-Source Contributor Studio into a single zero-config web application.
+**LexiconUI** solves this permanently by combining a 48-concept interactive UI/UX encyclopedia, a clickable full-screen Visual Anatomy X-Ray dissector, a deterministic Vibe-to-Spec Prompt Translator, Multi-Pattern Full-Page Blueprints, and a Guided 5-Tool Workspace Tour into a single zero-config web application.
 
 ---
 
 ## 2. Core Interactive Modules
 
-```
-┌───────────────────────────────────────────────────────────────────────────────┐
-│                         LexiconUI Application Shell                           │
-│  ┌─────────────────────┐  ┌─────────────────────────────┐  ┌───────────────┐  │
-│  │  Brand: LexiconUI   │  │ Encyclopedia · Anatomy X-Ray│  │ Spec Cart (N) │  │
-│  │  (3-Zone Top Bar)   │  │ Translator · Matrix · OSS   │  │ + Quick Cmd+K │  │
-│  └─────────────────────┘  └──────────────┬──────────────┘  └───────┬───────┘  │
-└──────────────────────────────────────────┼─────────────────────────┼──────────┘
-                                           │                         │
-    ┌──────────────────────┬───────────────┴───────┬─────────────────┴─────┐
-    ▼                      ▼                       ▼                       ▼
-┌────────────────┐ ┌───────────────────┐ ┌───────────────────┐ ┌────────────────┐
-│ 1. Two-Zone    │ │ 2. Visual Anatomy │ │ 3. Vibe-to-Spec   │ │ 4. In-App OSS  │
-│    Live        │ │    X-Ray          │ │    Prompt         │ │    Contributor │
-│    Sandbox     │ │    Inspector      │ │    Translator     │ │    Studio      │
-├────────────────┤ ├───────────────────┤ ├───────────────────┤ ├────────────────┤
-│ • 42 Live DOM  │ │ • 4 Full-Screen   │ │ • Plain-English   │ │ • 6 Community  │
-│   Simulations  │ │   Blueprints      │ │   Vibe Input      │ │   Contribution │
-│ • Real-Time    │ │   (incl. Sci-Fi   │ │ • 250+ Colloquial │ │   Avenues      │
-│   Sliders &    │ │   FUI HUD)        │ │   Synonym Graph   │ │ • Live 5-Gate  │
-│   Rulers       │ │ • Numbered Pins   │ │ • Anti-Slop       │ │   Rubric Audit │
-│ • Fluff vs.    │ │   & Synced Spec   │ │   Guardrails &    │ │ • 1-Click TS & │
-│   Exact Spec   │ │   Prompt Sheet    │ │   .MD Compiler    │ │   PR Generator │
-└────────────────┘ └───────────────────┘ └───────────────────┘ └────────────────┘
-```
-
-1. **Interactive Encyclopedia & Two-Zone Component Sandbox (`42 Live Concepts`)**:
-   - Manipulate live parameters (grid spans, gutter widths, concentric border-radius math, accordion disclosure modes, menu icon morphologies, chamfered HUD clip-paths, VisionOS specular rim angles, Bezier node curvature) and watch both the **live DOM specimen** and the **copy-ready AI agent prompt** update in real time.
+1. **Interactive Encyclopedia & Two-Zone Component Sandbox (`48 Live Concepts`)**:
+   - Manipulate live parameters (grid spans, CSS subgrid alignment, slash command popovers, PiP corner docks, 6-digit OTP inputs, magnetic button pull, 3D isometric plane spacing, chamfered HUD clip-paths, Bezier node curvature) and watch both the **live DOM specimen** and the **copy-ready AI agent prompt** update in real time.
 2. **Visual Anatomy X-Ray Inspector (`4 Industry & Sci-Fi Blueprints`)**:
    - Switch between 4 full-scale reference interfaces (*SaaS Analytics & Developer Console*, *Editorial Product Launch Landing Page*, *Modern E-Commerce Studio*, and *Sci-Fi Tactical HUD & Orbital Console*). Click any numbered X-Ray callout pin (`01`–`06`) or UI zone to reveal its formal name, spatial math rule, common vibe-coding mistake, and region-specific prompt.
 3. **Vibe-to-Spec Prompt Translator & Spec Composer**:
    - Type how you naturally picture an interface in plain English. Automatically detects every underlying UI/UX concept across all 5 pillars, attaches universal anti-slop guardrails, and exports a structured Markdown system prompt (`UI_UX_AGENT_PROMPT.md`).
 4. **Architectural Decision Matrices ("When to Use What")**:
    - Side-by-side comparison tables resolving classic UI confusion (*Modal vs. Slide-Over Drawer vs. Popover vs. Toast*, *Bento vs. Hairline Grid vs. Split-Screen Hero*, *Hamburger vs. Kebab vs. Meatballs vs. Bento Menu Icons*, and *Sci-Fi & Spatial UI Paradigms*).
-5. **In-App Open-Source Contributor Studio & Community Wishlist**:
-   - Draft and validate new UI/UX concepts, load starter presets, copy GitHub Issue/PR specs for community wishlist features, and generate validated TypeScript & Pull Request payloads in one click.
+5. **Multi-Pattern Full-Page Blueprints & Interactive "Name That UI!" Quiz**:
+   - Copy complete application architectures combining 4–5 Encyclopedia patterns (*B2B SaaS Workspace*, *Product Launch Landing Page*, *Collaborative Docs & Editor*, *2FA Auth Flow*, *Sci-Fi Telemetry Studio*), test your knowledge with interactive UI flashcards, and jump directly to the open-source GitHub repository.
+6. **Guided 5-Tool Workspace Intro Tour (`IntroTour.tsx`)**:
+   - Programmatically highlights each of the 5 workspace tools for first-time visitors (and on demand via the *Guided Tour* button), switching tabs live to explain what each tool does and when to use it.
 
 ---
 
-## 3. Complete 42-Concept Curriculum Taxonomy
+## 3. Complete 48-Concept Curriculum Taxonomy
 
 | # | Formal UI/UX Term | Pillar | Colloquial "Vibe Phrase" Example | Core CSS / Tailwind Signature |
 | :- | :--- | :--- | :--- | :--- |
@@ -138,6 +114,12 @@ Whether it is an **everyday mystery pattern** you see a hundred times a day (*Ac
 | `40` | **Polar Coordinate Radar & Conic Sweep HUD** | Sci-Fi & FUI | *"Spinning radar circle with sweeping beam and glowing blips"* | `conic-gradient(from 0deg, rgba(34,211,238,0.35), transparent 75deg)` |
 | `41` | **Radial Pie Menu (`Marking Menu`)** | Sci-Fi & FUI | *"Circular wheel menu that pops up around the cursor"* | Polar angle wedge sectors (`atan2(dy, dx)`) around origin |
 | `42` | **Node-Graph Patch Canvas & Bezier Noodles** | Sci-Fi & FUI | *"Boxes connected by curved wires like Blender or ComfyUI"* | `<svg>` cubic Bezier `<path d="M x1 y1 C cx1 cy1, cx2 cy2, x2 y2" />` |
+| `43` | **CSS Subgrid Cross-Card Alignment** | Layout & Spatial | *"Make card titles and buttons line up horizontally across a row"* | `grid-cols-3` parent + `row-span-3 grid-rows-subgrid` child cards |
+| `44` | **Inline Slash Command Menu (`/ Trigger`)** | Navigation & UI | *"Popup menu when you type a forward slash at the cursor"* | Caret-anchored `role="listbox"` popover (`w-64 shadow-xl z-50`) |
+| `45` | **Docked Picture-in-Picture (`PiP`) Mini-Player** | Navigation & UI | *"Small floating video player in bottom corner when scrolling"* | `fixed bottom-5 right-5 z-40 w-72 aspect-video rounded-2xl` |
+| `46` | **Segmented OTP / 2FA Auto-Advance Input** | Navigation & UI | *"6 separate digit boxes for verification code with paste support"* | `inputMode="numeric" autoComplete="one-time-code" tabular-nums` |
+| `47` | **Magnetic Cursor Target & Proximity Pull** | Motion & Craft | *"Button that pulls slightly toward your mouse cursor"* | `transform: translate3d(dx * 0.28, dy * 0.28, 0)` + spring snap |
+| `48` | **Isometric Exploded Layer Stack (`3D Planes`)** | Sci-Fi & FUI | *"Floating 3D tilted layers stacked on top of each other"* | `[transform-style:preserve-3d] [transform:rotateX(55deg)_rotateZ(-45deg)]` |
 
 ---
 
@@ -194,17 +176,18 @@ LexiconUI/
 │   ├── components/
 │   │   ├── AnatomyInspectorView.tsx    # Interactive X-Ray blueprint dissector (4 templates)
 │   │   ├── ComparisonMatrixView.tsx    # Side-by-side pattern decision tables + mobile cards
-│   │   ├── ContributorStudioView.tsx   # In-app OSS hub, Showcase Gallery & PR schema builder
-│   │   ├── EncyclopediaView.tsx        # Two-Zone sandbox & 42-term curriculum directory
+│   │   ├── ContributorStudioView.tsx   # Multi-Pattern Page Blueprints, UI Quiz & GitHub Hub
+│   │   ├── EncyclopediaView.tsx        # Two-Zone sandbox & 48-term curriculum directory
 │   │   ├── FeedbackRatingWidget.tsx    # Interactive 1-5 star feedback telemetry widget
 │   │   ├── Footer.tsx                  # 12-column architectural footer & social presence
-│   │   ├── InteractiveStage.tsx        # 42 live React mini-simulations
+│   │   ├── InteractiveStage.tsx        # 48 live React mini-simulations
+│   │   ├── IntroTour.tsx               # 5-step programmatic guided workspace tour
 │   │   ├── LexiconLogo.tsx             # Custom Swiss-architectural SVG brand mark
 │   │   ├── Overlays.tsx                # Global Cmd+K modal & Slide-Over Spec Cart
 │   │   └── PromptTranslatorView.tsx    # Natural-language Vibe-to-Spec compiler
 │   ├── data/
 │   │   ├── anatomyData.ts              # X-Ray hotspots, decision matrices & presets
-│   │   └── termsData.ts                # 42 canonical UI/UX & Sci-Fi FUI concepts
+│   │   └── termsData.ts                # 48 canonical UI/UX & Sci-Fi FUI concepts
 │   ├── App.tsx                         # Application shell, mobile nav & persistent Spec store
 │   ├── index.css                       # Swiss Editorial theme & blueprint utilities
 │   └── main.tsx                        # React 19 DOM entry point
@@ -224,21 +207,21 @@ LexiconUI/
 
 ## 6. Project Roadmap
 
-### Phase 1: Foundation, Everyday Mystery UI & Sci-Fi FUI Core (Completed)
-- [x] **42 Canonical UI/UX Concepts** across 5 Pillars (*Layout*, *Navigation*, *Typography & Color*, *Motion*, and *Sci-Fi / Spatial / Futuristic FUI*).
-- [x] **Two-Zone Interactive Sandbox** with real-time parameter sliders and Blueprint Rulers for all 42 concepts.
+### Phase 1: Foundation, 48 Interactive UI Sandboxes, Guided Tour & Page Blueprints (Completed in v1.11.0)
+- [x] **48 Canonical UI/UX Concepts** across 5 Pillars (*Layout*, *Navigation*, *Typography & Color*, *Motion*, and *Sci-Fi / Spatial / Futuristic FUI*).
+- [x] **Two-Zone Interactive Sandbox** with real-time parameter sliders and Blueprint Rulers for all 48 concepts.
 - [x] **4 Full-Screen Visual Anatomy X-Ray Blueprints**: *SaaS Console*, *Editorial Landing Page*, *E-Commerce Studio*, and *Sci-Fi Tactical HUD & Orbital Console*.
-- [x] **Deterministic Vibe-to-Spec Translator** with 250+ colloquial synonym triggers and `.MD` Spec export.
-- [x] **In-App OSS Contributor Studio** with 6 contribution avenues, starter presets, community wishlist issue generators, and 5-gate rubric validation.
+- [x] **Deterministic Vibe-to-Spec Translator** with 300+ colloquial synonym triggers and `.MD` Spec export.
+- [x] **5-Step Guided Workspace Intro Tour (`IntroTour.tsx`)** that programmatically highlights each tool for new visitors.
+- [x] **5 Multi-Pattern Full-Page Blueprints & Interactive "Name That UI!" Quiz (`ContributorStudioView.tsx`)**.
 
 ### Phase 2: Developer Convenience & AI Agent Ecosystem Integrations (Open for Community PRs!)
 - [ ] **1-Click Agent Rule File Exporters (`.cursorrules`, `CLAUDE.md`, `AGENTS.md`, Windsurf)**: Export your Spec Cart directly into IDE-native agent instruction files.
 - [ ] **LexiconUI MCP Server (`@lexicon-ui/mcp-server`)**: Expose the `DESIGN_TERMS` ontology via the Model Context Protocol so coding agents can query exact UI/UX specifications autonomously.
 - [ ] **Multi-Framework Code Tabs**: Toggle code snippets between Tailwind CSS, Vanilla CSS, `shadcn/ui`, and SwiftUI / Jetpack Compose.
 
-### Phase 3: Deep Interactivity, Visual Quiz Mode & Expanded Curriculum (Planned)
-- [ ] **"Name That UI Pattern!" Interactive Visual Flashcard & Quiz Mode**: Timed visual challenges to help developers internalize UI/UX vocabulary from sight.
-- [ ] **50+ Additional Everyday & Domain Concepts**: Sticky Table Headers, Docked PiP Mini-Players, Inline Slash Command Menus, Isometric 3D Exploded Layer Stacks, and Data Visualization taxonomies.
+### Phase 3: Expanded Curriculum & Localization (Planned)
+- [ ] **50+ Additional Everyday & Domain Concepts**: Sticky Table Headers, Resizable Split Panes, Pull-to-Refresh, and Data Visualization taxonomies.
 - [ ] **Community Localization (i18n)**: Map colloquial vibe phrases in multiple languages to canonical English UI/UX engineering terminology.
 
 ---
@@ -249,16 +232,16 @@ LexiconUI/
 
 ### Six High-Impact Ways You Can Contribute
 
-1. **01 · Add Everyday "What Is That Called?!" UI Concepts**:
-   - Spot a common UI pattern people see every day (e.g., *Sticky Table Header*, *Inline Slash Command Menu (`/`) *, *Docked Mini-Player*, *Segmented OTP Input*, *Pull-to-Refresh*) that isn't in the encyclopedia yet? Draft it in the **OSS Contribute** tab and submit a PR!
+1. **01 · Add Everyday "What Is That Called?!" UI Concepts (`Concept #49+`)**:
+   - Spot a common UI pattern people see every day (e.g., *Sticky Table Header*, *Resizable Split Pane*, *Pull-to-Refresh*, *Color Swatch Picker*) that isn't in the encyclopedia yet? Add it to `src/data/termsData.ts` + `src/components/InteractiveStage.tsx` and submit a PR!
 2. **02 · Expand the Sci-Fi, Spatial & Futuristic UI (FUI) Collection**:
-   - Contribute VisionOS spatial glass components, 3D CSS isometric exploded layer stacks, diegetic game HUD overlays, biometric waveform oscilloscopes, or WebGL shader surfaces.
+   - Contribute VisionOS spatial glass components, diegetic game HUD overlays, biometric waveform oscilloscopes, or WebGL shader surfaces.
 3. **03 · Make the Sandboxes Even More Interactive & Tactile**:
    - Upgrade existing or new concept sandboxes in `src/components/InteractiveStage.tsx` with drag-and-drop physics, keyboard navigation testers, spring-mass visualizers, or side-by-side *"What AI Hallucinates vs. Canonical UI/UX Spec"* toggles.
-4. **04 · Build Developer Convenience & Workflow Power-Ups**:
-   - Add 1-click exports for `.cursorrules`, `CLAUDE.md`, `AGENTS.md`, or Figma Tokens, or add framework tabs (Tailwind, Vanilla CSS, React/shadcn) to the code deck.
-5. **05 · Elevate the Website's Own UI/UX, Polish & Learning Modes**:
-   - Have an idea to make LexiconUI itself faster, cleaner, more intuitive, or more fun to learn from? Build an interactive Flashcard/Quiz mode, improve mobile responsiveness, refine micro-interactions, or add keyboard shortcuts.
+4. **04 · Add Full-Page Blueprints & Developer Exporters**:
+   - Add new multi-pattern page blueprints in `src/components/ContributorStudioView.tsx` or 1-click exports for `.cursorrules`, `CLAUDE.md`, `AGENTS.md`, or Figma Tokens.
+5. **05 · Elevate the Website's Own UI/UX, Polish & Quiz Questions**:
+   - Expand the interactive *"Name That UI!"* flashcard quiz, improve mobile responsiveness, refine micro-interactions, or add keyboard shortcuts.
 6. **06 · Create New Full-Screen Visual Anatomy X-Ray Blueprints**:
    - Dissect whole industry interfaces (*Mobile Fintech Wallet*, *AI Coding IDE & Canvas*, *Non-Linear Video Timeline Editor*) with clickable numbered X-Ray pins.
 
@@ -266,16 +249,16 @@ LexiconUI/
 
 ```bash
 # 1. Fork the repo and create a feature branch
-git checkout -b feat/term-slash-command-menu
+git checkout -b feat/term-sticky-table-header
 
-# 2. Open the "OSS Contribute" tab in the running app to draft & validate your contribution
+# 2. Add your concept to src/data/termsData.ts & src/components/InteractiveStage.tsx
 # 3. Verify TypeScript compilation and production build
 npm run lint
 npm run build
 
 # 4. Commit using Conventional Commits and open a Pull Request
-git commit -m "feat(terms): add Inline Slash Command Menu term and interactive sandbox"
-git push origin feat/term-slash-command-menu
+git commit -m "feat(terms): add Sticky Table Header term (#49) and interactive sandbox"
+git push origin feat/term-sticky-table-header
 ```
 
 Read our full [**Contribution Framework & Review Rubric (`CONTRIBUTING.md`)**](./CONTRIBUTING.md) and [**Technical Architecture Guide (`ARCHITECTURE.md`)**](./ARCHITECTURE.md) for step-by-step instructions.

@@ -2,7 +2,7 @@
 
 Thank you for helping build **LexiconUI** ([`https://github.com/RootDeveloperDS/LexiconUI`](https://github.com/RootDeveloperDS/LexiconUI))—the open-source interactive UI/UX terminology encyclopedia and prompt-engineering standard for developers, designers, and AI vibe coders!
 
-Whether you want to **add new UI/UX concepts**, **invent richer interactive sandboxes**, **contribute Sci-Fi / Spatial UI (FUI) patterns**, or **improve the website's own convenience, UI/UX polish, and developer workflows**, your contributions are deeply valued.
+Whether you want to **add new UI/UX concepts (Concept #49+)**, **invent richer interactive sandboxes**, **contribute Sci-Fi / Spatial UI (FUI) patterns**, or **add new Multi-Pattern Full-Page Blueprints & Quiz questions**, your contributions are deeply valued.
 
 ---
 
@@ -11,7 +11,7 @@ Whether you want to **add new UI/UX concepts**, **invent richer interactive sand
 1. [Six Ways You Can Make LexiconUI Indispensable](#1-six-ways-you-can-make-lexiconui-indispensable)
 2. [Quality Rubric for UI/UX Terms](#2-quality-rubric-for-uiux-terms)
 3. [Step-by-Step: Adding a New UI/UX or Sci-Fi FUI Term](#3-step-by-step-adding-a-new-uiux-or-sci-fi-fui-term)
-4. [Step-by-Step: Improving Site UX, Interactivity & Convenience](#4-step-by-step-improving-site-ux-interactivity--convenience)
+4. [Step-by-Step: Improving Site UX, Blueprints & Quiz Mode](#4-step-by-step-improving-site-ux-blueprints--quiz-mode)
 5. [Step-by-Step: Adding a Visual Anatomy Case Study](#5-step-by-step-adding-a-visual-anatomy-case-study)
 6. [Pull Request Structure & Review Lifecycle](#6-pull-request-structure--review-lifecycle)
 
@@ -23,14 +23,12 @@ Contributors can participate across six open-ended tracks depending on their int
 
 | Track | What You Can Build | Files Touched | Complexity |
 | :--- | :--- | :--- | :--- |
-| **01 · Everyday Mystery UI Concepts** | Add common UI patterns people see daily but don't know the name of (*Inline Slash Command Menu*, *Sticky Table Header*, *Docked PiP Mini-Player*, *OTP Input*) + colloquial vibe phrases. | `src/data/termsData.ts`, `src/components/InteractiveStage.tsx`, `src/components/PromptTranslatorView.tsx` | Starter–Intermediate |
-| **02 · Sci-Fi, Spatial & Futuristic UI (FUI)** | Add AR/VR spatial glass patterns, 3D CSS isometric layer stacks, game HUD reticles, cyberpunk telemetry, or WebGL shader surfaces under `category: 'futuristic'`. | `src/data/termsData.ts`, `src/components/InteractiveStage.tsx` | Intermediate |
+| **01 · Everyday Mystery UI Concepts** | Add common UI patterns people see daily but don't know the name of (*Sticky Table Header*, *Pull-to-Refresh*, *Resizable Split Pane*, *Color Swatch Picker*) + colloquial vibe phrases. | `src/data/termsData.ts`, `src/components/InteractiveStage.tsx`, `src/components/PromptTranslatorView.tsx` | Starter–Intermediate |
+| **02 · Sci-Fi, Spatial & Futuristic UI (FUI)** | Add AR/VR spatial glass patterns, biometric waveform oscilloscopes, game HUD reticles, cyberpunk telemetry, or WebGL shader surfaces under `category: 'futuristic'`. | `src/data/termsData.ts`, `src/components/InteractiveStage.tsx` | Intermediate |
 | **03 · Richer Interactive Sandboxes** | Upgrade existing or new concept sandboxes with drag-and-drop physics, keyboard navigation testers, spring visualizers, or *"Broken AI Output vs. Exact Spec"* toggles. | `src/components/InteractiveStage.tsx` | Intermediate |
-| **04 · Developer Convenience & Exporters** | Build 1-click exporters for `.cursorrules`, `CLAUDE.md`, `AGENTS.md`, Windsurf rules, or multi-framework code tabs (Tailwind, Vanilla CSS, `shadcn/ui`, SwiftUI). | `src/components/Overlays.tsx`, `src/components/PromptTranslatorView.tsx` | Intermediate |
-| **05 · Website UI/UX Polish & Learning Modes** | Make LexiconUI itself more convenient, beautiful, and indispensable—add an interactive *"Name That UI!"* flashcard/quiz game, keyboard shortcuts, or mobile ergonomic refinements. | `src/components/*`, `src/App.tsx` | Intermediate–Advanced |
+| **04 · Multi-Pattern Page Blueprints & Exporters** | Add full-page multi-pattern blueprints in `ContributorStudioView.tsx` or build 1-click exporters for `.cursorrules`, `CLAUDE.md`, `AGENTS.md`, or multi-framework code tabs. | `src/components/ContributorStudioView.tsx`, `src/components/Overlays.tsx` | Intermediate |
+| **05 · Website UI/UX Polish & Quiz Questions** | Expand the interactive *"Name That UI!"* flashcard quiz, refine the 5-step `IntroTour`, add keyboard shortcuts, or polish mobile ergonomics. | `src/components/*`, `src/App.tsx` | Intermediate–Advanced |
 | **06 · Visual Anatomy X-Ray Blueprints** | Build clickable full-screen domain dissections (*Mobile Fintech Wallet*, *AI Agent Canvas IDE*, *Video Timeline Editor*) with numbered X-Ray callout pins. | `src/data/anatomyData.ts`, `src/components/AnatomyInspectorView.tsx` | Advanced |
-
-> **Pro Tip**: Open the **OSS Contribute** tab inside the live LexiconUI web app to browse Community Wishlist ideas, load starter templates, validate your concept against the 5-Gate Rubric, and generate ready-to-paste TypeScript and Pull Request Markdown!
 
 ---
 
@@ -41,7 +39,7 @@ Every term in LexiconUI must pass our **5-Point Editorial & Engineering Rubric**
 1. **Industry-Standard Canonical Naming**:
    - The `title` and `pronunciationOrAlias` must reflect established design-system, W3C WAI-ARIA, Apple HIG, Material Design, or game/spatial FUI nomenclature—never invented buzzwords.
 2. **Authentic Colloquial "Vibe Phrases" (`3–6 phrases`)**:
-   - Include at least 3 natural-language phrases that a developer or non-designer actually types when they forget the word (e.g., *"three vertical dots vs three horizontal dots"* or *"darkens the screen except one highlighted button"*).
+   - Include at least 3 natural-language phrases that a developer or non-designer actually types when they forget the word (e.g., *"three vertical dots vs three horizontal dots"* or *"make card titles and buttons line up horizontally across a row"*).
 3. **High-Contrast Prompt Pair (`Bad Prompt` vs. `Good Prompt`)**:
    - **`badPromptExample`**: Illustrates the realistic, ambiguous "fluff" prompt that causes AI coding agents to hallucinate or produce generic layouts.
    - **`goodPromptExample`**: Provides a concrete, copy-pasteable specification containing exact structural layout rules, Tailwind/CSS tokens, and accessibility constraints.
@@ -54,20 +52,16 @@ Every term in LexiconUI must pass our **5-Point Editorial & Engineering Rubric**
 
 ## 3. Step-by-Step: Adding a New UI/UX or Sci-Fi FUI Term
 
-1. **Draft & Validate in the In-App Contributor Studio**:
-   - Run `npm run dev` and open the **OSS Contribute** tab.
-   - Choose one of the 5 pillars (`layout` | `navigation` | `typography` | `motion` | `futuristic`), fill in the fields (or load a starter preset), and verify that all **5 / 5 Quality Gates** show **PASS**.
-   - Click **Copy TypeScript** to copy the formatted `DesignTerm` object.
-2. **Register the Term in `src/data/termsData.ts`**:
-   - Append your `DesignTerm` object to `DESIGN_TERMS` and increment the corresponding category `count` in `CATEGORY_META`.
-3. **Add Synonyms to the Vibe Translator**:
+1. **Register the Term in `src/data/termsData.ts`**:
+   - Append your `DesignTerm` object (e.g., `number: '49'`) to `DESIGN_TERMS` under one of the 5 pillars (`layout` | `navigation` | `typography` | `motion` | `futuristic`) and increment the corresponding category `count` in `CATEGORY_META`.
+2. **Add Synonyms to the Vibe Translator**:
    - In `src/components/PromptTranslatorView.tsx`, add a key for your new `term.id` inside `KEYWORD_SYNONYM_MAP` with 4–6 colloquial trigger substrings.
-4. **Implement the Interactive Simulation**:
+3. **Implement the Interactive Simulation**:
    - In `src/components/InteractiveStage.tsx`, add a `case '<your-term-id>':` block inside `switch (term.id)` that reads `controlValues` and `showBlueprint` to render a live, responsive demo.
 
 ---
 
-## 4. Step-by-Step: Improving Site UX, Interactivity & Convenience
+## 4. Step-by-Step: Improving Site UX, Blueprints & Quiz Mode
 
 We actively encourage Pull Requests that make LexiconUI itself more intuitive, convenient, and visually refined! When proposing a UX or feature enhancement:
 
@@ -95,7 +89,7 @@ Visual Anatomy Case Studies live in `src/data/anatomyData.ts` (`ANATOMY_TEMPLATE
 ### Branch Naming
 - `feat/term-<term-id>` — Adding a new everyday UI/UX concept and sandbox
 - `feat/fui-<term-id>` — Adding a new Sci-Fi / Spatial / Futuristic UI concept
-- `feat/ux-<short-name>` — Improving site convenience, exporters, quiz mode, or UI/UX polish
+- `feat/ux-<short-name>` — Improving site convenience, page blueprints, quiz mode, or UI/UX polish
 - `feat/anatomy-<template-id>` — Adding a new Visual Anatomy X-Ray blueprint
 - `fix/<short-description>` — Fixing a bug, typo, or layout issue
 

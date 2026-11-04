@@ -1059,22 +1059,20 @@ export const EncyclopediaView: React.FC<EncyclopediaViewProps> = ({
           </div>
         )}
 
-        {/* Open-Source Community Callout Banner */}
+        {/* Full-Page Blueprints & Interactive UI Quiz Callout Banner */}
         {onOpenContribute && (
           <div className="p-4 sm:p-6 rounded-2xl bg-white border border-slate-200 flex flex-col md:flex-row md:items-center justify-between gap-4 shadow-2xs">
             <div className="space-y-1 max-w-2xl">
               <div className="text-xs font-mono text-sky-700 font-semibold">
-                OPEN-SOURCE COMMUNITY ENCYCLOPEDIA · BUILT BY &amp; FOR VIBE CODERS
+                READY-TO-PASTE FULL-PAGE ARCHITECTURES · UI VOCABULARY QUIZ
               </div>
               <h3 className="font-display text-base sm:text-lg font-bold text-slate-900">
-                Know a UI/UX concept we missed, or have an idea to make LexiconUI even more useful?
+                Want a complete multi-pattern page blueprint or want to test your UI/UX vocabulary?
               </h3>
               <p className="text-xs text-slate-600 leading-relaxed">
-                Contributors can add new everyday mystery UI patterns, futuristic sci-fi HUD
-                components, richer interactive sandboxes, agent rule exporters (
-                <code className="font-mono text-slate-800">.cursorrules</code> /{' '}
-                <code className="font-mono text-slate-800">CLAUDE.md</code>), or UI/UX convenience
-                improvements.
+                Explore 5 complete production page blueprints (SaaS Workspace, Product Launch Page,
+                Docs Portal, 2FA Auth Flow, and Spatial HUD) or test yourself with the interactive
+                &ldquo;Name That UI!&rdquo; flashcard challenge.
               </p>
             </div>
             <button
@@ -1082,7 +1080,7 @@ export const EncyclopediaView: React.FC<EncyclopediaViewProps> = ({
               onClick={onOpenContribute}
               className="min-h-[44px] w-full sm:w-auto px-4 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold transition-colors flex items-center justify-center gap-1.5 whitespace-nowrap self-start md:self-center shrink-0"
             >
-              <span>Open OSS Contributor Studio</span>
+              <span>Open Blueprints &amp; UI Quiz</span>
               <ArrowUpRight className="w-4 h-4" />
             </button>
           </div>

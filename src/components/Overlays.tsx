@@ -129,7 +129,7 @@ export const CommandPaletteModal: React.FC<CommandPaletteModalProps> = ({
             { id: 'anatomy', label: 'X-Ray', icon: Eye },
             { id: 'translator', label: 'Translator', icon: Wand2 },
             { id: 'matrix', label: 'Matrix', icon: Table },
-            { id: 'contribute', label: 'OSS Hub', icon: GitPullRequest },
+            { id: 'contribute', label: 'Blueprints', icon: GitPullRequest },
           ].map((v) => {
             const Icon = v.icon;
             return (

@@ -1,13 +1,13 @@
 ---
 name: "New UI/UX Concept + Live Demo Proposal"
-about: "Propose a new UI/UX or Sci-Fi FUI concept with its live interactive demo preview"
+about: "Propose a new UI/UX or Sci-Fi FUI concept (Concept #49+) with its live interactive demo preview"
 title: "[CONCEPT + DEMO]: <Formal UI/UX Term Name>"
 labels: ["new-term", "live-demo", "curriculum"]
 ---
 
 ## 1. Formal UI/UX Term & Category
-- **Formal Title**: <!-- e.g., CSS Subgrid Alignment -->
-- **Architectural Alias**: <!-- e.g., Cross-Card Row Track Inheritance -->
+- **Formal Title**: <!-- e.g., Sticky Table Header & Pinned Column -->
+- **Architectural Alias**: <!-- e.g., Dual-Axis Sticky Data Grid (sticky top-0 + sticky left-0) -->
 - **Category Pillar**: `layout` | `navigation` | `typography` | `motion` | `futuristic`
 - **Difficulty**: `Foundational` | `Intermediate` | `System Architecture`
 

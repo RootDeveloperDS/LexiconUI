@@ -346,6 +346,48 @@ const KEYWORD_SYNONYM_MAP: Record<string, string[]> = {
     'comfyui',
     'blender',
   ],
+  'css-subgrid': [
+    'subgrid',
+    'buttons line up horizontally',
+    'align sections inside neighboring cards',
+    'pricing cards line up',
+    'same row line',
+  ],
+  'slash-command-menu': [
+    'slash menu',
+    'forward slash',
+    'type a slash',
+    'notion style slash',
+    'insert block menu',
+  ],
+  'pip-mini-player': [
+    'mini player',
+    'picture in picture',
+    'pip',
+    'floating video',
+    'docks in the corner',
+  ],
+  'segmented-otp-input': [
+    '6 digit',
+    'verification code',
+    'otp',
+    'two factor',
+    '2fa',
+    'separate little boxes',
+  ],
+  'magnetic-cursor-target': [
+    'magnetic',
+    'pulls toward your mouse',
+    'follows the mouse',
+    'ipad pointer',
+  ],
+  'isometric-layer-stack': [
+    'isometric',
+    'exploded view',
+    '3d tilted layers',
+    '3d stack',
+    'preserve-3d',
+  ],
 };
 
 export const PromptTranslatorView: React.FC<PromptTranslatorViewProps> = ({

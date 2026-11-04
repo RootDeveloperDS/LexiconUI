@@ -2,7 +2,7 @@ blank_issues_enabled: true
 contact_links:
   - name: "💬 Community Discussions & Q&A"
     url: "https://github.com/RootDeveloperDS/LexiconUI/discussions"
-    about: "Ask questions about UI/UX terminology, prompt engineering, or architecture."
-  - name: "🛠️ In-App OSS Contributor Studio"
-    url: "https://github.com/RootDeveloperDS/LexiconUI#7-contribution-guidelines--how-you-can-make-lexiconui-indispensable"
-    about: "Use the built-in Contributor Studio tab inside LexiconUI to draft and validate new UI/UX concepts and live demos."
+    about: "Ask questions about UI/UX terminology, prompt engineering, or frontend architecture."
+  - name: "📖 Contribution Guide & 6-Gate Quality Rubric"
+    url: "https://github.com/RootDeveloperDS/LexiconUI/blob/main/CONTRIBUTING.md"
+    about: "Read step-by-step instructions for adding Concept #49+, new X-Ray blueprints, or full-page presets."

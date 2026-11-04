@@ -51,15 +51,15 @@ export const CATEGORY_META: Record<
     label: 'Layout & Spatial Systems',
     shortLabel: 'Layout & Spatial',
     description:
-      'Bento grids, masonry waterfalls, split screens, sticky rails, scroll snap, and spatial math.',
-    count: 8,
+      'Bento grids, CSS subgrid, masonry waterfalls, split screens, sticky rails, and spatial math.',
+    count: 9,
   },
   navigation: {
     label: 'Navigation & Everyday Components',
     shortLabel: 'Everyday UI & Nav',
     description:
-      'Accordions, kebab/meatball menus, mega menus, breadcrumbs, avatar stacks, steppers, and sheets.',
-    count: 15,
+      'Accordions, slash menus, PiP mini-players, OTP inputs, kebab/meatball menus, and sheets.',
+    count: 18,
   },
   typography: {
     label: 'Typography & Color Hierarchy',
@@ -72,15 +72,15 @@ export const CATEGORY_META: Record<
     label: 'Micro-Interactions & Motion',
     shortLabel: 'Motion & Craft',
     description:
-      'Infinite marquees, scroll progress bars, spring physics, glassmorphism, and spotlight borders.',
-    count: 7,
+      'Magnetic cursor targets, infinite marquees, scroll progress bars, spring physics, and spotlights.',
+    count: 8,
   },
   futuristic: {
     label: 'Sci-Fi, Spatial & Futuristic UI (FUI)',
     shortLabel: 'Sci-Fi & Spatial FUI',
     description:
-      'Chamfered HUD reticles, VisionOS spatial glass, CRT scanlines, radial pie menus, and node graphs.',
-    count: 6,
+      'Isometric 3D layer stacks, chamfered HUD reticles, VisionOS glass, CRT scanlines, and node graphs.',
+    count: 7,
   },
 };
 
@@ -2911,4 +2911,410 @@ export const DESIGN_TERMS: DesignTerm[] = [
     ],
     relatedTerms: ['hud-reticle-frame', 'app-shell'],
   },
+  {
+    id: 'css-subgrid',
+    number: '43',
+    title: 'CSS Subgrid Cross-Card Alignment',
+    category: 'layout',
+    categoryLabel: 'Layout & Spatial Systems',
+    difficulty: 'Intermediate',
+    pronunciationOrAlias: 'Cross-Card Track Inheritance (grid-template-rows: subgrid)',
+    summary:
+      'Allows nested child cards to inherit the row tracks of their parent CSS Grid (`row-span-3 grid grid-rows-subgrid`) so card titles, variable-length descriptions, and bottom CTA buttons lock onto shared horizontal axes across sibling cards.',
+    whyAgentsNeedIt:
+      'Without CSS Subgrid, when 3 pricing or feature cards in a row have different title or paragraph lengths, their internal sections and buttons sit at ragged, misaligned heights. Prompting for `grid-rows-subgrid row-span-3` locks horizontal alignment across all sibling cards without brittle fixed heights.',
+    vibePhrases: [
+      'make card titles and buttons line up horizontally across a row',
+      'align sections inside neighboring cards even when text length differs',
+      'pricing cards where headers descriptions and buttons stay on the same row line',
+      'css subgrid card alignment',
+    ],
+    badPromptExample:
+      'Make 3 pricing cards in a row and make sure the headings, descriptions, and bottom buttons all line up evenly.',
+    goodPromptExample:
+      'Use CSS Subgrid across the 3-column card row: set the parent container to `grid grid-cols-1 md:grid-cols-3 gap-6` and each child card to `row-span-3 grid grid-rows-subgrid gap-4 p-6 rounded-2xl border` so the header, body copy, and CTA footer rows align horizontally across all sibling cards.',
+    anatomyParts: [
+      {
+        name: 'Parent Multi-Column Grid',
+        role: 'Defines the master column tracks and implicit row tracks shared by all cards.',
+        cssHint: 'grid grid-cols-1 md:grid-cols-3 gap-x-6 gap-y-4',
+      },
+      {
+        name: 'Subgrid Child Card (`grid-rows-subgrid`)',
+        role: 'Spans 3 parent rows (header, body, footer) and inherits their exact track heights.',
+        cssHint: 'row-span-3 grid grid-rows-subgrid p-6 rounded-xl border',
+      },
+      {
+        name: 'Locked Baseline Footer',
+        role: 'CTA button row that stays perfectly flush across all cards regardless of copy length.',
+        cssHint: 'pt-3 border-t border-slate-100 self-end',
+      },
+    ],
+    cssSnippet: `.card-grid-parent {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.5rem;
+}
+.subgrid-card {
+  grid-row: span 3 / span 3;
+  display: grid;
+  grid-template-rows: subgrid;
+  gap: 0.75rem;
+}`,
+    tailwindTokens: ['grid-cols-3', 'row-span-3', 'grid-rows-subgrid', 'gap-6'],
+    sandboxControls: [
+      {
+        id: 'subgridMode',
+        label: 'Cross-Card Row Alignment Mode',
+        type: 'select',
+        options: [
+          { label: 'CSS Subgrid Enabled (Aligned Headers, Body & CTA Rows)', value: 'subgrid' },
+          { label: 'Naive Flex Cards (Ragged Misaligned Baselines)', value: 'naive' },
+        ],
+        defaultValue: 'subgrid',
+      },
+      {
+        id: 'copyLength',
+        label: 'Middle Card Copy Length',
+        type: 'select',
+        options: [
+          { label: 'Long Multi-Line Description (Stress Test)', value: 'long' },
+          { label: 'Uniform Short Copy', value: 'short' },
+        ],
+        defaultValue: 'long',
+      },
+    ],
+    relatedTerms: ['bento-grid', 'spatial-grid'],
+  },
+  {
+    id: 'slash-command-menu',
+    number: '44',
+    title: 'Inline Slash Command Menu (/ Trigger)',
+    category: 'navigation',
+    categoryLabel: 'Navigation & Everyday Components',
+    difficulty: 'Intermediate',
+    pronunciationOrAlias: 'Caret-Anchored Rich-Text Block Inserter (Notion / Linear Style)',
+    summary:
+      'A keyboard-first floating command listbox triggered by typing `/` inside an editor or text input, anchored directly to the text caret coordinates for inserting headings, code blocks, tables, or AI actions without leaving the keyboard.',
+    whyAgentsNeedIt:
+      'When you ask an AI to "let users insert headings, code blocks, or tables in the editor," it defaults to a cluttered 15-button formatting toolbar at the top. Specifying an **Inline Slash Command Menu anchored to the text caret** produces a modern Notion/Linear editing experience.',
+    vibePhrases: [
+      'popup menu when you type a forward slash in the text box',
+      'notion style slash menu to pick heading or list',
+      'menu that appears right where your cursor is typing',
+      'inline slash command popover',
+    ],
+    badPromptExample:
+      'Let users add headings, bullet lists, or code blocks while typing in the document editor.',
+    goodPromptExample:
+      'Implement an Inline Slash Command Menu triggered when the user types "/" at the start of a line: anchor a floating `role="listbox"` popover (`w-64 max-h-72 overflow-y-auto rounded-xl shadow-xl border border-slate-200 bg-white p-1.5 z-50`) to the caret coordinates with keyboard `ArrowUp`/`ArrowDown` navigation, live query filtering, and `Enter` block insertion.',
+    anatomyParts: [
+      {
+        name: 'Slash Trigger Token (`/query`)',
+        role: 'Inline text token after the `/` character that filters the command list in real time.',
+        cssHint: 'font-mono text-sky-700 bg-sky-50 px-1 rounded',
+      },
+      {
+        name: 'Caret-Anchored Listbox Popover',
+        role: 'Floating menu positioned directly beneath the active line or cursor coordinates.',
+        cssHint: 'absolute left-4 top-12 z-50 w-64 rounded-xl border bg-white shadow-xl p-1.5',
+      },
+      {
+        name: 'Keyboard-Highlighted Command Option',
+        role: 'Row displaying block icon, title, description, and shortcut badge (`↵`).',
+        cssHint: 'aria-selected="true" bg-sky-50 text-sky-900 font-semibold rounded-lg px-3 py-2',
+      },
+    ],
+    cssSnippet: `.slash-command-popover {
+  position: absolute;
+  top: var(--caret-y, 48px);
+  left: var(--caret-x, 16px);
+  z-index: 50;
+  width: 16rem;
+  max-height: 18rem;
+  overflow-y: auto;
+  border-radius: 0.75rem;
+}`,
+    tailwindTokens: ['role="listbox"', 'absolute', 'z-50', 'w-64', 'shadow-xl'],
+    sandboxControls: [
+      {
+        id: 'slashFilter',
+        label: 'Typed Slash Query Filter',
+        type: 'select',
+        options: [
+          { label: '`/` (Show All 4 Block Types)', value: 'all' },
+          { label: '`/h2` (Filter to Heading 2)', value: 'h2' },
+          { label: '`/code` (Filter to TSX Code Block)', value: 'code' },
+        ],
+        defaultValue: 'all',
+      },
+      {
+        id: 'editorPattern',
+        label: 'Editor Toolbar Architecture',
+        type: 'select',
+        options: [
+          { label: 'Caret-Anchored Slash Popover (Clean Canvas)', value: 'slash' },
+          { label: 'Cluttered Top Ribbon Toolbar (Legacy)', value: 'toolbar' },
+        ],
+        defaultValue: 'slash',
+      },
+    ],
+    relatedTerms: ['command-palette', 'overlay-taxonomy'],
+  },
+  {
+    id: 'pip-mini-player',
+    number: '45',
+    title: 'Docked Picture-in-Picture (PiP) Mini-Player',
+    category: 'navigation',
+    categoryLabel: 'Navigation & Everyday Components',
+    difficulty: 'Intermediate',
+    pronunciationOrAlias: 'Floating Viewport-Corner Media Overlay (`aspect-video w-72`)',
+    summary:
+      'A persistent floating media or live-call stage (`fixed bottom-5 right-5 z-40 w-72 aspect-video`) that automatically docks to the viewport corner when the user scrolls past the primary video player or switches workspace tabs.',
+    whyAgentsNeedIt:
+      'When users ask to "keep the video or call visible while scrolling down to read comments," AI agents often make the giant full-width video `sticky top-0`, blocking half the screen. Asking for a **Docked Picture-in-Picture (PiP) Corner Mini-Player** keeps media accessible while preserving 90% of the reading viewport.',
+    vibePhrases: [
+      'small floating video player in the bottom right corner when you scroll down',
+      'youtube or twitch mini player that docks in the corner',
+      'picture in picture floating call window',
+      'corner docked mini player',
+    ],
+    badPromptExample:
+      'Make sure the user can still watch the livestream video while they scroll down the page to read the documentation notes.',
+    goodPromptExample:
+      'When the primary media stage scrolls out of view (`IntersectionObserver`), morph it into a Docked Picture-in-Picture (PiP) Mini-Player (`fixed bottom-5 right-5 z-40 w-72 aspect-video rounded-2xl shadow-2xl border border-slate-700 bg-slate-950 overflow-hidden`) featuring a live status badge, Play/Pause toggle, and an Expand (`↗`) button.',
+    anatomyParts: [
+      {
+        name: '16:9 Corner-Pinned Frame',
+        role: 'Compact floating container anchored 20px from the viewport corner.',
+        cssHint: 'fixed bottom-5 right-5 z-40 w-72 aspect-video rounded-2xl shadow-2xl',
+      },
+      {
+        name: 'Scrim Control Overlay',
+        role: 'Top and bottom gradient bars housing stream title, timecode, and expand/close buttons.',
+        cssHint: 'bg-gradient-to-t from-black/80 via-transparent to-black/50 p-3',
+      },
+      {
+        name: 'Restore / Expand Action (`↗`)',
+        role: 'Returns the mini-player back to the full-width primary stage.',
+        cssHint: 'px-2 py-1 rounded bg-white/15 hover:bg-white/25 text-white text-xs',
+      },
+    ],
+    cssSnippet: `.pip-dock {
+  position: fixed;
+  bottom: 1.25rem;
+  right: 1.25rem;
+  z-index: 40;
+  width: 18rem;
+  aspect-ratio: 16 / 9;
+  border-radius: 1rem;
+}`,
+    tailwindTokens: ['fixed bottom-5 right-5', 'aspect-video', 'w-72', 'shadow-2xl', 'z-40'],
+    sandboxControls: [
+      {
+        id: 'dockPosition',
+        label: 'Mini-Player Dock State',
+        type: 'select',
+        options: [
+          { label: 'Bottom-Right PiP Corner Dock (Scrolled Down)', value: 'bottom-right' },
+          { label: 'Bottom-Left PiP Corner Dock', value: 'bottom-left' },
+          { label: 'Expanded Full-Width Stage (Top of Page)', value: 'expanded' },
+        ],
+        defaultValue: 'bottom-right',
+      },
+    ],
+    relatedTerms: ['overlay-taxonomy', 'sticky-rail', 'luminance-scrim'],
+  },
+  {
+    id: 'segmented-otp-input',
+    number: '46',
+    title: 'Segmented OTP / 2FA Auto-Advance Input',
+    category: 'navigation',
+    categoryLabel: 'Navigation & Everyday Components',
+    difficulty: 'Foundational',
+    pronunciationOrAlias: 'Individual Character Slot Array (`autocomplete="one-time-code"`)',
+    summary:
+      'A 6-digit verification code input pattern that splits each digit into a dedicated `tabular-nums` character box, automatically advancing keyboard focus on digit entry, stepping backward on `Backspace`, and distributing a pasted 6-digit string across all slots.',
+    whyAgentsNeedIt:
+      'If you ask an AI for a "6-digit verification code box," it either renders a plain `<input type="number">` (with ugly up/down spinner arrows) or 6 separate inputs that trap the user because focus does not auto-advance or support clipboard paste.',
+    vibePhrases: [
+      '6 separate little boxes for typing a verification code',
+      'two factor authentication code input where cursor jumps to next box',
+      'sms otp 6 digit boxes with paste support',
+      'segmented passcode input',
+    ],
+    badPromptExample:
+      'Add a 6-digit verification code input on the login screen with 6 boxes.',
+    goodPromptExample:
+      'Build a 6-digit Segmented OTP Input (`role="group" aria-label="6-Digit Verification Code"`): render 6 individual `w-11 h-13 text-center font-mono text-lg font-bold tabular-nums rounded-xl border` inputs with `inputMode="numeric" maxLength={1}` and `autoComplete="one-time-code"` on slot 0. Auto-advance focus to `slot + 1` on digit input, move focus to `slot - 1` on `Backspace`, and intercept `onPaste` to populate all 6 slots simultaneously.',
+    anatomyParts: [
+      {
+        name: 'Digit Slot Cell (`maxLength={1}`)',
+        role: 'Single-character monospace input with high-contrast focus ring.',
+        cssHint: 'w-11 h-12 text-center font-mono text-lg font-bold tabular-nums rounded-xl border',
+      },
+      {
+        name: 'Triplet Visual Grouping Divider',
+        role: 'Subtle dash (`-`) after the 3rd digit reducing cognitive chunking load (`482 - 910`).',
+        cssHint: 'text-slate-300 font-mono px-1 select-none',
+      },
+      {
+        name: 'SMS Autofill & Paste Handler',
+        role: 'Distributes a 6-character clipboard or OS SMS payload across all 6 state indices.',
+        cssHint: 'autoComplete="one-time-code" onPaste={handlePaste}',
+      },
+    ],
+    cssSnippet: `.otp-slot {
+  width: 2.75rem;
+  height: 3.25rem;
+  text-align: center;
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  border-radius: 0.75rem;
+}`,
+    tailwindTokens: ['inputMode="numeric"', 'autoComplete="one-time-code"', 'tabular-nums', 'maxLength={1}'],
+    sandboxControls: [
+      {
+        id: 'otpPreset',
+        label: 'Interactive Verification State',
+        type: 'select',
+        options: [
+          { label: 'Active Entry (3 of 6 Digits Typed)', value: 'partial' },
+          { label: 'Verified 6-Digit Code (482-910)', value: 'verified' },
+          { label: 'Invalid Code Shake / Error State', value: 'error' },
+        ],
+        defaultValue: 'partial',
+      },
+    ],
+    relatedTerms: ['focus-ring', 'tabular-numerals'],
+  },
+  {
+    id: 'magnetic-cursor-target',
+    number: '47',
+    title: 'Magnetic Cursor Target & Proximity Pull',
+    category: 'motion',
+    categoryLabel: 'Micro-Interactions & Motion',
+    difficulty: 'Intermediate',
+    pronunciationOrAlias: 'Pointer-Delta Spring Translation (`translate3d(dx * 0.28, dy * 0.28, 0)`)',
+    summary:
+      'A tactile micro-interaction popularized by iPadOS pointer physics and Awwwards interfaces where a primary CTA button or navigation target subtly pulls toward the user cursor within a proximity field before snapping back smoothly on pointer exit.',
+    whyAgentsNeedIt:
+      'When you ask an AI for an "interactive hover effect on the main button," it applies a generic `hover:scale-105`. Specifying a **Magnetic Cursor Target using pointer-delta translation (`dx * 0.28, dy * 0.28`) and spring snap-back** creates genuine physical craft.',
+    vibePhrases: [
+      'button that pulls toward your mouse cursor when you get close',
+      'magnetic hover button like ipad pointer',
+      'button that follows the mouse slightly before snapping back',
+      'magnetic cursor attraction effect',
+    ],
+    badPromptExample:
+      'Make the primary Call to Action button have a really cool interactive hover animation.',
+    goodPromptExample:
+      'Implement a Magnetic Cursor Target on the primary CTA: calculate pointer offset `(dx, dy)` relative to the button center in `onMouseMove` (`dx = (e.clientX - centerX) * 0.28`) and apply `transform: translate3d(${dx}px, ${dy}px, 0)` with a smooth `transition: transform 180ms cubic-bezier(0.16, 1, 0.3, 1)` snap-back to `(0, 0, 0)` on `onMouseLeave`.',
+    anatomyParts: [
+      {
+        name: 'Proximity Sensor Hit Area',
+        role: 'Outer bounding wrapper that measures pointer coordinates relative to center `(cx, cy)`.',
+        cssHint: 'relative p-6 flex items-center justify-center',
+      },
+      {
+        name: 'Compositor-Translated Target (`translate3d`)',
+        role: 'Button element shifted on the GPU via `translate3d(dx, dy, 0)` without layout reflow.',
+        cssHint: 'will-change-transform transition-transform duration-150 ease-out',
+      },
+    ],
+    cssSnippet: `.magnetic-cta {
+  transform: translate3d(var(--mag-x, 0px), var(--mag-y, 0px), 0);
+  transition: transform 180ms cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform;
+}`,
+    tailwindTokens: ['translate3d()', 'will-change-transform', 'transition-transform', 'duration-150'],
+    sandboxControls: [
+      {
+        id: 'pullStrength',
+        label: 'Magnetic Pull Multiplier',
+        type: 'slider',
+        min: 10,
+        max: 50,
+        step: 5,
+        unit: '%',
+        defaultValue: 30,
+      },
+    ],
+    relatedTerms: ['spring-physics', 'spotlight-border'],
+  },
+  {
+    id: 'isometric-layer-stack',
+    number: '48',
+    title: 'Isometric Exploded Layer Stack (3D CSS Planes)',
+    category: 'futuristic',
+    categoryLabel: 'Sci-Fi, Spatial & Futuristic UI (FUI)',
+    difficulty: 'System Architecture',
+    pronunciationOrAlias: '3D Orthographic Z-Axis Dissection (`preserve-3d` + `translateZ`)',
+    summary:
+      'A spatial architecture diagram that tilts UI cards, security layers, or hardware planes into an isometric 3D projection (`rotateX(55deg) rotateZ(-45deg)`) with `transform-style: preserve-3d`, separating each plane along the vertical Z-axis (`translateZ`) to reveal how system layers stack.',
+    whyAgentsNeedIt:
+      'When users ask for a "3D stacked architecture diagram showing our 3 platform layers," AI models draw flat 2D rectangles stacked vertically. Prompting for an **Isometric Exploded Layer Stack with `preserve-3d`, `rotateX(55deg) rotateZ(-45deg)`, and `translateZ()` spacing** produces a true spatial 3D hologram.',
+    vibePhrases: [
+      'floating 3d tilted layers stacked on top of each other',
+      'exploded view diagram that separates in 3d when you hover',
+      'isometric hologram stack of architecture layers',
+      '3d css tilted planes',
+    ],
+    badPromptExample:
+      'Show a cool 3D diagram of how our 3 system layers (Hardware, Kernel, and UI) stack on top of each other.',
+    goodPromptExample:
+      'Build an Isometric Exploded Layer Stack using CSS 3D transforms: apply `[transform-style:preserve-3d]` and `[transform:rotateX(55deg)_rotateZ(-45deg)]` to the stage container, and offset each glass plane along the Z-axis via `translateZ(0px)`, `translateZ(44px)`, and `translateZ(88px)` with smooth hover expansion.',
+    anatomyParts: [
+      {
+        name: '3D Scene Stage (`preserve-3d`)',
+        role: 'Establishes the shared 3D coordinate space rotated in X and Z axes.',
+        cssHint: '[transform-style:preserve-3d] [transform:rotateX(55deg)_rotateZ(-45deg)]',
+      },
+      {
+        name: 'Z-Translated Plane (`translateZ(n)`)',
+        role: 'Individual translucent card levitated along the Z-axis (`0px`, `44px`, `88px`).',
+        cssHint: 'absolute w-48 h-28 rounded-xl border border-cyan-400/70 bg-cyan-950/70 backdrop-blur-md',
+      },
+      {
+        name: 'Vertical Axis Alignment Spine',
+        role: 'Subtle vertical reference line connecting the centers of all exploded planes.',
+        cssHint: 'border-l border-dashed border-cyan-400/40',
+      },
+    ],
+    cssSnippet: `.isometric-stage {
+  transform-style: preserve-3d;
+  transform: rotateX(55deg) rotateZ(-45deg);
+}
+.exploded-plane {
+  transform: translateZ(calc(var(--layer-idx) * 44px));
+  transition: transform 300ms cubic-bezier(0.16, 1, 0.3, 1);
+}`,
+    tailwindTokens: ['[transform-style:preserve-3d]', '[transform:rotateX(55deg)_rotateZ(-45deg)]', 'translateZ()'],
+    sandboxControls: [
+      {
+        id: 'zGap',
+        label: 'Z-Axis Explosion Spacing',
+        type: 'slider',
+        min: 8,
+        max: 44,
+        step: 4,
+        unit: 'px',
+        defaultValue: 28,
+      },
+      {
+        id: 'activePlane',
+        label: 'Highlighted Architecture Layer',
+        type: 'select',
+        options: [
+          { label: 'All 3 Planes Illuminated', value: 'all' },
+          { label: 'Layer 03: Spatial Glass UI Shell (Top)', value: '2' },
+          { label: 'Layer 02: Neural Agent Runtime (Middle)', value: '1' },
+          { label: 'Layer 01: Silicon Tensor Core (Base)', value: '0' },
+        ],
+        defaultValue: 'all',
+      },
+    ],
+    relatedTerms: ['visionos-spatial-glass', 'hud-reticle-frame', 'z-index-scale'],
+  },
 ];
+

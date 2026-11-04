@@ -46,6 +46,12 @@ export const InteractiveStage: React.FC<InteractiveStageProps> = ({
   const [openAccordions, setOpenAccordions] = useState<number[]>([0]);
   const [iconMenuOpen, setIconMenuOpen] = useState(true);
   const [nodeRouterY, setNodeRouterY] = useState<number>(84);
+  const [slashSelectedIdx, setSlashSelectedIdx] = useState<number>(0);
+  const [insertedBlockLabel, setInsertedBlockLabel] = useState<string>('Heading 2: System Architecture');
+  const [pipPlaying, setPipPlaying] = useState<boolean>(true);
+  const [otpDigits, setOtpDigits] = useState<string[]>(['4', '8', '2', '', '', '']);
+  const [magneticPos, setMagneticPos] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
+  const [hoveredIsoLayer, setHoveredIsoLayer] = useState<number | null>(null);
 
   // Live ticker for Tabular Numerals & Sci-Fi Telemetry demos
   useEffect(() => {
@@ -2842,6 +2848,502 @@ export const InteractiveStage: React.FC<InteractiveStageProps> = ({
               </text>
             )}
           </svg>
+        </div>
+      );
+    }
+
+    // -------------------------------------------------------------------------
+    // 43. CSS SUBGRID CROSS-CARD ALIGNMENT
+    // -------------------------------------------------------------------------
+    case 'css-subgrid': {
+      const subgridMode = String(controlValues.subgridMode || 'subgrid');
+      const copyLength = String(controlValues.copyLength || 'long');
+      const isSubgrid = subgridMode === 'subgrid';
+
+      const cards = [
+        {
+          tier: '01 · Starter Tier',
+          title: 'Developer Sandbox',
+          body: 'Single-workspace access with instant token exports.',
+          cta: 'Deploy Starter',
+        },
+        {
+          tier: '02 · Enterprise Cluster',
+          title: 'Multi-Region Distributed Architecture & SAML SSO',
+          body:
+            copyLength === 'long'
+              ? 'Includes dedicated VPC peering, automated compliance audit logs, custom role-based permissions, and 99.99% uptime SLA guarantees across all nodes.'
+              : 'Dedicated cloud cluster with enterprise security controls.',
+          cta: 'Contact Solutions',
+        },
+        {
+          tier: '03 · Pro Team',
+          title: 'Collaborative Studio',
+          body: 'Shared prompt libraries and team spec sheets.',
+          cta: 'Start Pro Trial',
+        },
+      ];
+
+      return (
+        <div className="w-full space-y-3">
+          {showBlueprint && (
+            <div className="flex flex-wrap items-center justify-between gap-2 text-[11px] font-mono text-sky-700 bg-sky-50 px-3 py-1.5 rounded-lg border border-sky-200">
+              <span>
+                {isSubgrid
+                  ? 'PARENT: grid-cols-3 · CHILD: row-span-3 grid-rows-subgrid'
+                  : 'NAIVE FLEX CARDS: Independent heights & ragged baselines'}
+              </span>
+              <span>3 LOCKED HORIZONTAL TRACKS</span>
+            </div>
+          )}
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 items-start">
+            {cards.map((c, idx) => (
+              <div
+                key={c.tier}
+                className={`p-4 rounded-xl border bg-white transition-all ${
+                  isSubgrid
+                    ? 'md:min-h-[235px] flex flex-col justify-between border-sky-300 shadow-2xs'
+                    : 'space-y-3 border-amber-300'
+                }`}
+              >
+                <div className={isSubgrid ? 'md:min-h-[54px]' : ''}>
+                  <div className="text-[10px] font-mono text-sky-700 font-semibold">{c.tier}</div>
+                  <div className="font-display text-sm font-bold text-slate-900 mt-0.5 leading-snug">
+                    {c.title}
+                  </div>
+                </div>
+
+                <div
+                  className={`text-xs text-slate-600 leading-relaxed ${
+                    isSubgrid ? 'md:min-h-[82px] border-t border-dashed border-sky-200 pt-2' : ''
+                  }`}
+                >
+                  {c.body}
+                </div>
+
+                <div className="pt-2.5 border-t border-slate-100">
+                  <button
+                    type="button"
+                    className={`w-full min-h-[36px] py-1.5 px-3 rounded-lg text-xs font-semibold transition-colors ${
+                      idx === 1
+                        ? 'bg-sky-600 text-white hover:bg-sky-700'
+                        : 'bg-slate-900 text-white hover:bg-slate-800'
+                    }`}
+                  >
+                    {c.cta}
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      );
+    }
+
+    // -------------------------------------------------------------------------
+    // 44. INLINE SLASH COMMAND MENU (/ TRIGGER)
+    // -------------------------------------------------------------------------
+    case 'slash-command-menu': {
+      const slashFilter = String(controlValues.slashFilter || 'all');
+      const editorPattern = String(controlValues.editorPattern || 'slash');
+
+      const allCommands = [
+        {
+          id: 'h2',
+          cmd: '/h2',
+          label: 'Heading 2 · Section Title',
+          desc: 'Medium structural section heading',
+        },
+        {
+          id: 'code',
+          cmd: '/code',
+          label: 'TSX Code Block',
+          desc: 'Syntax-highlighted monospace snippet',
+        },
+        {
+          id: 'callout',
+          cmd: '/callout',
+          label: 'Architectural Callout Box',
+          desc: 'Highlighted note with border',
+        },
+        {
+          id: 'table',
+          cmd: '/table',
+          label: '3-Column Decision Matrix',
+          desc: 'Structured comparison table',
+        },
+      ];
+
+      const visibleCommands =
+        slashFilter === 'all'
+          ? allCommands
+          : allCommands.filter((item) => item.id === slashFilter);
+
+      return (
+        <div className="w-full space-y-3">
+          {editorPattern === 'toolbar' ? (
+            <div className="p-4 rounded-xl border border-amber-300 bg-amber-50/40 space-y-3">
+              <div className="flex flex-wrap gap-1 p-2 rounded-lg bg-white border border-amber-200 text-[11px] font-mono text-slate-600">
+                {[
+                  'Bold',
+                  'Italic',
+                  'Underline',
+                  'Strike',
+                  'H1',
+                  'H2',
+                  'H3',
+                  'Quote',
+                  'Code',
+                  'Link',
+                  'Image',
+                  'Table',
+                  'Align L',
+                  'Align C',
+                ].map((btn) => (
+                  <span
+                    key={btn}
+                    className="px-2 py-1 rounded bg-slate-100 border border-slate-200"
+                  >
+                    {btn}
+                  </span>
+                ))}
+              </div>
+              <div className="text-xs text-amber-900">
+                Legacy Top Ribbon: Forces user eyes and pointer away from the active typing line.
+              </div>
+            </div>
+          ) : (
+            <div className="p-4 rounded-xl border border-slate-200 bg-white space-y-3 relative">
+              <div className="flex items-center justify-between text-xs text-slate-500 font-mono">
+                <span>Notion / Linear Caret-Anchored Slash Editor</span>
+                <span className="text-emerald-700 font-semibold">
+                  Inserted: {insertedBlockLabel}
+                </span>
+              </div>
+
+              <div className="p-3 rounded-xl bg-slate-50 border border-slate-200 font-mono text-xs text-slate-900 flex items-center gap-1">
+                <span className="text-slate-400">Line 04:</span>
+                <span className="px-1.5 py-0.5 rounded bg-sky-100 text-sky-800 font-bold">
+                  /{slashFilter === 'all' ? '' : slashFilter}
+                </span>
+                <span className="w-0.5 h-4 bg-sky-600 inline-block" />
+                <span className="text-slate-400 ml-2">
+                  (Click any option in the popover below to insert)
+                </span>
+              </div>
+
+              <div
+                role="listbox"
+                aria-label="Slash Command Block Inserter"
+                className="w-full max-w-sm rounded-xl border border-slate-200 bg-white shadow-xl p-1.5 space-y-1"
+              >
+                <div className="px-2.5 py-1 text-[10px] font-mono text-slate-400 flex justify-between">
+                  <span>INSERT BLOCK AT CARET</span>
+                  <span>↑↓ TO NAVIGATE · ↵ SELECT</span>
+                </div>
+                {visibleCommands.map((item, idx) => {
+                  const isActive = idx === slashSelectedIdx % visibleCommands.length;
+                  return (
+                    <button
+                      key={item.id}
+                      type="button"
+                      onClick={() => {
+                        setSlashSelectedIdx(idx);
+                        setInsertedBlockLabel(item.label);
+                      }}
+                      className={`w-full min-h-[42px] px-3 py-2 rounded-lg text-left flex items-center justify-between gap-2 transition-colors ${
+                        isActive
+                          ? 'bg-sky-50 text-sky-950 border border-sky-200'
+                          : 'hover:bg-slate-50 text-slate-700'
+                      }`}
+                    >
+                      <div>
+                        <div className="text-xs font-semibold">{item.label}</div>
+                        <div className="text-[11px] text-slate-500">{item.desc}</div>
+                      </div>
+                      <kbd className="px-1.5 py-0.5 rounded bg-slate-100 border border-slate-200 font-mono text-[10px] text-slate-700 shrink-0">
+                        {item.cmd}
+                      </kbd>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+          )}
+        </div>
+      );
+    }
+
+    // -------------------------------------------------------------------------
+    // 45. DOCKED PICTURE-IN-PICTURE (PIP) MINI-PLAYER
+    // -------------------------------------------------------------------------
+    case 'pip-mini-player': {
+      const dockPosition = String(controlValues.dockPosition || 'bottom-right');
+
+      return (
+        <div className="w-full relative rounded-xl border border-slate-200 bg-white p-4 min-h-[220px] flex flex-col justify-between overflow-hidden">
+          <div className="space-y-2 max-w-md">
+            <div className="text-[11px] font-mono text-slate-400">
+              SCROLLABLE ARTICLE VIEWPORT · MAIN VIDEO SCROLLED OUT OF VIEW
+            </div>
+            <div className="font-display text-sm font-bold text-slate-900">
+              Architecture Walkthrough: Spatial UI Systems
+            </div>
+            <p className="text-xs text-slate-600 leading-relaxed">
+              As the reader scrolls down through long-form documentation, the primary 16:9 media
+              stage detaches and docks unobtrusively into the corner so playback continues without
+              blocking the reading column.
+            </p>
+          </div>
+
+          <div
+            className={`mt-4 transition-all duration-200 ${
+              dockPosition === 'expanded'
+                ? 'w-full rounded-xl bg-slate-950 text-white p-4 border border-slate-800 shadow-lg'
+                : dockPosition === 'bottom-left'
+                ? 'self-start w-64 sm:w-72 rounded-2xl bg-slate-950 text-white p-3.5 border-2 border-sky-500/80 shadow-2xl'
+                : 'self-end w-64 sm:w-72 rounded-2xl bg-slate-950 text-white p-3.5 border-2 border-sky-500/80 shadow-2xl'
+            }`}
+          >
+            <div className="flex items-center justify-between text-[10px] font-mono text-sky-400 mb-2">
+              <span>{pipPlaying ? '▶ LIVE STREAM · 14:28' : '⏸ PAUSED · 14:28'}</span>
+              <span className="px-1.5 py-0.5 rounded bg-slate-800 text-slate-300">
+                {dockPosition === 'expanded' ? 'Full Stage' : 'PiP Corner Dock'}
+              </span>
+            </div>
+
+            <div className="font-display text-xs font-bold text-white truncate">
+              Keynote: Precision UI Terminology for AI Agents
+            </div>
+
+            <div className="mt-3 pt-2 border-t border-slate-800 flex items-center justify-between gap-2">
+              <button
+                type="button"
+                onClick={() => setPipPlaying((p) => !p)}
+                className="min-h-[32px] px-2.5 py-1 rounded-lg bg-sky-500 hover:bg-sky-400 text-slate-950 text-xs font-bold transition-colors"
+              >
+                {pipPlaying ? 'Pause' : 'Resume'}
+              </button>
+              <span className="text-[10px] font-mono text-slate-400">aspect-video · z-40</span>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    // -------------------------------------------------------------------------
+    // 46. SEGMENTED OTP / 2FA AUTO-ADVANCE INPUT
+    // -------------------------------------------------------------------------
+    case 'segmented-otp-input': {
+      const otpPreset = String(controlValues.otpPreset || 'partial');
+      const displayDigits =
+        otpPreset === 'verified'
+          ? ['4', '8', '2', '9', '1', '0']
+          : otpPreset === 'error'
+          ? ['9', '9', '9', '0', '0', '0']
+          : otpDigits;
+
+      return (
+        <div className="w-full p-4 rounded-xl border border-slate-200 bg-white space-y-4">
+          <div className="flex flex-wrap items-center justify-between gap-2">
+            <div>
+              <div className="text-xs font-display font-bold text-slate-900">
+                Two-Factor Verification Code (6-Slot Segmented Input)
+              </div>
+              <div className="text-[11px] text-slate-500">
+                Click any slot to type a digit, or test 1-click clipboard autofill:
+              </div>
+            </div>
+            <div className="flex items-center gap-1.5">
+              <button
+                type="button"
+                onClick={() => setOtpDigits(['4', '8', '2', '9', '1', '0'])}
+                className="min-h-[34px] px-2.5 py-1 rounded-lg bg-sky-50 hover:bg-sky-100 border border-sky-200 text-sky-900 text-xs font-semibold"
+              >
+                Simulate Paste &ldquo;482910&rdquo;
+              </button>
+              <button
+                type="button"
+                onClick={() => setOtpDigits(['', '', '', '', '', ''])}
+                className="min-h-[34px] px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-medium"
+              >
+                Clear
+              </button>
+            </div>
+          </div>
+
+          <div
+            role="group"
+            aria-label="6-Digit Verification Code"
+            className="flex flex-wrap items-center justify-center gap-2 py-2"
+          >
+            {displayDigits.map((digit, idx) => (
+              <React.Fragment key={idx}>
+                {idx === 3 && (
+                  <span className="text-slate-300 font-mono text-lg font-bold px-1 select-none">
+                    -
+                  </span>
+                )}
+                <input
+                  type="text"
+                  inputMode="numeric"
+                  maxLength={1}
+                  aria-label={`Digit ${idx + 1}`}
+                  value={digit}
+                  onChange={(e) => {
+                    const val = e.target.value.replace(/[^0-9]/g, '').slice(-1);
+                    const next = [...otpDigits];
+                    next[idx] = val;
+                    setOtpDigits(next);
+                  }}
+                  className={`w-11 h-12 text-center font-mono text-lg font-bold tabular-nums rounded-xl border transition-all focus:outline-none focus:ring-2 ${
+                    otpPreset === 'verified'
+                      ? 'border-emerald-500 bg-emerald-50/50 text-emerald-950 focus:ring-emerald-500'
+                      : otpPreset === 'error'
+                      ? 'border-red-500 bg-red-50/50 text-red-950 focus:ring-red-500'
+                      : digit
+                      ? 'border-slate-900 bg-white text-slate-900 focus:ring-sky-600'
+                      : 'border-slate-300 bg-slate-50 text-slate-900 focus:bg-white focus:ring-sky-600'
+                  }`}
+                />
+              </React.Fragment>
+            ))}
+          </div>
+
+          <div className="text-center text-xs font-mono">
+            {otpPreset === 'verified' ? (
+              <span className="text-emerald-700 font-semibold">
+                ✓ Code Verified · autocomplete=&quot;one-time-code&quot;
+              </span>
+            ) : otpPreset === 'error' ? (
+              <span className="text-red-600 font-semibold">
+                ✕ Invalid token — slots highlighted with accessible error state
+              </span>
+            ) : (
+              <span className="text-slate-500">
+                inputMode=&quot;numeric&quot; · tabular-nums · Auto-advances on keypress
+              </span>
+            )}
+          </div>
+        </div>
+      );
+    }
+
+    // -------------------------------------------------------------------------
+    // 47. MAGNETIC CURSOR TARGET & PROXIMITY PULL
+    // -------------------------------------------------------------------------
+    case 'magnetic-cursor-target': {
+      const pullStrength = Number(controlValues.pullStrength ?? 30) / 100;
+
+      return (
+        <div
+          onMouseMove={(e) => {
+            const rect = e.currentTarget.getBoundingClientRect();
+            const dx = (e.clientX - (rect.left + rect.width / 2)) * pullStrength;
+            const dy = (e.clientY - (rect.top + rect.height / 2)) * pullStrength;
+            setMagneticPos({ x: Math.round(dx), y: Math.round(dy) });
+          }}
+          onMouseLeave={() => setMagneticPos({ x: 0, y: 0 })}
+          className="w-full min-h-[190px] rounded-xl border border-slate-200 bg-white p-6 flex flex-col items-center justify-center gap-3 relative cursor-crosshair"
+        >
+          {showBlueprint && (
+            <div className="text-[11px] font-mono text-sky-700">
+              PROXIMITY FIELD · Move your cursor inside this box ({magneticPos.x}px, {magneticPos.y}
+              px)
+            </div>
+          )}
+
+          <button
+            type="button"
+            style={{
+              transform: `translate3d(${magneticPos.x}px, ${magneticPos.y}px, 0)`,
+            }}
+            className="min-h-[46px] px-6 py-3 rounded-xl bg-slate-900 hover:bg-sky-600 text-white font-display text-sm font-bold shadow-lg transition-transform duration-150 ease-out"
+          >
+            Magnetic Primary CTA →
+          </button>
+
+          <div className="text-[11px] font-mono text-slate-500">
+            transform: translate3d({magneticPos.x}px, {magneticPos.y}px, 0) · Pull:{' '}
+            {Math.round(pullStrength * 100)}%
+          </div>
+        </div>
+      );
+    }
+
+    // -------------------------------------------------------------------------
+    // 48. ISOMETRIC EXPLODED LAYER STACK (3D CSS PLANES)
+    // -------------------------------------------------------------------------
+    case 'isometric-layer-stack': {
+      const zGap = Number(controlValues.zGap ?? 28);
+      const activePlane = String(controlValues.activePlane || 'all');
+
+      const layers = [
+        {
+          idx: 0,
+          name: 'LAYER 01 · SILICON TENSOR CORE',
+          zLabel: 'Z + 0px',
+          border: 'border-emerald-400/80',
+          bg: 'bg-emerald-950/75 text-emerald-200',
+        },
+        {
+          idx: 1,
+          name: 'LAYER 02 · NEURAL AGENT RUNTIME',
+          zLabel: `Z + ${zGap}px`,
+          border: 'border-sky-400/80',
+          bg: 'bg-sky-950/75 text-sky-200',
+        },
+        {
+          idx: 2,
+          name: 'LAYER 03 · SPATIAL GLASS UI SHELL',
+          zLabel: `Z + ${zGap * 2}px`,
+          border: 'border-cyan-300',
+          bg: 'bg-cyan-900/75 text-cyan-100',
+        },
+      ];
+
+      return (
+        <div className="w-full min-h-[220px] rounded-xl bg-slate-950 border border-slate-800 p-4 flex flex-col justify-between text-white overflow-hidden">
+          <div className="flex flex-wrap items-center justify-between gap-2 text-[11px] font-mono text-cyan-300">
+            <span>preserve-3d · rotateX(55deg) rotateZ(-45deg)</span>
+            <span>Z-AXIS SEPARATION: {zGap}px</span>
+          </div>
+
+          <div className="relative h-40 flex items-center justify-center my-2">
+            {layers.map((layer) => {
+              const isFocused =
+                activePlane === 'all' ||
+                activePlane === String(layer.idx) ||
+                hoveredIsoLayer === layer.idx;
+              const yOffset = (1 - layer.idx) * zGap;
+
+              return (
+                <div
+                  key={layer.idx}
+                  onMouseEnter={() => setHoveredIsoLayer(layer.idx)}
+                  onMouseLeave={() => setHoveredIsoLayer(null)}
+                  style={{
+                    transform: `translateY(${yOffset}px) skewX(-24deg) scaleY(0.78)`,
+                  }}
+                  className={`absolute w-64 sm:w-72 h-16 rounded-xl border ${layer.border} ${
+                    layer.bg
+                  } backdrop-blur-md px-4 flex items-center justify-between font-mono text-xs shadow-2xl transition-all duration-200 cursor-pointer ${
+                    isFocused ? 'opacity-100 scale-105' : 'opacity-35'
+                  }`}
+                >
+                  <span className="font-bold truncate">{layer.name}</span>
+                  <span className="text-[10px] px-1.5 py-0.5 rounded bg-black/40 shrink-0">
+                    {layer.zLabel}
+                  </span>
+                </div>
+              );
+            })}
+          </div>
+
+          <div className="text-[11px] font-mono text-slate-400 text-center">
+            Hover any plane or adjust the Z-Axis Explosion Spacing slider below
+          </div>
         </div>
       );
     }

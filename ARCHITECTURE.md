@@ -1,6 +1,6 @@
 # LexiconUI Technical Architecture & Ontology Guide
 
-This document explains how **LexiconUI** is architected under the hood so open-source contributors can confidently extend the UI/UX ontology, add interactive sandboxes, or integrate the terminology dataset into external developer tools (VS Code / Cursor extensions, MCP servers, or CLI prompt generators).
+This document explains how **LexiconUI** is architected under the hood so open-source contributors can confidently extend the 48-concept UI/UX ontology, add interactive sandboxes, or integrate the terminology dataset into external developer tools (VS Code / Cursor extensions, MCP servers, or CLI prompt generators).
 
 ---
 
@@ -9,7 +9,7 @@ This document explains how **LexiconUI** is architected under the hood so open-s
 ```
 ┌────────────────────────────────────────────────────────────────────────────┐
 │                        src/data/termsData.ts                               │
-│  Canonical Ontology (DESIGN_TERMS: DesignTerm[])                           │
+│  Canonical Ontology (DESIGN_TERMS: DesignTerm[] — 48 Live Concepts)        │
 │  • Metadata (id, number, title, category, difficulty, alias)               │
 │  • Prompt Engineering Pair (badPromptExample vs. goodPromptExample)        │
 │  • Colloquial Synonym Graph (vibePhrases[])                                │
@@ -30,19 +30,25 @@ This document explains how **LexiconUI** is architected under the hood so open-s
 
 ---
 
-## 2. Core Data Contracts
+## 2. Core Data Contracts & Modules
 
 ### `DesignTerm` (`src/data/termsData.ts`)
 Every UI/UX concept in LexiconUI is a strongly typed `DesignTerm` object. Because `DESIGN_TERMS` is a pure TypeScript array with zero runtime DOM dependencies, it can also be exported as a standalone JSON dataset or consumed by an **MCP (Model Context Protocol) server** to give AI agents direct access to canonical UI patterns.
 
 Key fields:
-- `id`: Kebab-case unique slug (e.g., `'bento-grid'`, `'command-palette'`).
-- `category`: `'layout' | 'navigation' | 'typography' | 'motion'`.
+- `id`: Kebab-case unique slug (e.g., `'bento-grid'`, `'css-subgrid'`, `'slash-command-menu'`).
+- `category`: `'layout' | 'navigation' | 'typography' | 'motion' | 'futuristic'`.
 - `vibePhrases`: Colloquial descriptions used by the global `Cmd+K` search and the Vibe-to-Spec Translator.
 - `sandboxControls`: Declarative array of `'slider'` or `'select'` controls. `EncyclopediaView` automatically renders the control UI and passes the active key-value map (`controlValues`) to `<InteractiveStage />`.
 
 ### `AnatomyTemplate` (`src/data/anatomyData.ts`)
-Powers the **Visual Anatomy X-Ray Inspector** (`src/components/AnatomyInspectorView.tsx`). Each template defines a realistic domain interface (*SaaS Console*, *Editorial Landing Page*, *E-Commerce Studio*) and an array of `AnatomyHotspot` pins (`01`–`06`), each linked via `linkedTermId` to a canonical `DesignTerm`.
+Powers the **Visual Anatomy X-Ray Inspector** (`src/components/AnatomyInspectorView.tsx`). Each template defines a realistic domain interface (*SaaS Console*, *Editorial Landing Page*, *E-Commerce Studio*, *Sci-Fi Tactical HUD*) and an array of `AnatomyHotspot` pins (`01`–`06`), each linked via `linkedTermId` to a canonical `DesignTerm`.
+
+### `IntroTour` (`src/components/IntroTour.tsx`)
+Provides a 5-step programmatic guided tour for first-time visitors (persisted via `localStorage` under `lexicon_ui_intro_tour_seen_v1`) and on-demand replay. Each step highlights the corresponding tool card in the 5-tool workspace deck and switches the active workspace view live.
+
+### `ContributorStudioView` (`src/components/ContributorStudioView.tsx`)
+Powers Tool 05 (**Blueprints & UI Quiz**), containing 5 multi-pattern full-page architectural blueprints, a 5-question interactive *"Name That UI!"* flashcard quiz, and direct GitHub repository links.
 
 ---
 

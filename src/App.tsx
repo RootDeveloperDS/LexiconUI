@@ -11,7 +11,7 @@ import {
   Wand2,
   Table,
   Check,
-  GitPullRequest,
+  LayoutTemplate,
   ArrowUpRight,
   ArrowDown,
   Copy,
@@ -20,6 +20,7 @@ import {
   ChevronDown,
   AlertCircle,
   CheckCircle2,
+  Compass,
 } from 'lucide-react';
 import { DESIGN_TERMS } from './data/termsData';
 import { EncyclopediaView } from './components/EncyclopediaView';
@@ -28,6 +29,7 @@ import { PromptTranslatorView } from './components/PromptTranslatorView';
 import { ComparisonMatrixView } from './components/ComparisonMatrixView';
 import { ContributorStudioView } from './components/ContributorStudioView';
 import { CommandPaletteModal, SpecCartDrawer } from './components/Overlays';
+import { IntroTour, INTRO_TOUR_STEPS } from './components/IntroTour';
 import { LexiconLogo } from './components/LexiconLogo';
 import { Footer } from './components/Footer';
 import { Analytics } from '@vercel/analytics/react';
@@ -41,6 +43,7 @@ export type ActiveWorkspaceTab =
 
 export const GITHUB_REPO_URL = 'https://github.com/RootDeveloperDS/LexiconUI';
 const STORAGE_KEY_CART = 'lexicon_ui_spec_cart_v1';
+const STORAGE_KEY_TOUR_SEEN = 'lexicon_ui_intro_tour_seen_v1';
 
 interface HeroDemoComparison {
   id: string;
@@ -77,15 +80,15 @@ const HERO_COMPARISONS: HeroDemoComparison[] = [
       'Render a vertical 3-dot Kebab Menu (MoreVertical) inside each table row for inline actions, and a 3x3 Bento / Waffle Launcher icon (Grid) in the top header.',
   },
   {
-    id: 'hud',
-    termId: 'hud-reticle-frame',
-    everydayQuestion: '"Sci-fi box with 45-degree cut corners"',
-    shortBadge: '37. Chamfered HUD',
-    vaguePrompt: 'Make a cool futuristic Cyberpunk / Iron Man card with angled corners.',
-    brokenResultLabel: 'AI outputs a normal rounded rectangle (rounded-lg) with a neon blue border.',
-    canonicalName: '37. Chamfered HUD Frame & Corner Reticles',
+    id: 'subgrid',
+    termId: 'css-subgrid',
+    everydayQuestion: '"Make card titles & buttons line up across a row"',
+    shortBadge: '43. CSS Subgrid',
+    vaguePrompt: 'Make 3 pricing cards and make sure the headings and bottom buttons line up evenly.',
+    brokenResultLabel: 'AI hardcodes fixed heights that clip text or leaves buttons misaligned when text wraps.',
+    canonicalName: '43. CSS Subgrid Cross-Card Alignment',
     exactPrompt:
-      'Apply a 45° Chamfered HUD Polygon (clip-path: polygon(0 0, calc(100% - 16px) 0, 100% 16px, 100% 100%, 16px 100%, 0 calc(100% - 16px))) with corner reticle SVG ticks.',
+      'Use CSS Subgrid across the 3-column card row: set the parent container to grid-cols-3 gap-6 and each child card to row-span-3 grid grid-rows-subgrid gap-4 so headers, descriptions, and CTA footers lock onto shared row tracks.',
   },
 ];
 
@@ -101,6 +104,16 @@ export default function App() {
   const [heroViewMode, setHeroViewMode] = useState<'exact' | 'vague'>('exact');
   const [isHeroCollapsed, setIsHeroCollapsed] = useState<boolean>(false);
   const [copiedHeroPrompt, setCopiedHeroPrompt] = useState<boolean>(false);
+
+  // Interactive Intro Tour State (Automatically active for first-time visitors)
+  const [isTourOpen, setIsTourOpen] = useState<boolean>(() => {
+    try {
+      return localStorage.getItem(STORAGE_KEY_TOUR_SEEN) !== 'true';
+    } catch {
+      return true;
+    }
+  });
+  const [tourStepIdx, setTourStepIdx] = useState<number>(0);
 
   const [specCartIds, setSpecCartIds] = useState<string[]>(() => {
     try {
@@ -138,7 +151,6 @@ export default function App() {
   // Universal Desktop Mouse-Wheel-to-Horizontal-Scroll for all horizontal strips across the app
   useEffect(() => {
     const handleGlobalWheel = (e: WheelEvent) => {
-      // Only intercept predominantly vertical mouse wheel events (standard desktop scroll wheel)
       if (e.ctrlKey || Math.abs(e.deltaY) <= Math.abs(e.deltaX)) return;
 
       let node = e.target as HTMLElement | null;
@@ -151,7 +163,6 @@ export default function App() {
           const style = window.getComputedStyle(node);
           const overflowX = style.overflowX;
           const isHorizScrollable = overflowX === 'auto' || overflowX === 'scroll';
-          // Ensure it's a horizontal strip, not a vertically scrolling container
           const isVertScrollable =
             (style.overflowY === 'auto' || style.overflowY === 'scroll') &&
             node.scrollHeight > node.clientHeight + 12;
@@ -225,6 +236,51 @@ export default function App() {
     }, 40);
   };
 
+  // Intro Tour Handlers: Programmatically highlight & switch between the 5 workspace tools
+  const handleSelectTourStep = (idx: number) => {
+    const clamped = Math.max(0, Math.min(INTRO_TOUR_STEPS.length - 1, idx));
+    setTourStepIdx(clamped);
+    const step = INTRO_TOUR_STEPS[clamped];
+    if (step) {
+      setActiveTab(step.tabId);
+    }
+  };
+
+  const handleCloseTour = () => {
+    setIsTourOpen(false);
+    try {
+      localStorage.setItem(STORAGE_KEY_TOUR_SEEN, 'true');
+    } catch {
+      // ignore storage error
+    }
+  };
+
+  const handleStartTour = () => {
+    setTourStepIdx(0);
+    setActiveTab('encyclopedia');
+    setIsTourOpen(true);
+    setTimeout(() => {
+      document
+        .getElementById('workspace-main-anchor')
+        ?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 40);
+  };
+
+  const handleNextTourStep = () => {
+    if (tourStepIdx >= INTRO_TOUR_STEPS.length - 1) {
+      handleCloseTour();
+      triggerToast('Completed the 5-Tool Workspace Intro Tour!');
+    } else {
+      handleSelectTourStep(tourStepIdx + 1);
+    }
+  };
+
+  const handlePrevTourStep = () => {
+    if (tourStepIdx > 0) {
+      handleSelectTourStep(tourStepIdx - 1);
+    }
+  };
+
   const activeHeroComparison = HERO_COMPARISONS[heroExampleIdx] || HERO_COMPARISONS[0];
 
   const handleCopyHeroPrompt = () => {
@@ -270,12 +326,14 @@ export default function App() {
     {
       id: 'contribute' as const,
       step: '05',
-      label: 'Community & PR Studio',
-      shortLabel: 'Contribute',
-      subtitle: 'Explore showcase & add new UI concepts',
-      icon: GitPullRequest,
+      label: 'Blueprints & UI Quiz',
+      shortLabel: 'Blueprints',
+      subtitle: 'Copy full-page specs & test your UI vocabulary',
+      icon: LayoutTemplate,
     },
   ];
+
+  const highlightedTourTab = isTourOpen ? INTRO_TOUR_STEPS[tourStepIdx]?.tabId : null;
 
   return (
     <div className="min-h-screen flex flex-col bg-[#F8FAFC] text-[#0F172A] pb-20 md:pb-0">
@@ -360,7 +418,7 @@ export default function App() {
             Decision Matrix
           </a>
           <a
-            href="#oss-contribute"
+            href="#blueprints-quiz"
             onClick={(e) => {
               e.preventDefault();
               scrollToWorkspace('contribute');
@@ -371,7 +429,7 @@ export default function App() {
                 : 'hover:text-slate-900'
             }`}
           >
-            OSS Contribute
+            Blueprints &amp; Quiz
           </a>
         </nav>
 
@@ -390,7 +448,6 @@ export default function App() {
 
       {/* =====================================================================
           ASYMMETRIC SPLIT-SCREEN ONBOARDING HERO (PROPOSITION -> PROOF -> CTA)
-          Immediately answers: What is LexiconUI? Why use it? How do I start?
       ===================================================================== */}
       <section className="border-b border-slate-200 bg-white blueprint-grid">
         <div className="max-w-[1360px] mx-auto px-3.5 sm:px-6 py-5 sm:py-9">
@@ -419,22 +476,32 @@ export default function App() {
               </a>
             </div>
 
-            <div className="flex items-center gap-2">
+            <div className="flex flex-wrap items-center gap-2">
+              <button
+                type="button"
+                onClick={handleStartTour}
+                className="min-h-[36px] px-3 py-1 bg-sky-50 hover:bg-sky-100 border border-sky-200 rounded-lg text-xs font-semibold text-sky-800 flex items-center gap-1.5 transition-colors whitespace-nowrap"
+              >
+                <Compass className="w-3.5 h-3.5 text-sky-600 shrink-0" />
+                <span>Guided Tour (5 Tools)</span>
+              </button>
+
               <button
                 type="button"
                 onClick={() => setCmdPaletteOpen(true)}
-                className="min-h-[36px] px-3 py-1 bg-slate-100 hover:bg-slate-200/80 border border-slate-300/80 rounded-lg text-xs text-slate-700 flex items-center gap-2 transition-colors"
+                className="min-h-[36px] px-3 py-1 bg-slate-100 hover:bg-slate-200/80 border border-slate-300/80 rounded-lg text-xs text-slate-700 flex items-center gap-2 transition-colors whitespace-nowrap"
               >
                 <Search className="w-3.5 h-3.5 text-sky-600 shrink-0" />
-                <span>Search 42 UI Terms...</span>
+                <span>Search {DESIGN_TERMS.length} UI Terms...</span>
                 <kbd className="px-1.5 py-0.5 text-[10px] font-mono bg-white border border-slate-200 rounded text-slate-600">
                   ⌘K
                 </kbd>
               </button>
+
               <button
                 type="button"
                 onClick={() => setIsHeroCollapsed((prev) => !prev)}
-                className="min-h-[36px] px-2.5 py-1 rounded-lg border border-slate-200 bg-white hover:bg-slate-50 text-xs font-medium text-slate-600 hover:text-slate-900 flex items-center gap-1"
+                className="min-h-[36px] px-2.5 py-1 rounded-lg border border-slate-200 bg-white hover:bg-slate-50 text-xs font-medium text-slate-600 hover:text-slate-900 flex items-center gap-1 whitespace-nowrap"
               >
                 {isHeroCollapsed ? (
                   <>
@@ -471,8 +538,11 @@ export default function App() {
                     </em>
                     , the AI guesses and builds generic layouts.{' '}
                     <strong className="text-slate-900">LexiconUI</strong> lets you visually browse{' '}
-                    <strong className="text-slate-900">42 real UI/UX patterns</strong>, test them in
-                    a live interactive sandbox, and copy the exact engineering prompt in one click.
+                    <strong className="text-slate-900">
+                      {DESIGN_TERMS.length} real UI/UX patterns
+                    </strong>
+                    , test them in a live interactive sandbox, and copy the exact engineering prompt
+                    in one click.
                   </p>
 
                   {/* 3-Step Visual Onboarding Strip ("How to use LexiconUI in 15 seconds") */}
@@ -485,8 +555,8 @@ export default function App() {
                         Pick or Describe a Pattern
                       </div>
                       <p className="text-xs text-slate-600 leading-snug">
-                        Browse 42 visual concepts by category below, or type a casual description in
-                        the Vibe Translator.
+                        Browse {DESIGN_TERMS.length} visual concepts by category below, or type a
+                        casual description in the Vibe Translator.
                       </p>
                     </div>
 
@@ -518,7 +588,7 @@ export default function App() {
                   </div>
                 </div>
 
-                {/* Primary & Secondary Action Row (Wrapped & Contained Within Left 7 Cols) */}
+                {/* Primary & Secondary Action Row */}
                 <div className="pt-1 flex flex-wrap items-center gap-2.5 sm:gap-3">
                   <button
                     type="button"
@@ -689,37 +759,58 @@ export default function App() {
       </section>
 
       {/* =====================================================================
-          5-MODE WORKSPACE NAVIGATION DECK (SELF-EXPLANATORY TOOL CARDS)
-          Eliminates confusion over what each section of the app does
+          5-MODE WORKSPACE NAVIGATION DECK + PROGRAMMATIC INTRO TOUR HIGHLIGHTER
       ===================================================================== */}
       <div
         id="workspace-main-anchor"
         className="bg-slate-100/80 border-b border-slate-200 scroll-mt-16"
       >
         <div className="max-w-[1360px] mx-auto px-3 sm:px-6 py-3">
-          <div className="flex items-center justify-between gap-2 mb-2">
+          <div className="flex flex-wrap items-center justify-between gap-2 mb-2">
             <span className="text-[11px] font-mono font-semibold text-slate-500">
               CHOOSE YOUR INTERACTIVE WORKSPACE MODE (5 TOOLS):
             </span>
-            <span className="hidden sm:inline text-[11px] font-mono text-slate-500">
-              Active Tool:{' '}
-              <strong className="text-slate-900">
-                {workspaceTools.find((t) => t.id === activeTab)?.label}
-              </strong>
-            </span>
+            <div className="flex items-center gap-3">
+              {!isTourOpen && (
+                <button
+                  type="button"
+                  onClick={handleStartTour}
+                  className="text-[11px] font-mono font-semibold text-sky-700 hover:text-sky-900 underline underline-offset-2 inline-flex items-center gap-1"
+                >
+                  <Compass className="w-3 h-3" />
+                  <span>Explain These 5 Tools (Tour)</span>
+                </button>
+              )}
+              <span className="hidden sm:inline text-[11px] font-mono text-slate-500">
+                Active Tool:{' '}
+                <strong className="text-slate-900">
+                  {workspaceTools.find((t) => t.id === activeTab)?.label}
+                </strong>
+              </span>
+            </div>
           </div>
 
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2">
-            {workspaceTools.map((tool) => {
+            {workspaceTools.map((tool, idx) => {
               const Icon = tool.icon;
               const isSelected = activeTab === tool.id;
+              const isTourHighlighted = highlightedTourTab === tool.id;
+
               return (
                 <button
                   key={tool.id}
+                  id={`workspace-tool-${tool.id}`}
                   type="button"
-                  onClick={() => setActiveTab(tool.id)}
+                  onClick={() => {
+                    setActiveTab(tool.id);
+                    if (isTourOpen) {
+                      setTourStepIdx(idx);
+                    }
+                  }}
                   className={`min-h-[60px] p-2.5 sm:p-3 rounded-xl border text-left transition-all flex flex-col justify-between gap-1 ${
-                    isSelected
+                    isTourHighlighted
+                      ? 'bg-slate-900 border-sky-400 text-white ring-4 ring-sky-400/50 shadow-lg z-10'
+                      : isSelected
                       ? 'bg-slate-900 border-slate-900 text-white shadow-sm'
                       : 'bg-white border-slate-200/90 text-slate-700 hover:border-slate-400'
                   }`}
@@ -727,14 +818,15 @@ export default function App() {
                   <div className="flex items-center justify-between gap-1.5">
                     <span
                       className={`text-[10px] font-mono font-semibold ${
-                        isSelected ? 'text-sky-400' : 'text-sky-700'
+                        isSelected || isTourHighlighted ? 'text-sky-400' : 'text-sky-700'
                       }`}
                     >
                       TOOL {tool.step}
+                      {isTourHighlighted ? ' · TOUR FOCUS' : ''}
                     </span>
                     <Icon
                       className={`w-3.5 h-3.5 shrink-0 ${
-                        isSelected ? 'text-sky-400' : 'text-slate-400'
+                        isSelected || isTourHighlighted ? 'text-sky-400' : 'text-slate-400'
                       }`}
                     />
                   </div>
@@ -743,7 +835,7 @@ export default function App() {
                   </div>
                   <div
                     className={`hidden sm:block text-[11px] leading-tight line-clamp-1 ${
-                      isSelected ? 'text-slate-300' : 'text-slate-500'
+                      isSelected || isTourHighlighted ? 'text-slate-300' : 'text-slate-500'
                     }`}
                   >
                     {tool.subtitle}
@@ -752,6 +844,20 @@ export default function App() {
               );
             })}
           </div>
+
+          {/* Programmatic Intro Tour Component */}
+          <IntroTour
+            isOpen={isTourOpen}
+            currentStepIdx={tourStepIdx}
+            onSelectStep={handleSelectTourStep}
+            onNextStep={handleNextTourStep}
+            onPrevStep={handlePrevTourStep}
+            onCloseTour={handleCloseTour}
+            onJumpToToolSection={(tab, anchorId) => {
+              handleCloseTour();
+              scrollToWorkspace(tab, anchorId);
+            }}
+          />
         </div>
       </div>
 
@@ -801,7 +907,12 @@ export default function App() {
         )}
 
         {activeTab === 'contribute' && (
-          <ContributorStudioView onCopyFeedback={triggerToast} />
+          <ContributorStudioView
+            onCopyFeedback={triggerToast}
+            onJumpToTerm={handleJumpToTerm}
+            onAddMultipleToCart={handleAddMultipleToCart}
+            specCartIds={specCartIds}
+          />
         )}
       </main>
 
@@ -820,7 +931,6 @@ export default function App() {
 
       {/* =====================================================================
           FIXED MOBILE BOTTOM THUMB-ZONE TAB BAR (< md VIEWPORTS)
-          Ensures 44px+ touch targets and instant 1-thumb workspace switching
       ===================================================================== */}
       <nav
         aria-label="Mobile Bottom Workspace Navigation"

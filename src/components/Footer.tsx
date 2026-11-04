@@ -244,7 +244,7 @@ export const Footer: React.FC<FooterProps> = ({
                     }`}
                   >
                     <GitPullRequest className="w-3.5 h-3.5 shrink-0" />
-                    <span>Community &amp; PR Studio</span>
+                    <span>Blueprints &amp; UI Quiz</span>
                   </a>
                 </li>
               </ul>

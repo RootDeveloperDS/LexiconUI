@@ -6,10 +6,12 @@ Thank you for using **LexiconUI** (`RootDeveloperDS/LexiconUI`)! Here is how to 
 
 ## 1. Where to Ask Questions
 
+- **Guided Walkthrough of All 5 Tools**:
+  Click the **Guided Tour (5 Tools)** button in the top intro bar of LexiconUI to step through each workspace tool with live explanations.
 - **UI/UX Terminology & Prompt Engineering Questions**:
-  Use the **Vibe-to-Spec Translator** tab inside the app, or open a thread in [**GitHub Discussions**](https://github.com/RootDeveloperDS/LexiconUI/discussions).
-- **Proposing a New UI/UX Concept + Live Demo**:
-  Open the **OSS Contribute** tab inside LexiconUI to draft your concept, preview its live demo, and export the TypeScript/PR payload, or open a [**New UI/UX Concept Proposal Issue**](https://github.com/RootDeveloperDS/LexiconUI/issues/new/choose).
+  Use the **Vibe-to-Spec Translator** tab or the **Blueprints & UI Quiz** tab inside the app, or open a thread in [**GitHub Discussions**](https://github.com/RootDeveloperDS/LexiconUI/discussions).
+- **Proposing a New UI/UX Concept (Concept #49+)**:
+  Open a [**New UI/UX Concept Proposal Issue**](https://github.com/RootDeveloperDS/LexiconUI/issues/new/choose) or submit a Pull Request following [`CONTRIBUTING.md`](./CONTRIBUTING.md).
 
 ## 2. Reporting Bugs
 
