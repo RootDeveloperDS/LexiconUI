@@ -320,7 +320,7 @@ export const Footer: React.FC<FooterProps> = ({
                 Help improve LexiconUI — click a star to share quick thoughts or feature ideas.
               </p>
             </div>
-            <FeedbackRatingWidget projectId="lexican-ui" />
+            <FeedbackRatingWidget projectId="lexicon-ui" />
           </div>
         </div>
 

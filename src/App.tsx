@@ -39,7 +39,7 @@ export type ActiveWorkspaceTab =
   | 'matrix'
   | 'contribute';
 
-export const GITHUB_REPO_URL = 'https://github.com/RootDeveloperDS/LexicanUI';
+export const GITHUB_REPO_URL = 'https://github.com/RootDeveloperDS/LexiconUI';
 const STORAGE_KEY_CART = 'lexicon_ui_spec_cart_v1';
 
 interface HeroDemoComparison {
@@ -414,7 +414,7 @@ export default function App() {
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-1 text-slate-700 hover:text-sky-700 underline underline-offset-2 font-medium"
               >
-                <span>GitHub: RootDeveloperDS/LexicanUI</span>
+                <span>GitHub: RootDeveloperDS/LexiconUI</span>
                 <ArrowUpRight className="w-3.5 h-3.5" />
               </a>
             </div>

@@ -857,14 +857,14 @@ ${vibePhrases.map((p) => `- *"${p}"*`).join('\n')}
           <div className="space-y-1.5">
             <div className="inline-flex items-center gap-2 text-xs font-mono text-sky-700 font-semibold">
               <LexiconLogo size={18} />
-              <span>OPEN-SOURCE COMMUNITY HUB · ROOTDEVELOPERDS/LEXICANUI</span>
+              <span>OPEN-SOURCE COMMUNITY HUB · ROOTDEVELOPERDS/LEXICONUI</span>
             </div>
             <h2 className="font-display text-xl sm:text-2xl font-bold text-slate-900 tracking-tight">
               Contribute new beautiful UI/UX concepts &amp; designs — complete with live interactive
               demo previews
             </h2>
             <p className="text-xs text-slate-600 max-w-3xl leading-relaxed">
-              LexiconUI (<code className="font-mono text-slate-800">RootDeveloperDS/LexicanUI</code>) is
+              LexiconUI (<code className="font-mono text-slate-800">RootDeveloperDS/LexiconUI</code>) is
               built to grow into the world&apos;s most comprehensive open-source UI/UX encyclopedia.
               Anyone can contribute brand-new UI/UX concepts, futuristic sci-fi patterns, or
               platform UX enhancements—and{' '}
@@ -880,13 +880,13 @@ ${vibePhrases.map((p) => `- *"${p}"*`).join('\n')}
 
           <div className="flex flex-wrap items-center gap-2 shrink-0 text-xs font-mono">
             <a
-              href="https://github.com/RootDeveloperDS/LexicanUI"
+              href="https://github.com/RootDeveloperDS/LexiconUI"
               target="_blank"
               rel="noopener noreferrer"
               className="min-h-[40px] px-3.5 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-semibold inline-flex items-center gap-1.5 transition-colors"
             >
               <GitPullRequest className="w-3.5 h-3.5 text-sky-400" />
-              <span>GitHub: RootDeveloperDS/LexicanUI</span>
+              <span>GitHub: RootDeveloperDS/LexiconUI</span>
               <ArrowUpRight className="w-3.5 h-3.5 text-slate-300" />
             </a>
             <span className="min-h-[40px] px-3 py-2 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-900 font-semibold inline-flex items-center">
@@ -1779,7 +1779,7 @@ ${vibePhrases.map((p) => `- *"${p}"*`).join('\n')}
                 <code className="text-slate-800">src/components/InteractiveStage.tsx</code>
               </span>
               <a
-                href="https://github.com/RootDeveloperDS/LexicanUI/pulls"
+                href="https://github.com/RootDeveloperDS/LexiconUI/pulls"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="min-h-[36px] px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-900 font-semibold inline-flex items-center justify-center gap-1 transition-colors shrink-0"

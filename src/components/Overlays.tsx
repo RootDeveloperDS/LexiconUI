@@ -16,7 +16,7 @@ import {
 } from 'lucide-react';
 import { LexiconLogo } from './LexiconLogo';
 
-const GITHUB_REPO_URL = 'https://github.com/RootDeveloperDS/LexicanUI';
+const GITHUB_REPO_URL = 'https://github.com/RootDeveloperDS/LexiconUI';
 
 interface CommandPaletteModalProps {
   isOpen: boolean;
@@ -207,7 +207,7 @@ export const CommandPaletteModal: React.FC<CommandPaletteModalProps> = ({
             rel="noopener noreferrer"
             className="text-sky-700 hover:underline shrink-0"
           >
-            RootDeveloperDS/LexicanUI ↗
+            RootDeveloperDS/LexiconUI ↗
           </a>
         </div>
       </div>
@@ -247,7 +247,7 @@ export const SpecCartDrawer: React.FC<SpecCartDrawerProps> = ({
   const compiledSpecMarkdown = useMemo(() => {
     if (selectedTerms.length === 0) return '';
     const lines = [
-      '# Frontend UI/UX Design Specification (Generated via LexicanUI)',
+      '# Frontend UI/UX Design Specification (Generated via LexiconUI)',
       `> Reference Repository: ${GITHUB_REPO_URL}`,
       '',
       'Apply the following industry-standard UI/UX patterns, spatial laws, and component architectures:',

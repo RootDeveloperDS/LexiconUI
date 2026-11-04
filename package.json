@@ -1,12 +1,12 @@
 {
-  "name": "lexican-ui",
+  "name": "lexicon-ui",
   "private": true,
   "version": "1.7.0",
   "description": "The Open-Source Interactive UI/UX Terminology & Prompt-Engineering Encyclopedia for Developers and AI Vibe Coders",
-  "homepage": "https://github.com/RootDeveloperDS/LexicanUI",
+  "homepage": "https://github.com/RootDeveloperDS/LexiconUI",
   "repository": {
     "type": "git",
-    "url": "https://github.com/RootDeveloperDS/LexicanUI.git"
+    "url": "https://github.com/RootDeveloperDS/LexiconUI.git"
   },
   "license": "MIT",
   "type": "module",

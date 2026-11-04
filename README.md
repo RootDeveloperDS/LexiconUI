@@ -2,19 +2,19 @@
 
 <img src="./public/favicon.svg" width="76" height="76" alt="LexiconUI Vector Logo" />
 
-# LexiconUI (`RootDeveloperDS/LexicanUI`)
+# LexiconUI (`RootDeveloperDS/LexiconUI`)
 
 **The Open-Source Interactive UI/UX Terminology & Prompt-Engineering Encyclopedia for Developers and AI Vibe Coders**
 
-[![GitHub Repo](https://img.shields.io/badge/GitHub-RootDeveloperDS%2FLexicanUI-0F172A.svg?logo=github)](https://github.com/RootDeveloperDS/LexicanUI)
+[![GitHub Repo](https://img.shields.io/badge/GitHub-RootDeveloperDS%2FLexiconUI-0F172A.svg?logo=github)](https://github.com/RootDeveloperDS/LexiconUI)
 [![License: MIT](https://img.shields.io/badge/License-MIT-0284C7.svg)](./LICENSE)
-[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-059669.svg)](https://github.com/RootDeveloperDS/LexicanUI/pulls)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-059669.svg)](https://github.com/RootDeveloperDS/LexiconUI/pulls)
 [![Concepts: 42 Interactive Specs](https://img.shields.io/badge/UI%2FUX_Concepts-42_Live_Sandboxes-0F172A.svg)](#3-complete-42-concept-curriculum-taxonomy)
 [![TypeScript](https://img.shields.io/badge/TypeScript-Strict-0F172A.svg)](./tsconfig.json)
 [![React 19](https://img.shields.io/badge/React-19-0284C7.svg)](./package.json)
 [![Tailwind CSS v4](https://img.shields.io/badge/Tailwind_CSS-v4.0-38BDF8.svg)](./src/index.css)
 
-[**GitHub Repository**](https://github.com/RootDeveloperDS/LexicanUI) · [**Project Overview**](#1-project-overview--the-problem-we-solve) · [**Interactive Modules**](#2-core-interactive-modules) · [**42-Concept Curriculum**](#3-complete-42-concept-curriculum-taxonomy) · [**Installation**](#4-installation--local-development) · [**Roadmap**](#6-project-roadmap) · [**Contributing**](#7-contribution-guidelines--how-you-can-make-lexiconui-indispensable) · [**MIT License**](#8-license)
+[**GitHub Repository**](https://github.com/RootDeveloperDS/LexiconUI) · [**Project Overview**](#1-project-overview--the-problem-we-solve) · [**Interactive Modules**](#2-core-interactive-modules) · [**42-Concept Curriculum**](#3-complete-42-concept-curriculum-taxonomy) · [**Installation**](#4-installation--local-development) · [**Roadmap**](#6-project-roadmap) · [**Contributing**](#7-contribution-guidelines--how-you-can-make-lexiconui-indispensable) · [**MIT License**](#8-license)
 
 </div>
 
@@ -152,8 +152,8 @@ LexiconUI is a 100% deterministic, client-side application built with **React 19
 
 ```bash
 # 1. Clone the repository
-git clone https://github.com/RootDeveloperDS/LexicanUI.git
-cd LexicanUI
+git clone https://github.com/RootDeveloperDS/LexiconUI.git
+cd LexiconUI
 
 # 2. Install dependencies
 npm install
@@ -176,7 +176,7 @@ npm run dev
 ## 5. Repository Structure & Technical Architecture
 
 ```text
-LexicanUI/
+LexiconUI/
 ├── .github/
 │   ├── ISSUE_TEMPLATE/
 │   │   ├── bug_report.md               # Issue template for UI or sandbox bugs

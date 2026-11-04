@@ -2,14 +2,14 @@ import React, { useState } from 'react';
 import { Star, Send, CheckCircle2, Loader2, X } from 'lucide-react';
 
 export interface FeedbackRatingWidgetProps {
-  /** Optional override for project slug; defaults to package.json name "lexican-ui" */
+  /** Optional override for project slug; defaults to package.json name "lexicon-ui" */
   projectId?: string;
   /** Optional className for container layout customization */
   className?: string;
 }
 
 const TELEMETRY_ENDPOINT = 'https://visar-backend.onrender.com/api/v1/feedback';
-const DEFAULT_PROJECT_SLUG = 'lexican-ui';
+const DEFAULT_PROJECT_SLUG = 'lexicon-ui';
 
 const STAR_LABELS: Record<number, string> = {
   1: 'Needs work',
